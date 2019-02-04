@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
   public static TCPClient client = null;
 
   Command m_autonomousCommand;
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /**
    * This function is run when the robot is first started up and should be
