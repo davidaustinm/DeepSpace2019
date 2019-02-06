@@ -42,9 +42,9 @@ public class TargetCamera implements Runnable {
     };
     public TargetCamera() {
         System.out.println("start camera thread");
-        /*
-        //UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-        //camera.setResolution(320, 240);
+        
+        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+        camera.setResolution(320, 240);
       
         cvSink = CameraServer.getInstance().getVideo();
         outputStream = CameraServer.getInstance().putVideo("Blur", 320, 240);
@@ -54,7 +54,6 @@ public class TargetCamera implements Runnable {
         mask = new Mat();
         hierarchy = new Mat();
         contours = new ArrayList<MatOfPoint>();
-        */
         thread = new Thread(this);
     }
 
@@ -64,7 +63,6 @@ public class TargetCamera implements Runnable {
 
     public void run() {
         while(!Thread.interrupted()) {
-            /*
           long start = System.currentTimeMillis();
           cvSink.grabFrame(source);
           if (source.empty()) {
@@ -97,11 +95,9 @@ public class TargetCamera implements Runnable {
             area += Imgproc.contourArea(contours.get(i));
           }
           area /= contours.size();
-          */
-          //center /= contours.size();
-          //long elapsed = System.currentTimeMillis() - start;
+          
+          center /= contours.size();
           double[] targetInfo = Robot.client.getTargetInfo();
-          double area = targetInfo[2];
           double distance = coefficients[0];
           double x = 1/area;
           for (int i = 1; i < coefficients.length; i++) {
@@ -109,7 +105,6 @@ public class TargetCamera implements Runnable {
             x /= area;
           }
           
-          double center = targetInfo[0];
           setDistance(distance);
           angle = -Math.toDegrees(Math.atan(fieldOfView / imageWidth * center));
           System.out.println(/*elapsed + " " + */distance + " " + angle);

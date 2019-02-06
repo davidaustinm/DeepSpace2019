@@ -10,9 +10,18 @@ import java.io.*;
 public class TCPClient implements Runnable{
     private final Object lock = new Object();
     double[] targetInfo = new double[] {-1,-1, -1};
-    String serverIP = "10.40.3.104";
+    double[] coefficients = new double[] {
+        15.5887262581734, 38646.2278445553, -7.35691471763911e+6,
+        8.80924154583584e8, -4.04032044493288e+10
+    };
+    double distance;
+    double angle;
+    double fieldOfView = 15 / 26.0;
+    double imageWidth = 160;
+    String serverIP = "10.40.3.51";
     int port = 5802;
     Thread thread;
+    long lastTime = 0;
 
     public TCPClient() {
         thread = new Thread(this);
@@ -25,7 +34,31 @@ public class TCPClient implements Runnable{
     public void setTargetInfo(double x, double y, double averArea) {
     	synchronized(lock) {
     		targetInfo = new double[] {x, y, averArea};
-    	}
+        }
+        
+        double area = targetInfo[2];
+        double d = coefficients[0];
+        double val = 1/area;
+        for (int i = 1; i < coefficients.length; i++) {
+          d += coefficients[i]*val;
+          val /= area;
+        }
+           
+        double center = targetInfo[0] - imageWidth;
+        distance = d;
+        angle = -Math.toDegrees(Math.atan(fieldOfView / imageWidth * center));
+        long time = System.currentTimeMillis();
+        double elapsed = time - lastTime;
+        lastTime = time;
+        System.out.println(elapsed + " " +distance + " " + angle);
+        
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+    public double getAngle() {
+        return angle;
     }
     
     public double[] getTargetInfo() {

@@ -26,7 +26,7 @@ public class DriveToTarget extends Command {
   protected void initialize() {
     System.out.println("initializing");
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
-    double distance = Robot.camera.getDistance();
+    double distance = Robot.client.getDistance();
     if (Double.isNaN(distance)) {
       System.out.println("distance = NaN");
       finished = true;
@@ -39,7 +39,7 @@ public class DriveToTarget extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double distance = Robot.camera.getDistance();
+    double distance = Robot.client.getDistance();
     if(distance < 30) dontReadDistance = true;
     double avgEncoder = 0;
     if (!Double.isNaN(distance) && !dontReadDistance) {
@@ -50,7 +50,7 @@ public class DriveToTarget extends Command {
 
     }
     System.out.println(avgEncoder + " " + encoderTarget + " " + distance);
-    double error = Robot.camera.getAngle();
+    double error = Robot.client.getAngle();
     double correction = 0.005 * error;
     if(dontReadDistance) correction = 0;
     correction = Utilities.clip(correction, -0.5 * speed, 0.5 * speed);

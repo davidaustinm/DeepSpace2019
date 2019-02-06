@@ -15,7 +15,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.PowerUpDriveTrain;
 import frc.robot.subsystems.Sensors;
+import frc.robot.subsystems.Shifter;
 import frc.robot.subsystems.SparkDriveTrain;
 import frc.robot.utilities.TargetCamera;
 import frc.robot.utilities.TCPClient;
@@ -30,10 +32,11 @@ import frc.robot.utilities.TCPClient;
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
-  public static SparkDriveTrain driveTrain = new SparkDriveTrain();
+  public static PowerUpDriveTrain driveTrain = new PowerUpDriveTrain();
   public static Sensors sensors = new Sensors();
   public static TargetCamera camera;
   public static TCPClient client = null;
+  public static Shifter shifter = new Shifter();
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -45,7 +48,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     client = new TCPClient();
-    client.start();
+    //client.start();
 
     m_oi = new OI();
 
@@ -54,7 +57,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto mode", m_chooser);
 
     camera = new TargetCamera();
-    camera.start();
+    //camera.start();
   }
 
   /**
@@ -163,8 +166,8 @@ public class Robot extends TimedRobot {
     sensors.updatePosition();
     double[] position = sensors.getPosition();
     //.out.println(position[0] + " " + position[1]);
-    double[] targetInfo = client.getTargetInfo();
-    System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
+    //double[] targetInfo = client.getTargetInfo();
+    //System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
   }
 
   /**
