@@ -18,7 +18,8 @@ public class Sensors extends Subsystem {
   double gyroOffset = 0;
   double cutPoint = 180;
   double[] driveEncoderOffsets = new double[] {0,0};
-  public final double ENCODERCOUNTSPERINCH = 0.8;
+  public final double ENCODERCOUNTSPERINCH = 0.8; // wooden robot
+  public static final double ENCODER_TICKS_PER_INCH = 23.8; // powerup robot
   double positionX = 0;
   double positionY = 0;
   double[] lastDriveEncoder = new double[] {0,0};
