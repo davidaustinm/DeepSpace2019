@@ -91,8 +91,8 @@ public class ExecuteDriveProfile extends Command implements Runnable {
     double heading = profile[currentPoint][4];
       
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
-    double currentLeftPos = driveEncoders[0]/Robot.sensors.ENCODERCOUNTSPERINCH;
-    double currentRightPos = driveEncoders[1]/Robot.sensors.ENCODERCOUNTSPERINCH;
+    double currentLeftPos = driveEncoders[0]/Robot.sensors.ENCODER_TICKS_PER_INCH;
+    double currentRightPos = driveEncoders[1]/Robot.sensors.ENCODER_TICKS_PER_INCH;
     	
    	double leftError = leftPos-currentLeftPos;   	
     double rightError = rightPos-currentRightPos;

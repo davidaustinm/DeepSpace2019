@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
 
-    camera = new TargetCamera();
+    //camera = new TargetCamera();
     //camera.start();
   }
 
@@ -103,9 +103,16 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
     CommandGroup auto = new CommandGroup();
-    //auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
+    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
+    auto.addSequential(new SwitchDirection());
+    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/turn-left-rocket-front.profile.csv"));
+    auto.addSequential(new SwitchDirection());
+    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/drive-to-portal.profile.csv"));
+    auto.addSequential(new SwitchDirection());
+    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/backaway-from-portal.profile.csv"));
+    //auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/.profile.csv"));
     //auto.addSequential(new Wait(500));
-    auto.addSequential(new DriveToTarget(0.4));
+    //auto.addSequential(new DriveToTarget(0.4));
     m_autonomousCommand = auto;
     sensors.resetGyro();
     sensors.resetDriveEncoders();
