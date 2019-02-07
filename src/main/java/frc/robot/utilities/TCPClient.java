@@ -5,6 +5,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import java.io.*;
 
 public class TCPClient implements Runnable{
@@ -27,7 +30,7 @@ public class TCPClient implements Runnable{
         thread = new Thread(this);
     }
 
-    public void start(){
+    public void start() {
         thread.start();
     }
 
@@ -67,17 +70,32 @@ public class TCPClient implements Runnable{
     	}
     }
 
-    public void run() {
+    protected Socket connectToPi(String serverIP, int port) {
+
+        System.out.println("Connecting to " + serverIP + " on port " + port);
         Socket client = null;
         try {
-           System.out.println("Connecting to " + serverIP + " on port " + port);
-           client = new Socket(serverIP, port);
-           System.out.println("Just connected to " + client.getRemoteSocketAddress());
-        } catch (IOException e) {
-           e.printStackTrace();
+            client = new Socket(serverIP, port);
+            System.out.println("Just connected to " + client.getRemoteSocketAddress());
+        } catch (IOException ex) {
+            client = null;
+            System.out.println("Error connecting to pi.");
+            ex.printStackTrace();
         }
+        return client;
+    }
+
+    public void run() {
+        Socket client = connectToPi(serverIP, port);
         while(!Thread.interrupted()) {
+            if (client == null) { 
+                // TODO: Extend the if to check for socket connectivity, reconnect if needed.
+                client = connectToPi(serverIP, port);
+            }
             try {
+                if (client == null) {
+                    continue; 
+                }
                 InputStream in = client.getInputStream();
                 byte[] content = new byte[1024];
                 int len;
@@ -87,9 +105,16 @@ public class TCPClient implements Runnable{
                 int start = textData.lastIndexOf("^");
                 int end = textData.lastIndexOf(";");
                 String goodData = textData.substring(start+1, end);
-                String[] xy = goodData.split("\\|");
-                setTargetInfo(Double.parseDouble(xy[0]), Double.parseDouble(xy[1]), Double.parseDouble(xy[2]));
-                //System.out.println("X:" + xy[0] + " Y:" + xy[1] + " Average Area:" + xy[2]);
+                if (start != -1 && end != -1) {
+                    String[] xy = goodData.split("\\|");
+                    double x = Double.parseDouble(xy[0]);
+                    double y = Double.parseDouble(xy[1]);
+                    double area = Double.parseDouble(xy[2]);
+                    SmartDashboard.putNumber("inner TCP x", x);
+                    SmartDashboard.putNumber("inner TCP y", y);
+                    SmartDashboard.putNumber("inner TCP area", area);
+                    setTargetInfo(x, y, area);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
