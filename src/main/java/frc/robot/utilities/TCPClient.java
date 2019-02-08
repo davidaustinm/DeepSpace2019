@@ -27,6 +27,7 @@ public class TCPClient implements Runnable {
 	protected int port = 5802;
 	protected Thread thread;
 	protected long lastTime = 0;
+	protected byte[] content = new byte[1024];
 
 	protected double currX, currY, currArea;
 
@@ -121,7 +122,6 @@ public class TCPClient implements Runnable {
 					continue; 
 				}
 				InputStream in = client.getInputStream();
-				byte[] content = new byte[1024];
 				int len;
 				len = in.read(content);
 				if (len == -1) {
