@@ -14,8 +14,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
+import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.PowerUpDriveTrain;
+//import frc.robot.subsystems.PowerUpDriveTrain;
 import frc.robot.subsystems.Sensors;
 import frc.robot.subsystems.Shifter;
 import frc.robot.subsystems.SparkDriveTrain;
@@ -32,7 +33,7 @@ import frc.robot.utilities.TCPClient;
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
-  public static PowerUpDriveTrain driveTrain = new PowerUpDriveTrain();
+  public static DeepSpaceDriveTrain driveTrain = new DeepSpaceDriveTrain();
   public static Sensors sensors = new Sensors();
   public static TargetCamera camera;
   public static TCPClient client = null;
@@ -47,8 +48,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    client = new TCPClient();
-    client.start();
+    //client = new TCPClient();
+    //client.start();
 
     m_oi = new OI();
 
@@ -148,6 +149,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    shifter.setState(false);
     sensors.resetPosition();
     sensors.resetDriveEncoders();
     sensors.resetGyro();

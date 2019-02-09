@@ -17,7 +17,7 @@ public class Shifter extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  Solenoid solenoid = new Solenoid(3);
+  Solenoid solenoid = new Solenoid(0);
 
   public void setState(boolean state) {
     solenoid.set(state);
