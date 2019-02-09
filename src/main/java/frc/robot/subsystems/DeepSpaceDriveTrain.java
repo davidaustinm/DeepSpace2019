@@ -37,10 +37,17 @@ public class DeepSpaceDriveTrain extends Subsystem {
     rightMaster.setInverted(true);
     rightSlave2.setInverted(true);
     //leftSlave1.setInverted(true);
-    // leftMaster.setInverted(true);
-    // leftSlave2.setInverted(true);
+    //leftMaster.setInverted(true);
+    //leftSlave2.setInverted(true);
+    
     leftEncoder = leftMaster.getEncoder();
     rightEncoder = rightMaster.getEncoder();
+
+    leftSlave1.follow(leftMaster);
+    leftSlave2.follow(leftMaster);
+
+    rightSlave1.follow(rightMaster);
+    rightSlave2.follow(rightMaster);
 
     leftSlave1.setIdleMode(IdleMode.kBrake);
     leftMaster.setIdleMode(IdleMode.kBrake);
@@ -89,12 +96,16 @@ public class DeepSpaceDriveTrain extends Subsystem {
   }
 
   public void switchDirection() {
+    System.out.println("SWITCHING DRIVE TRAIN");
     CANSparkMax tmp1 = leftSlave1;
     CANSparkMax tmp2 = leftMaster;
+    CANSparkMax tmp3 = leftSlave2;
     leftSlave1 = rightSlave1;
     leftMaster = rightMaster;
+    leftSlave2 = rightSlave2;
     rightSlave1 = tmp1;
     rightMaster = tmp2;
+    rightSlave2 = tmp3;
     switched = !switched;
     Robot.sensors.resetDriveEncoders();
   }

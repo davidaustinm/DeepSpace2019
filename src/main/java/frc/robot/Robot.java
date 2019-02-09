@@ -152,8 +152,12 @@ public class Robot extends TimedRobot {
     sensors.resetPosition();
     sensors.resetDriveEncoders();
     sensors.resetGyro();
+<<<<<<< HEAD
     //driveTrain.switchDirection();
     if(Robot.driveTrain.isSwitched()) Robot.driveTrain.switchDirection();
+=======
+    if (Robot.driveTrain.isSwitched()) Robot.driveTrain.switchDirection();
+>>>>>>> 5b32735fd9c1ac436ba41371a3980cce635641e9
   }
   /**
    * This function is called periodically during operator control.
