@@ -19,7 +19,8 @@ public class Sensors extends Subsystem {
   double cutPoint = 180;
   double[] driveEncoderOffsets = new double[] {0,0};
   //public final double ENCODERCOUNTSPERINCH = 0.8; // wooden robot
-  public final double ENCODERCOUNTSPERINCH = 0.44444; // new Drive train no extras
+  public final double ENCODER_COUNTS_PER_INCH_HIGH_GEAR = 0.44444; // new Drive train no extras
+  public final double ENCODER_COUNTS_PER_INCH_LOW_GEAR = .63;
   public static final double ENCODER_TICKS_PER_INCH = 23.8; // powerup robot
   double positionX = 0;
   double positionY = 0;
@@ -87,7 +88,7 @@ public class Sensors extends Subsystem {
     lastDriveEncoder = driveEncoders;
   }
   public double[] getPosition() {
-    return new double[] {positionX / ENCODERCOUNTSPERINCH, positionY / ENCODERCOUNTSPERINCH};
+    return new double[] {positionX / ENCODER_COUNTS_PER_INCH_LOW_GEAR, positionY / ENCODER_COUNTS_PER_INCH_LOW_GEAR };
   }
 
   
