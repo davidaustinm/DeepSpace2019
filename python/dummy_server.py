@@ -12,17 +12,24 @@ on the robot.
 
 import time
 import socket
+import errno
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-s.bind(('0.0.0.0', 5802))
-s.listen(1)
 
-conn, addr = s.accept()
-print("Connection to {} established.".format(addr))
+def wait_connect():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    s.bind(('0.0.0.0', 5802))
+    s.listen(1)
+    print("Waiting for connection...")
+    conn, addr = s.accept()
+    print("Connection to {} established.".format(addr))
+    return conn
+
+
 x = 0
 y = 0
 area = 0
+conn = wait_connect()
 while True:
     x = x + 1
     y = x * 2
@@ -31,5 +38,9 @@ while True:
         x = 0
         continue  # Jump back to the top of our while loop
 
-    conn.send("^{}|{}|{};".format(x, y, area).encode('utf-8'))
-    time.sleep(1 / 24.0)
+    try:
+        conn.send("^{}|{}|{};".format(x, y, area).encode('utf-8'))
+    except IOError as e:
+        if e.errno == errno.EPIPE:
+            conn = wait_connect()
+    time.sleep(1 / 60.0)
