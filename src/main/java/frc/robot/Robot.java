@@ -146,7 +146,7 @@ public class Robot extends TimedRobot {
     sensors.resetPosition();
     sensors.resetDriveEncoders();
     sensors.resetGyro();
-    driveTrain.switchDirection();
+    if (Robot.driveTrain.isSwitched()) Robot.driveTrain.switchDirection();
   }
 
   /**
