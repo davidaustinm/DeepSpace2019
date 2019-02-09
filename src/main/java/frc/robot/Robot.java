@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.PowerUpDriveTrain;
 //import frc.robot.subsystems.PowerUpDriveTrain;
 import frc.robot.subsystems.Sensors;
 import frc.robot.subsystems.Shifter;
@@ -33,7 +34,7 @@ import frc.robot.utilities.TCPClient;
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
-  public static DeepSpaceDriveTrain driveTrain = new DeepSpaceDriveTrain();
+  public static PowerUpDriveTrain driveTrain = new PowerUpDriveTrain();
   public static Sensors sensors = new Sensors();
   public static TargetCamera camera;
   public static TCPClient client = null;
@@ -48,8 +49,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    //client = new TCPClient();
-    //client.start();
+    client = new TCPClient();
+    client.start();
 
     m_oi = new OI();
 
@@ -106,7 +107,12 @@ public class Robot extends TimedRobot {
     CommandGroup auto = new CommandGroup();
     auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
     //auto.addSequential(new Wait(500));
-    //auto.addSequential(new DriveToTarget(0.4));
+    auto.addSequential(new DriveToTarget(0.4));
+    auto.addSequential(new SwitchDirection());
+    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/turn-left-rocket-front.profile.csv"));
+    auto.addSequential(new SwitchDirection());
+    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/drive-to-portal.profile.csv"));
+    auto.addSequential(new DriveToTarget(0.4));
     m_autonomousCommand = auto;
     sensors.resetGyro();
     sensors.resetDriveEncoders();
@@ -146,9 +152,9 @@ public class Robot extends TimedRobot {
     sensors.resetPosition();
     sensors.resetDriveEncoders();
     sensors.resetGyro();
-    driveTrain.switchDirection();
+    //driveTrain.switchDirection();
+    if(Robot.driveTrain.isSwitched()) Robot.driveTrain.switchDirection();
   }
-
   /**
    * This function is called periodically during operator control.
    */
