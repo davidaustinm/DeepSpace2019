@@ -17,10 +17,13 @@ public class Shifter extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  Solenoid solenoid = new Solenoid(0);
+  Solenoid extend = new Solenoid(0);
+  Solenoid retract = new Solenoid(1);
+
 
   public void setState(boolean state) {
-    solenoid.set(state);
+    extend.set(state);
+    retract.set(!state);
   }
   
   @Override

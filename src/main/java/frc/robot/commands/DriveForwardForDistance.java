@@ -28,7 +28,7 @@ public class DriveForwardForDistance extends Command {
   protected void initialize() {
     double[] encoderReadings = Robot.sensors.getDriveEncoders();
     double averageEncoder = (encoderReadings[0] + encoderReadings[1]) / 2.0;
-    encoderTarget = averageEncoder + distance * Robot.sensors.ENCODERCOUNTSPERINCH;
+    encoderTarget = averageEncoder + distance * Robot.sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
   }
 
   // Called repeatedly when this Command is scheduled to run

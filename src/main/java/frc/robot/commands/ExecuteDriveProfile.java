@@ -20,7 +20,7 @@ public class ExecuteDriveProfile extends Command implements Runnable {
   double kP = 0.025;
   double kAngle = 0.0125;
   //double kAngle = 0.0;
-  double vMax;
+  double vMax = 1.44;
 	boolean isNotifierRunning = false;
   int currentPoint = 0;
   Object lock = new Object();
@@ -29,7 +29,7 @@ public class ExecuteDriveProfile extends Command implements Runnable {
     CSVReader reader = new CSVReader(filename);
     profile = reader.parseCSV();
     System.out.println("length of profile " + profile.length);
-    vMax = reader.getVmax();
+    //vMax = reader.getVmax();
     notifier = new Notifier(this);
     requires(Robot.driveTrain);
   }

@@ -15,6 +15,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.DriveTrainCommand;
@@ -27,33 +28,31 @@ public class DeepSpaceDriveTrain extends Subsystem {
   CANEncoder leftEncoder, rightEncoder;
   boolean switched = false;
   public DeepSpaceDriveTrain() {
-    leftSlave1 = new CANSparkMax(3,MotorType.kBrushless);
-    leftMaster = new CANSparkMax(4,MotorType.kBrushless);
-    leftSlave2 = new CANSparkMax(6,MotorType.kBrushless);
-    rightSlave1 = new CANSparkMax(1,MotorType.kBrushless);
-    rightMaster = new CANSparkMax(2, MotorType.kBrushless);
-    rightSlave2 = new CANSparkMax(9,MotorType.kBrushless);
-    rightSlave1.setInverted(true);
+    rightSlave1 = new CANSparkMax(4,MotorType.kBrushless);
+    rightMaster = new CANSparkMax(3,MotorType.kBrushless);
+    rightSlave2 = new CANSparkMax(6,MotorType.kBrushless);
+    leftSlave1 = new CANSparkMax(1,MotorType.kBrushless);
+    leftMaster = new CANSparkMax(2, MotorType.kBrushless);
+    leftSlave2 = new CANSparkMax(9,MotorType.kBrushless);
+    leftSlave1.setInverted(true);
     rightMaster.setInverted(true);
     rightSlave2.setInverted(true);
-    //leftSlave1.setInverted(true);
-    //leftMaster.setInverted(true);
-    //leftSlave2.setInverted(true);
     
     leftEncoder = leftMaster.getEncoder();
     rightEncoder = rightMaster.getEncoder();
-
+    /*
     leftSlave1.follow(leftMaster);
     leftSlave2.follow(leftMaster);
 
     rightSlave1.follow(rightMaster);
     rightSlave2.follow(rightMaster);
+    */
 
-    leftSlave1.setIdleMode(IdleMode.kBrake);
     leftMaster.setIdleMode(IdleMode.kBrake);
+    leftSlave1.setIdleMode(IdleMode.kBrake);
     leftSlave2.setIdleMode(IdleMode.kBrake);
-    rightSlave1.setIdleMode(IdleMode.kBrake);
     rightMaster.setIdleMode(IdleMode.kBrake);
+    rightSlave1.setIdleMode(IdleMode.kBrake);
     rightSlave2.setIdleMode(IdleMode.kBrake);
     
     leftSlave1.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
@@ -69,11 +68,20 @@ public class DeepSpaceDriveTrain extends Subsystem {
       left *= -1;
       right *= -1;
     }
+    SmartDashboard.putNumber("rightMaster", rightMaster.getOutputCurrent());
+    SmartDashboard.putNumber("rightSlave1", rightSlave1.getOutputCurrent());
+    SmartDashboard.putNumber("rightSlave2", rightSlave2.getOutputCurrent());
+    SmartDashboard.putNumber("leftMaster", leftMaster.getOutputCurrent());
+    SmartDashboard.putNumber("leftSlave1", leftSlave1.getOutputCurrent());
+    SmartDashboard.putNumber("leftSlave2", leftSlave2.getOutputCurrent());
+
+
     leftSlave1.set(left);
     leftMaster.set(left);
     leftSlave2.set(left);
-    rightSlave1.set(right);
+    
     rightMaster.set(right);
+    rightSlave1.set(right);
     rightSlave2.set(right);
   }
 
