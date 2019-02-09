@@ -26,6 +26,7 @@ import frc.robot.commands.DriveTrainCommand;
 public class DeepSpaceDriveTrain extends Subsystem {
   CANSparkMax leftSlave1, leftMaster, leftSlave2, rightSlave1, rightMaster, rightSlave2;
   CANEncoder leftEncoder, rightEncoder;
+  double maxSpeed = 1;
   boolean switched = false;
   public DeepSpaceDriveTrain() {
     rightSlave1 = new CANSparkMax(4,MotorType.kBrushless);
@@ -63,26 +64,75 @@ public class DeepSpaceDriveTrain extends Subsystem {
     rightSlave2.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
   }
 
+  public void setMaxSpeed(double speed) {
+    maxSpeed = speed;
+  }
+
   public void setPower(double left, double right) {
     if (switched) {
       left *= -1;
       right *= -1;
     }
+    /*
     SmartDashboard.putNumber("rightMaster", rightMaster.getOutputCurrent());
     SmartDashboard.putNumber("rightSlave1", rightSlave1.getOutputCurrent());
     SmartDashboard.putNumber("rightSlave2", rightSlave2.getOutputCurrent());
     SmartDashboard.putNumber("leftMaster", leftMaster.getOutputCurrent());
     SmartDashboard.putNumber("leftSlave1", leftSlave1.getOutputCurrent());
     SmartDashboard.putNumber("leftSlave2", leftSlave2.getOutputCurrent());
+    */
 
-
-    leftSlave1.set(left);
     leftMaster.set(left);
+    leftSlave1.set(left);
     leftSlave2.set(left);
     
     rightMaster.set(right);
     rightSlave1.set(right);
     rightSlave2.set(right);
+  }
+
+  double xLimit = 1;
+  double yLimit = 1;
+  public void arcadeDrive(double moveValue, double rotateValue, boolean squaredInputs) {
+
+    double leftMotorSpeed;
+    double rightMotorSpeed;
+    moveValue *= yLimit;
+    rotateValue *= xLimit;
+
+    if (squaredInputs) {
+      // square the inputs (while preserving the sign) to increase fine control
+      // while permitting full power
+      if (moveValue >= 0.0) {
+        moveValue = moveValue * moveValue;
+      } else {
+        moveValue = -(moveValue * moveValue);
+      }
+      if (rotateValue >= 0.0) {
+        rotateValue = rotateValue * rotateValue;
+      } else {
+        rotateValue = -(rotateValue * rotateValue);
+      }
+    }
+
+    if (moveValue > 0.0) {
+      if (rotateValue > 0.0) {
+        leftMotorSpeed = moveValue - rotateValue;
+        rightMotorSpeed = Math.max(moveValue, rotateValue);
+      } else {
+        leftMotorSpeed = Math.max(moveValue, -rotateValue);
+        rightMotorSpeed = moveValue + rotateValue;
+      }
+    } else {
+      if (rotateValue > 0.0) {
+        leftMotorSpeed = -Math.max(-moveValue, rotateValue);
+        rightMotorSpeed = moveValue + rotateValue;
+      } else {
+        leftMotorSpeed = moveValue - rotateValue;
+        rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
+      }
+    }
+    setPower(leftMotorSpeed, rightMotorSpeed);
   }
 
   public double[] getDriveEncoders() {

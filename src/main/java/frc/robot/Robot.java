@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.LeftRocketFront;
 import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.PowerUpDriveTrain;
@@ -105,16 +106,8 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_chooser.getSelected();
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
-    CommandGroup auto = new CommandGroup();
-    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
-    //auto.addSequential(new Wait(500));
-    auto.addSequential(new DriveToTarget(0.4));
-    //auto.addSequential(new SwitchDirection());
-    //auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/turn-left-rocket-front.profile.csv"));
-    //auto.addSequential(new SwitchDirection());
-    //auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/drive-to-portal.profile.csv"));
-    //auto.addSequential(new DriveToTarget(0.4));
-    m_autonomousCommand = auto;
+    
+    m_autonomousCommand = new LeftRocketFront();
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();

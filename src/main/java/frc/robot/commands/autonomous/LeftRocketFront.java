@@ -5,16 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.DriveToTarget;
+import frc.robot.commands.ExecuteDriveProfile;
 
 public class LeftRocketFront extends CommandGroup {
   /**
    * Add your docs here.
    */
   public LeftRocketFront() {
-    //addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-front.profile.csv"));
+    CommandGroup auto = new CommandGroup();
+    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
+    auto.addSequential(new DriveToTarget(0.4));
+    //auto.addSequential(new SwitchDirection());
+    //auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/turn-left-rocket-front.profile.csv"));
+    //auto.addSequential(new SwitchDirection());
+    //auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/drive-to-portal.profile.csv"));
+    //auto.addSequential(new DriveToTarget(0.4));
+   
+    /*
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-front.profile.csv"));
     addSequential(new SwitchDirection());
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/turn-left-rocket-front.profile.csv"));
@@ -26,7 +37,6 @@ public class LeftRocketFront extends CommandGroup {
     addSequential(new RotateToHeading(-75, 0.6, 0.6));
     addSequential(new Wait(50));
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/return-to-rocket.profile.csv"));
-    //addSequential(new SwitchDirection());
-    
+    */
   }
 }

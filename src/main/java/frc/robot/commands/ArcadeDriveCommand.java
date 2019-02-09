@@ -22,9 +22,32 @@ public class ArcadeDriveCommand extends Command {
   protected void initialize() {
   }
 
+  double alpha = 0.5; //0.74;
+  double turnAlpha = .7;
+  double lastTurn = 0;
+  double turnAlpham1 = 1-turnAlpha;
+  double alpham1 = 1-alpha;
+  double lastThrottle = 0;
+  double lastSteering = 0;
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double throttle = -Robot.m_oi.driver.getY(Hand.kLeft);
+    double steering = -0.8*Robot.m_oi.driver.getX(Hand.kRight);
+    double power = (alpha * throttle) + (alpham1 * lastThrottle);
+    double turn = (turnAlpha * steering) + turnAlpham1 * lastSteering;
+    	
+    if (Robot.m_oi.driver.getTriggerAxis(Hand.kLeft) > 0.5) {
+    	Robot.driveTrain.setMaxSpeed(0.6);
+    } else {
+    	Robot.driveTrain.setMaxSpeed(1.0);
+    }
+    
+    Robot.driveTrain.arcadeDrive(power, turn, true);
+    lastThrottle = throttle;
+    lastSteering = steering;
+
+    /*
     double throttle = -Robot.m_oi.driver.getY(Hand.kLeft);
     double turn = 0.5 * Robot.m_oi.driver.getX(Hand.kRight);
     double leftPower = throttle + turn;
@@ -36,6 +59,7 @@ public class ArcadeDriveCommand extends Command {
     if(Math.abs(leftPower) < 0.1) leftPower = 0;
     if(Math.abs(rightPower) < 0.1) rightPower = 0;
     Robot.driveTrain.setPower(leftPower, rightPower);
+    */
   }
 
   // Make this return true when this Command no longer needs to run execute()
