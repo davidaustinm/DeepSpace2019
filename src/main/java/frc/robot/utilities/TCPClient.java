@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.*;
@@ -66,7 +68,9 @@ public class TCPClient implements Runnable {
 		long time = System.currentTimeMillis();
 		double elapsed = time - lastTime;
 		lastTime = time;
-		System.out.println(elapsed + " " + distance + " " + angle);
+        //System.out.println(elapsed + " " + distance + " " + angle);
+        SmartDashboard.putNumber("distance", distance);
+        SmartDashboard.putNumber("angle", angle);
 
 	}
 
@@ -139,9 +143,9 @@ public class TCPClient implements Runnable {
 					double x = Double.parseDouble(xy[0]);
 					double y = Double.parseDouble(xy[1]);
 					double area = Double.parseDouble(xy[2]);
-					System.out.println("inner TCP x: " + x);
-					System.out.println("inner TCP y: " + y);
-					System.out.println("inner TCP area: " + area);
+					SmartDashboard.putNumber("inner TCP x: ", x);
+					SmartDashboard.putNumber("inner TCP y: ", y);
+					SmartDashboard.putNumber("inner TCP area: ", area);
 					setTargetInfo(x, y, area);
 				}
 			} catch (Exception e) {

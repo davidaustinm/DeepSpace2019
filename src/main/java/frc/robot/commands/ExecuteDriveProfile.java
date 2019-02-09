@@ -96,6 +96,7 @@ public class ExecuteDriveProfile extends Command implements Runnable {
     	
    	double leftError = leftPos-currentLeftPos;   	
     double rightError = rightPos-currentRightPos;
+    System.out.println(leftError + " " + rightError);
     double angleError = Utilities.normalizeAngle(heading - Robot.sensors.getHeading(), 180);
     double correction = kAngle * angleError;
     if (profile.length - currentPoint < 20) correction = 0;

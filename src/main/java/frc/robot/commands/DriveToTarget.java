@@ -33,7 +33,7 @@ public class DriveToTarget extends Command {
       return;
     }
     double avgEncoder = (driveEncoders[0] + driveEncoders[1])/2.0;
-    encoderTarget = avgEncoder + (distance-6)*Robot.sensors.ENCODERCOUNTSPERINCH;
+    encoderTarget = avgEncoder + distance*Robot.sensors.ENCODER_TICKS_PER_INCH;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -41,23 +41,27 @@ public class DriveToTarget extends Command {
   protected void execute() {
     double distance = Robot.client.getDistance();
     if(distance < 30) dontReadDistance = true;
-    double avgEncoder = 0;
+    double[] driveEncoders = Robot.sensors.getDriveEncoders();
+    double avgEncoder = (driveEncoders[0]+driveEncoders[1])/2.0;
+    double error = 0;
     if (!Double.isNaN(distance) && !dontReadDistance) {
-      double[] driveEncoders = Robot.sensors.getDriveEncoders();
-      avgEncoder = (driveEncoders[0]+driveEncoders[1])/2.0;
-      encoderTarget = avgEncoder + (distance-24)*Robot.sensors.ENCODERCOUNTSPERINCH;
+      
+      encoderTarget = avgEncoder + distance*Robot.sensors.ENCODER_TICKS_PER_INCH;
       if(distance < 0) encoderTarget = 10000;
+      error = Robot.client.getAngle();
 
     }
-    System.out.println(avgEncoder + " " + encoderTarget + " " + distance);
-    double error = Robot.client.getAngle();
+    //System.out.println(avgEncoder + " " + encoderTarget + " " + distance);
     double correction = 0.005 * error;
     if(dontReadDistance) correction = 0;
-    correction = Utilities.clip(correction, -0.5 * speed, 0.5 * speed);
+    correction = Utilities.clip(correction, -0.2 * speed, 0.2 * speed);
     double ramp = 1;
-    double remaining = (encoderTarget - avgEncoder)/Robot.sensors.ENCODERCOUNTSPERINCH;
-    if (remaining < 20) ramp = remaining/20;
-    Robot.driveTrain.setPower((speed - correction)*ramp, (speed + correction)*ramp);
+    double remaining = (encoderTarget - avgEncoder)/Robot.sensors.ENCODER_TICKS_PER_INCH;
+    if (remaining < 40) ramp = remaining/40;
+    double leftPower = speed * ramp - correction;
+    double rightPower = speed * ramp + correction;
+    Robot.driveTrain.setPower(leftPower, rightPower);
+    System.out.println(error + " " + leftPower + " " + rightPower);
   }
 
   // Make this return true when this Command no longer needs to run execute()

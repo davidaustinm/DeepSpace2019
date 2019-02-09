@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
     CommandGroup auto = new CommandGroup();
-    //auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
+    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
     //auto.addSequential(new Wait(500));
     auto.addSequential(new DriveToTarget(0.4));
     m_autonomousCommand = auto;
@@ -144,6 +144,7 @@ public class Robot extends TimedRobot {
     sensors.resetPosition();
     sensors.resetDriveEncoders();
     sensors.resetGyro();
+    driveTrain.switchDirection();
   }
 
   /**
@@ -156,6 +157,7 @@ public class Robot extends TimedRobot {
     long time = System.currentTimeMillis();
     long elapsed = time - lastTime;
     double[] encoders = sensors.getDriveEncoders();
+    System.out.println(encoders[0] + " " + encoders[1]);
     double average = (encoders[0] + encoders[1])/2.0;
     double distance = (average - lastAverage)/sensors.ENCODERCOUNTSPERINCH;
     double speed = distance/elapsed * 1000;

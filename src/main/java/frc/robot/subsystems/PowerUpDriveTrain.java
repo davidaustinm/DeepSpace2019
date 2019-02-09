@@ -62,17 +62,18 @@ public class PowerUpDriveTrain extends Subsystem {
   }
   
   public double[] getDriveEncoders() {
+    double switchFactor = switched ? -1 : 1;
     return new double[] {
-      leftMaster.getSelectedSensorPosition(0), rightMaster.getSelectedSensorPosition(0)
+      switchFactor*leftMaster.getSelectedSensorPosition(0), switchFactor*rightMaster.getSelectedSensorPosition(0)
     };
   }
 	
 	public int getLeftPosition() {
-		return leftMaster.getSelectedSensorPosition(0);
+		return -leftMaster.getSelectedSensorPosition(0);
 	}
 	
 	public int getRightPosition() {
-		return rightMaster.getSelectedSensorPosition(0);
+		return -rightMaster.getSelectedSensorPosition(0);
   }
 
   public boolean isSwitched() {
