@@ -23,38 +23,38 @@ import frc.robot.commands.DriveTrainCommand;
  * Add your docs here.
  */
 public class DeepSpaceDriveTrain extends Subsystem {
-  CANSparkMax left1, left2, left3, right1, right2, right3;
+  CANSparkMax leftSlave1, leftMaster, leftSlave2, rightSlave1, rightMaster, rightSlave2;
   CANEncoder leftEncoder, rightEncoder;
   boolean switched = false;
   public DeepSpaceDriveTrain() {
-    left1 = new CANSparkMax(3,MotorType.kBrushless);
-    left2 = new CANSparkMax(4,MotorType.kBrushless);
-    left3 = new CANSparkMax(6,MotorType.kBrushless);
-    right1 = new CANSparkMax(1,MotorType.kBrushless);
-    right2 = new CANSparkMax(2, MotorType.kBrushless);
-    right3 = new CANSparkMax(9,MotorType.kBrushless);
-    //right1.setInverted(true);
-    //right2.setInverted(true);
-    //right3.setInverted(true);
-    left1.setInverted(true);
-    left2.setInverted(true);
-    left3.setInverted(true);
-    leftEncoder = left2.getEncoder();
-    rightEncoder = right2.getEncoder();
+    leftSlave1 = new CANSparkMax(3,MotorType.kBrushless);
+    leftMaster = new CANSparkMax(4,MotorType.kBrushless);
+    leftSlave2 = new CANSparkMax(6,MotorType.kBrushless);
+    rightSlave1 = new CANSparkMax(1,MotorType.kBrushless);
+    rightMaster = new CANSparkMax(2, MotorType.kBrushless);
+    rightSlave2 = new CANSparkMax(9,MotorType.kBrushless);
+    rightSlave1.setInverted(true);
+    rightMaster.setInverted(true);
+    rightSlave2.setInverted(true);
+    //leftSlave1.setInverted(true);
+    // leftMaster.setInverted(true);
+    // leftSlave2.setInverted(true);
+    leftEncoder = leftMaster.getEncoder();
+    rightEncoder = rightMaster.getEncoder();
 
-    left1.setIdleMode(IdleMode.kBrake);
-    left2.setIdleMode(IdleMode.kBrake);
-    left3.setIdleMode(IdleMode.kBrake);
-    right1.setIdleMode(IdleMode.kBrake);
-    right2.setIdleMode(IdleMode.kBrake);
-    right3.setIdleMode(IdleMode.kBrake);
+    leftSlave1.setIdleMode(IdleMode.kBrake);
+    leftMaster.setIdleMode(IdleMode.kBrake);
+    leftSlave2.setIdleMode(IdleMode.kBrake);
+    rightSlave1.setIdleMode(IdleMode.kBrake);
+    rightMaster.setIdleMode(IdleMode.kBrake);
+    rightSlave2.setIdleMode(IdleMode.kBrake);
     
-    left1.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
-    left2.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
-    left3.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
-    right1.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
-    right2.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
-    right3.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
+    leftSlave1.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
+    leftMaster.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
+    leftSlave2.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
+    rightSlave1.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
+    rightMaster.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
+    rightSlave2.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
   }
 
   public void setPower(double left, double right) {
@@ -62,12 +62,12 @@ public class DeepSpaceDriveTrain extends Subsystem {
       left *= -1;
       right *= -1;
     }
-    left1.set(left);
-    left2.set(left);
-    left3.set(left);
-    right1.set(right);
-    right2.set(right);
-    right3.set(right);
+    leftSlave1.set(left);
+    leftMaster.set(left);
+    leftSlave2.set(left);
+    rightSlave1.set(right);
+    rightMaster.set(right);
+    rightSlave2.set(right);
   }
 
   public double[] getDriveEncoders() {
@@ -89,12 +89,12 @@ public class DeepSpaceDriveTrain extends Subsystem {
   }
 
   public void switchDirection() {
-    CANSparkMax tmp1 = left1;
-    CANSparkMax tmp2 = left2;
-    left1 = right1;
-    left2 = right2;
-    right1 = tmp1;
-    right2 = tmp2;
+    CANSparkMax tmp1 = leftSlave1;
+    CANSparkMax tmp2 = leftMaster;
+    leftSlave1 = rightSlave1;
+    leftMaster = rightMaster;
+    rightSlave1 = tmp1;
+    rightMaster = tmp2;
     switched = !switched;
     Robot.sensors.resetDriveEncoders();
   }
