@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -49,6 +50,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    CameraServer.getInstance().startAutomaticCapture();
     client = new TCPClient();
     client.start();
 
@@ -167,14 +169,14 @@ public class Robot extends TimedRobot {
     double[] encoders = sensors.getDriveEncoders();
     System.out.println(encoders[0] + " " + encoders[1]);
     double average = (encoders[0] + encoders[1])/2.0;
-    double distance = (average - lastAverage)/sensors.ENCODERCOUNTSPERINCH;
+    double distance = (average - lastAverage)/sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
     double speed = distance/elapsed * 1000;
-    //System.out.println("speed = " + speed);
+    System.out.println("speed = " + speed);
     lastAverage = average;
     lastTime = time;
     Scheduler.getInstance().run();
-    sensors.updatePosition();
-    double[] position = sensors.getPosition();
+    //sensors.updatePosition();
+    //double[] position = sensors.getPosition();
     //.out.println(position[0] + " " + position[1]);
     //double[] targetInfo = client.getTargetInfo();
     //System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
