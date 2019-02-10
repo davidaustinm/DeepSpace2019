@@ -17,8 +17,11 @@ public class LeftRocketFront extends CommandGroup {
    */
   public LeftRocketFront() {
     CommandGroup auto = new CommandGroup();
+    // System.out.println("test 1");
     auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
+    // System.out.println("test 2");
     auto.addSequential(new DriveToTarget(0.4));
+    // System.out.println("test 3");
     //auto.addSequential(new SwitchDirection());
     //auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/turn-left-rocket-front.profile.csv"));
     //auto.addSequential(new SwitchDirection());

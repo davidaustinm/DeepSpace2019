@@ -31,13 +31,16 @@ public class ExecuteDriveProfile extends Command implements Runnable {
     System.out.println("length of profile " + profile.length);
     //vMax = reader.getVmax();
     notifier = new Notifier(this);
+    System.out.println("test 1");
     requires(Robot.driveTrain);
+    System.out.println("test 2");
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.sensors.resetDriveEncoders();
+    System.out.println("test 3");
     isNotifierRunning = true;
     notifier.startPeriodic(0.01);
     System.out.println("initializing profile");
