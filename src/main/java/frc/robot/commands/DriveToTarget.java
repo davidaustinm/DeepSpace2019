@@ -24,7 +24,6 @@ public class DriveToTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("initializing");
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
     double distance = Robot.client.getDistance();
     if (Double.isNaN(distance)) {
@@ -33,31 +32,33 @@ public class DriveToTarget extends Command {
       return;
     }
     double avgEncoder = (driveEncoders[0] + driveEncoders[1])/2.0;
-    encoderTarget = avgEncoder + distance*Robot.sensors.ENCODER_TICKS_PER_INCH;
+    encoderTarget = avgEncoder + distance*Robot.sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
   }
 
   // Called repeatedly when this Command is scheduled to run
+  double kAngle = 0.005;
+  double rampDown = 40;
+  double clipAnglePct = 0.2;
+  double distanceCutOut = 30;
   @Override
   protected void execute() {
     double distance = Robot.client.getDistance();
-    if(distance < 30) dontReadDistance = true;
+    if(distance < distanceCutOut) dontReadDistance = true;
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
-    double avgEncoder = (driveEncoders[0]+driveEncoders[1])/2.0;
+    double position = (driveEncoders[0]+driveEncoders[1])/2.0;
     double error = 0;
     if (!Double.isNaN(distance) && !dontReadDistance) {
-      
-      encoderTarget = avgEncoder + distance*Robot.sensors.ENCODER_TICKS_PER_INCH;
-      if(distance < 0) encoderTarget = 10000;
+      encoderTarget = position + distance*Robot.sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
+      if(distance < 0) encoderTarget = Double.POSITIVE_INFINITY;
       error = Robot.client.getAngle();
-
     }
-    //System.out.println(avgEncoder + " " + encoderTarget + " " + distance);
-    double correction = 0.005 * error;
+    //System.out.println(position + " " + encoderTarget + " " + distance);
+    double correction = kAngle * error;
     if(dontReadDistance) correction = 0;
-    correction = Utilities.clip(correction, -0.2 * speed, 0.2 * speed);
+    correction = Utilities.clip(correction, -clipAnglePct * speed, clipAnglePct * speed);
     double ramp = 1;
-    double remaining = (encoderTarget - avgEncoder)/Robot.sensors.ENCODER_TICKS_PER_INCH;
-    if (remaining < 40) ramp = remaining/40;
+    double remaining = (encoderTarget - position)/Robot.sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
+    if (remaining < rampDown) ramp = remaining/rampDown;
     double leftPower = speed * ramp - correction;
     double rightPower = speed * ramp + correction;
     Robot.driveTrain.setPower(leftPower, rightPower);
@@ -68,8 +69,8 @@ public class DriveToTarget extends Command {
   @Override
   protected boolean isFinished() {
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
-    double avgEncoder = (driveEncoders[0] + driveEncoders[1])/2.0;
-    return finished || avgEncoder >= encoderTarget;
+    double position = (driveEncoders[0] + driveEncoders[1])/2.0;
+    return finished || position >= encoderTarget;
   }
 
   // Called once after isFinished returns true
@@ -82,5 +83,6 @@ public class DriveToTarget extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

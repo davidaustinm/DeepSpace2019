@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.LeftRocketFront;
 import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.PowerUpDriveTrain;
@@ -35,7 +36,7 @@ import frc.robot.utilities.TCPClient;
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
-  public static PowerUpDriveTrain driveTrain = new PowerUpDriveTrain();
+  public static DeepSpaceDriveTrain driveTrain = new DeepSpaceDriveTrain();
   public static Sensors sensors = new Sensors();
   public static TargetCamera camera;
   public static TCPClient client = null;
@@ -62,6 +63,7 @@ public class Robot extends TimedRobot {
 
     //camera = new TargetCamera();
     //camera.start();
+    shifter.setState(false);
   }
 
   /**
@@ -106,16 +108,8 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_chooser.getSelected();
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
-    CommandGroup auto = new CommandGroup();
-    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
-    //auto.addSequential(new Wait(500));
-    auto.addSequential(new DriveToTarget(0.4));
-    auto.addSequential(new SwitchDirection());
-    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/turn-left-rocket-front.profile.csv"));
-    auto.addSequential(new SwitchDirection());
-    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/drive-to-portal.profile.csv"));
-    auto.addSequential(new DriveToTarget(0.4));
-    m_autonomousCommand = auto;
+    
+    m_autonomousCommand = new LeftRocketFront();
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();
@@ -167,7 +161,7 @@ public class Robot extends TimedRobot {
     long time = System.currentTimeMillis();
     long elapsed = time - lastTime;
     double[] encoders = sensors.getDriveEncoders();
-    System.out.println(encoders[0] + " " + encoders[1]);
+    //System.out.println(encoders[0] + " " + encoders[1]);
     double average = (encoders[0] + encoders[1])/2.0;
     double distance = (average - lastAverage)/sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
     double speed = distance/elapsed * 1000;

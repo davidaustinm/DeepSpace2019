@@ -42,7 +42,7 @@ public class DriveToPoint extends Command {
     while(error > 180) error -= 360;
     while(error < -180) error += 360;
     double correction = 0.02 * error;
-    double ramp = 0.01 * distance * Robot.sensors.ENCODERCOUNTSPERINCH;
+    double ramp = 0.01 * distance * Robot.sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
     if(ramp > 1) ramp = 1;
     Robot.driveTrain.setPower((speed - correction) * ramp, (speed + correction) * ramp);
   }
