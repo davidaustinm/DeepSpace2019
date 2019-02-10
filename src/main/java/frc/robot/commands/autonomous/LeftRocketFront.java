@@ -10,23 +10,24 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.ExecuteDriveProfile;
+import frc.robot.commands.SwitchDirection;
 
 public class LeftRocketFront extends CommandGroup {
   /**
    * Add your docs here.
    */
   public LeftRocketFront() {
-    CommandGroup auto = new CommandGroup();
+    //CommandGroup auto = new CommandGroup();
     // System.out.println("test 1");
-    auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
+    addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
     // System.out.println("test 2");
-    auto.addSequential(new DriveToTarget(0.4));
+    addSequential(new DriveToTarget(0.4));
     // System.out.println("test 3");
-    //auto.addSequential(new SwitchDirection());
-    //auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/turn-left-rocket-front.profile.csv"));
-    //auto.addSequential(new SwitchDirection());
-    //auto.addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/drive-to-portal.profile.csv"));
-    //auto.addSequential(new DriveToTarget(0.4));
+    addSequential(new SwitchDirection());
+    addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/turn-left-rocket-front.profile.csv"));
+    //addSequential(new SwitchDirection());
+    //addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/drive-to-portal.profile.csv"));
+    //addSequential(new DriveToTarget(0.4));
    
     /*
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-front.profile.csv"));

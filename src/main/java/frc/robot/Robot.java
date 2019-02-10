@@ -165,15 +165,15 @@ public class Robot extends TimedRobot {
     double average = (encoders[0] + encoders[1])/2.0;
     double distance = (average - lastAverage)/sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
     double speed = distance/elapsed * 1000;
-    System.out.println("speed = " + speed);
+    //System.out.println("speed = " + speed);
     lastAverage = average;
     lastTime = time;
     Scheduler.getInstance().run();
     //sensors.updatePosition();
     //double[] position = sensors.getPosition();
     //.out.println(position[0] + " " + position[1]);
-    //double[] targetInfo = client.getTargetInfo();
-    //System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
+    double[] targetInfo = client.getTargetInfo();
+    System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
   }
 
   /**
