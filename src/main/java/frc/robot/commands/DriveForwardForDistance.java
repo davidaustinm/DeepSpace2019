@@ -15,12 +15,17 @@ public class DriveForwardForDistance extends Command {
   double distance;
   double speed;
   double heading;
-  public DriveForwardForDistance(double distance, double speed, double heading) {
+  boolean coast;
+  public DriveForwardForDistance(double distance, double speed, double heading, boolean coast) {
     this.distance = distance;
     this.speed = speed;
     this.heading = heading;
+    this.coast = coast;
     // Use requires() here to declare subsystem dependencies
     requires(Robot.driveTrain);
+  }
+  public DriveForwardForDistance(double distance, double speed, double heading) {
+    this(distance, speed, heading, false);
   }
 
   // Called just before this Command runs the first time
@@ -55,7 +60,9 @@ public class DriveForwardForDistance extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.driveTrain.setPower(0, 0);
+    if(!coast) {
+      Robot.driveTrain.setPower(0, 0);
+    }
   }
 
   // Called when another command which requires one or more of the same

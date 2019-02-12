@@ -117,12 +117,9 @@ public class TCPClient implements Runnable {
 		Socket client = connectToPi(serverIP, port);
 
 		while(!Thread.interrupted()) {
-			if (client == null) { 
-				// TODO: Extend the if to check for socket connectivity, reconnect if needed.
-				client = connectToPi(serverIP, port);
-			}
 			try {
 				if (client == null) {
+					client = connectToPi(serverIP, port);
 					continue; 
 				}
 				InputStream in = client.getInputStream();
@@ -149,6 +146,8 @@ public class TCPClient implements Runnable {
 					setTargetInfo(x, y, area);
 				}
 			} catch (Exception e) {
+				client = null;
+				System.out.println("Error in TCP code, going to reconnect.");
 				e.printStackTrace();
 			}
 		}

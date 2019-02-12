@@ -15,7 +15,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.CenterLeftRocketBack;
+import frc.robot.commands.autonomous.LeftLeftRocketBack;
 import frc.robot.commands.autonomous.LeftRocketFront;
+import frc.robot.commands.autonomous.LeftRocketFrontBack;
 import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.PowerUpDriveTrain;
@@ -109,7 +112,7 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
     
-    m_autonomousCommand = new LeftRocketFront();
+    m_autonomousCommand = new LeftRocketFrontBack();
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();
@@ -173,7 +176,7 @@ public class Robot extends TimedRobot {
     //double[] position = sensors.getPosition();
     //.out.println(position[0] + " " + position[1]);
     double[] targetInfo = client.getTargetInfo();
-    System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
+    //System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
   }
 
   /**
