@@ -15,12 +15,20 @@ import java.io.*;
 public class TCPClient implements Runnable {
 	private final Object lock = new Object();
 	protected double[] targetInfo = new double[] {-1, -1, -1};
+	/*
 	protected double[] coefficients = new double[] {
 												15.5887262581734,
 												38646.2278445553,
 												-7.35691471763911e+6,
 												8.80924154583584e8,
 												-4.04032044493288e+10 };
+												*/
+	protected double[] coefficients = new double[] {
+		20.075,
+		30236.23,
+		-2.4818e+6,
+		1.1185e+8
+	};
 	protected double distance;
 	protected double angle;
 	protected double fieldOfView = 15 / 26.0;
