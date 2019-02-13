@@ -80,7 +80,7 @@ public class DriveToTarget extends Command {
   protected boolean isFinished() {
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
     double position = (driveEncoders[0] + driveEncoders[1])/2.0;
-    return finished || position + 4 >= encoderTarget;
+    return finished || position >= encoderTarget;
   }
 
   // Called once after isFinished returns true

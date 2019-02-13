@@ -15,6 +15,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.Cargo1Left;
+import frc.robot.commands.autonomous.Cargo2Left;
+//import frc.robot.commands.autonomous.Cargo2Left;
+import frc.robot.commands.autonomous.Cargo3Left;
 import frc.robot.commands.autonomous.CenterLeftRocketBack;
 import frc.robot.commands.autonomous.LeftLeftRocketBack;
 import frc.robot.commands.autonomous.LeftRocketFront;
@@ -112,7 +116,7 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
     
-    m_autonomousCommand = new LeftRocketFrontBack();
+    m_autonomousCommand = new DriveToTarget(0.4);
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();
@@ -177,6 +181,7 @@ public class Robot extends TimedRobot {
     //.out.println(position[0] + " " + position[1]);
     double[] targetInfo = client.getTargetInfo();
     //System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
+    System.out.println(client.getTargetArea());
   }
 
   /**
