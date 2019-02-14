@@ -36,7 +36,7 @@ def start_socket():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.bind((TCP_IP, TCP_PORT))
-    s.listen(1)
+    s.listen(5)
     return s.accept()
 
 def editLowHue(h): 
@@ -97,7 +97,9 @@ conn, addr = start_socket();
 cont = True
 while cont:
     start_time = time.time()
-    ret, image = cap.read()
+    ret, orig_image = cap.read()
+    # Justin mounted the camera in the caes upside down so we have to flip it now.
+    image = cv2.flip(orig_image, -1)
     if gui:
         cv2.imshow('image', image)
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -135,7 +137,6 @@ while cont:
             if gui:
                 cv2.putText(res, label, (int(cx), int(cy)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
                 cv2.drawContours(res, [box], 0, (0, 0, 255), 2)
-
     target_list = list()    
     for lt in left_targets:
         ((lx, ly), (lw, lh), langle) = lt
@@ -162,7 +163,6 @@ while cont:
             if gui:
                 cv2.circle(res, (newx, newy), 10, (0, 255, 0), -1)
             target_list.append((newx, newy, averArea))
-
     shortest = 999
     winner = None
     for t in target_list:
@@ -173,44 +173,27 @@ while cont:
         if dist < shortest:
             shortest = dist
             winner = t
+
     if winner is None:
         ret_str = "^NaN|NaN|NaN;"
-        blist = bytearray()
-        blist.extend(ret_str.encode('utf-8'))
-        try:
-            conn.sendall(blist)
-        except IOError as e:
-            if e.errno == errno.EPIPE:
-                conn, addr = start_socket();
-    if winner is not None:
+    else:
         if gui:
             cv2.circle(res, (winner[0], winner[1]), 30, (255, 0, 255), -1)
-        resp = {}
-        resp['winner_x'] = winner[0]
-        resp['winner_y'] = winner[1]
-        js = json.dumps(resp, indent=4, sort_keys=True, default=str)
-        try:
-            ret_str = "^{}|{}|{};".format(winner[0], winner[1],winner[2])
-            blist = bytearray()
-            blist.extend(ret_str.encode('utf-8'))
-            conn.sendall(blist)
-        except socket.error as e:
-            if e.errno == errno.ECONNRESET:
-                # Handle disconnection -- close & reopen socket etc.
-                conn, addr = start_socket();
-            elif e.errno == errno.EPIPE:
-                # Handle disconnection -- close & reopen socket etc.
-                conn, addr = start_socket();
-            else:
-                # Other error, re-raise
-                raise
-    end_time = time.time()
-    print("FPS: {}".format(round(1.0 / (end_time - start_time), 1)))
+        ret_str = "^{}|{}|{};".format(winner[0], winner[1],winner[2])
+
+    blist = bytearray()
+    blist.extend(ret_str.encode('utf-8'))
+    try:
+        conn.sendall(blist)
+    except:
+        conn, addr = start_socket();
     if gui:
         cv2.imshow('mask', res)
         key = cv2.waitKey(25)
         if key == ord('q'):
             cont = False
+    end_time = time.time()
+    print("FPS: {}".format(round(1.0 / (end_time - start_time), 1)))
 conn.close()
 cap.release()
 cv2.destroyAllWindows()
