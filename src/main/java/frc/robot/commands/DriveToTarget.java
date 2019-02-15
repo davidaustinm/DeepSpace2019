@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.utilities.Utilities;
 
 public class DriveToTarget extends Command {
@@ -56,7 +57,9 @@ public class DriveToTarget extends Command {
       error = Robot.client.getAngle();
       countNotSeen = 0;
     }
-    System.out.println(position + " " + encoderTarget + " " + distance);
+    if(RobotMap.DEBUG){
+      System.out.println(position + " " + encoderTarget + " " + distance);
+    }
     if (Double.isNaN(distance) && countNotSeen > 0) {
       countNotSeen++;
       if (countNotSeen > 30) {

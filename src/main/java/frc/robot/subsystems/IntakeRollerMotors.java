@@ -18,7 +18,6 @@ import frc.robot.commands.IntakeRollerCommand;
  * Add your docs here.
  */
 public class IntakeRollerMotors extends Subsystem {
-  //TODO: Change ID
   VictorSPX rollerMotor = new VictorSPX(RobotMap.ROLLER_MOTOR);
 
   public void setPower(double power) {

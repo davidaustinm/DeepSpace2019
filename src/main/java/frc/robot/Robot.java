@@ -163,23 +163,27 @@ public class Robot extends TimedRobot {
   double lastAverage = 0;
   @Override
   public void teleopPeriodic() {
-    //long time = System.currentTimeMillis();
-    //long elapsed = time - lastTime;
-    //double[] encoders = sensors.getDriveEncoders();
-    //System.out.println(encoders[0] + " " + encoders[1]);
-    //double average = (encoders[0] + encoders[1])/2.0;
-    //double distance = (average - lastAverage)/sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
-    //double speed = distance/elapsed * 1000;
-    //System.out.println("speed = " + speed);
-    //lastAverage = average;
-    //lastTime = time;
+    /*
+    long time = System.currentTimeMillis();
+    long elapsed = time - lastTime;
+    double[] encoders = sensors.getDriveEncoders();
+    System.out.println(encoders[0] + " " + encoders[1]);
+    double average = (encoders[0] + encoders[1])/2.0;
+    double distance = (average - lastAverage)/sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
+    double speed = distance/elapsed * 1000;
+    System.out.println("speed = " + speed);
+    lastAverage = average;
+    lastTime = time;
+    double[] position = sensors.getPosition();
+    System.out.println(position[0] + " " + position[1]);
+    double[] targetInfo = client.getTargetInfo();
+    System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
+    */
     Scheduler.getInstance().run();
     //sensors.updatePosition();
-    //double[] position = sensors.getPosition();
-    //.out.println(position[0] + " " + position[1]);
-    //double[] targetInfo = client.getTargetInfo();
-    //System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
-    System.out.println(client.getTargetArea());
+    if(RobotMap.DEBUG){
+      System.out.println(client.getTargetArea());
+    }
   }
 
   /**

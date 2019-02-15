@@ -14,6 +14,8 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
+  public static boolean DEBUG = false;
+
   // SPARK MAX
   public static final int LEFT_MASTER = 1;
   public static final int LEFT_SLAVE1 = 2;

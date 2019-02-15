@@ -21,6 +21,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
@@ -107,7 +108,9 @@ public class TargetCamera implements Runnable {
           
           setDistance(distance);
           angle = -Math.toDegrees(Math.atan(fieldOfView / imageWidth * center));
-          System.out.println(/*elapsed + " " + */distance + " " + angle);
+          if(RobotMap.DEBUG){
+            System.out.println(/*elapsed + " " + */distance + " " + angle);
+          }
           //outputStream.putFrame(mask);
           //System.out.println(area + " " + center + " " + distance + " " + x + " " + angle);
           

@@ -16,7 +16,6 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class RearLiftMotors extends Subsystem {
-  //TODO: Change IDs 
   TalonSRX lift1 = new TalonSRX(RobotMap.REAR_LIFT1);
   TalonSRX lift2 = new TalonSRX(RobotMap.REAR_LIFT2);
 

@@ -16,7 +16,6 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class IntakeRotateMotors extends Subsystem {
-  //TODO: Change ID
   VictorSPX rotateMotor1 = new VictorSPX(RobotMap.ROTATE_MOTOR);
 
   @Override

@@ -14,7 +14,6 @@ import frc.robot.RobotMap;
 import frc.robot.commands.FrontLiftCommand;
 
 public class FrontLiftMotors extends Subsystem {
-  //TODO: Change IDs
   TalonSRX frontLift1 = new TalonSRX(RobotMap.FRONT_LIFT1);
   TalonSRX frontLift2 = new TalonSRX(RobotMap.FRONT_LIFT2);
 

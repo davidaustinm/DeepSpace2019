@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.utilities.CSVReader;
 import frc.robot.utilities.Utilities;
 
@@ -31,16 +32,13 @@ public class ExecuteDriveProfile extends Command implements Runnable {
     System.out.println("length of profile " + profile.length);
     //vMax = reader.getVmax();
     notifier = new Notifier(this);
-    System.out.println("test 1");
     requires(Robot.driveTrain);
-    System.out.println("test 2");
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     Robot.sensors.resetDriveEncoders();
-    System.out.println("test 3");
     isNotifierRunning = true;
     notifier.startPeriodic(0.01);
     System.out.println("initializing profile");
@@ -99,7 +97,9 @@ public class ExecuteDriveProfile extends Command implements Runnable {
     	
    	double leftError = leftPos-currentLeftPos;   	
     double rightError = rightPos-currentRightPos;
-    System.out.println(leftError + " " + rightError);
+    if(RobotMap.DEBUG){
+      System.out.println(leftError + " " + rightError);
+    }
     double angleError = Utilities.normalizeAngle(heading - Robot.sensors.getHeading(), 180);
     double correction = kAngle * angleError;
     if (profile.length - currentPoint < 20) correction = 0;
