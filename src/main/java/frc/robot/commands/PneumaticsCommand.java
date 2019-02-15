@@ -10,10 +10,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Sensors;
-import frc.robot.subsystems.Shifter;
 
-public class ShiftOnTheFly extends Command {
-  public ShiftOnTheFly() {
+public class PneumaticsCommand extends Command {
+  public PneumaticsCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -28,6 +27,8 @@ public class ShiftOnTheFly extends Command {
   double lastLeftEncoder, lastRightEncoder;
   @Override
   protected void execute() {
+    Robot.pneumatics.update();
+
     long currentTime = System.currentTimeMillis();
     double[] Encoder = Robot.sensors.getDriveEncoders();
       
@@ -38,12 +39,12 @@ public class ShiftOnTheFly extends Command {
     	double distance = (changeLeftEncoder + changeRightEncoder)/2.0;
       double velocity = distance / elapsedTime;
       //TODO: Change shift velocities
-      if(Robot.shifter.getState() && (velocity > 1.8)){
-          Robot.shifter.setState(true);
+      if(Robot.pneumatics.getState(Robot.pneumatics.SHIFTER_EXTEND) && (velocity > 1.8)){
+          Robot.pneumatics.setState(Robot.pneumatics.SHIFT, true);
       }
-      if((!Robot.shifter.getState()) && (velocity < 0.8)){
-        Robot.shifter.setState(false);
-    }
+      if((!Robot.pneumatics.getState(Robot.pneumatics.SHIFTER_EXTEND)) && (velocity < 0.8)){
+        Robot.pneumatics.setState(Robot.pneumatics.SHIFT, false);
+      }
     }
 
     lastTime = currentTime;

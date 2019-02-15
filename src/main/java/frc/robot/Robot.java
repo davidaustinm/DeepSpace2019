@@ -17,9 +17,13 @@ import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.FrontLiftMotors;
+import frc.robot.subsystems.IntakeRollerMotors;
 //import frc.robot.subsystems.PowerUpDriveTrain;
 import frc.robot.subsystems.Sensors;
-import frc.robot.subsystems.Shifter;
+import frc.robot.subsystems.Pneumatics;
+import frc.robot.subsystems.RearLiftDriveMotors;
+import frc.robot.subsystems.RearLiftMotors;
 import frc.robot.utilities.TCPClient;
 import frc.robot.utilities.TargetCamera;
 
@@ -32,12 +36,16 @@ import frc.robot.utilities.TargetCamera;
  */
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
-  public static OI m_oi;
+  public static OI oi;
   public static DeepSpaceDriveTrain driveTrain = new DeepSpaceDriveTrain();
+  public static IntakeRollerMotors intakeRoller = new IntakeRollerMotors();
+  public static FrontLiftMotors frontLift = new FrontLiftMotors();
+  public static RearLiftMotors rearLift = new RearLiftMotors();
+  public static RearLiftDriveMotors rearLiftDrive = new RearLiftDriveMotors();
   public static Sensors sensors = new Sensors();
   public static TargetCamera camera;
   public static TCPClient client = null;
-  public static Shifter shifter = new Shifter();
+  public static Pneumatics pneumatics = new Pneumatics();
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -52,7 +60,7 @@ public class Robot extends TimedRobot {
     client = new TCPClient();
     client.start();
 
-    m_oi = new OI();
+    oi = new OI();
 
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -60,7 +68,7 @@ public class Robot extends TimedRobot {
 
     //camera = new TargetCamera();
     //camera.start();
-    shifter.setState(false);
+    pneumatics.setState(pneumatics.SHIFT, false);
   }
 
   /**
@@ -141,7 +149,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    shifter.setState(false);
+    pneumatics.setState(pneumatics.SHIFT, false);
     sensors.resetPosition();
     sensors.resetDriveEncoders();
     sensors.resetGyro();

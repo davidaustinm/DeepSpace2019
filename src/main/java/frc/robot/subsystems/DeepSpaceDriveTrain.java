@@ -16,6 +16,7 @@ import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.DriveTrainCommand;
 
@@ -28,12 +29,12 @@ public class DeepSpaceDriveTrain extends Subsystem {
   double maxSpeed = 1;
   boolean switched = false;
   public DeepSpaceDriveTrain() {
-    rightSlave1 = new CANSparkMax(4,MotorType.kBrushless);
-    rightMaster = new CANSparkMax(3,MotorType.kBrushless);
-    rightSlave2 = new CANSparkMax(6,MotorType.kBrushless);
-    leftSlave1 = new CANSparkMax(1,MotorType.kBrushless);
-    leftMaster = new CANSparkMax(2, MotorType.kBrushless);
-    leftSlave2 = new CANSparkMax(9,MotorType.kBrushless);
+    rightMaster = new CANSparkMax(RobotMap.RIGHT_MASTER, MotorType.kBrushless);
+    rightSlave1 = new CANSparkMax(RobotMap.RIGHT_SLAVE1, MotorType.kBrushless);
+    rightSlave2 = new CANSparkMax(RobotMap.RIGHT_SLAVE2, MotorType.kBrushless);
+    leftMaster = new CANSparkMax(RobotMap.LEFT_MASTER, MotorType.kBrushless);
+    leftSlave1 = new CANSparkMax(RobotMap.LEFT_SLAVE1, MotorType.kBrushless);
+    leftSlave2 = new CANSparkMax(RobotMap.LEFT_SLAVE2, MotorType.kBrushless);
     leftSlave1.setInverted(true);
     rightMaster.setInverted(true);
     rightSlave2.setInverted(true);

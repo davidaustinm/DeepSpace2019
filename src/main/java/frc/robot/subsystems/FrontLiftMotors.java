@@ -10,11 +10,13 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
+import frc.robot.commands.FrontLiftCommand;
 
 public class FrontLiftMotors extends Subsystem {
   //TODO: Change IDs
-  TalonSRX frontLift1 = new TalonSRX(0);
-  TalonSRX frontLift2 = new TalonSRX(0);
+  TalonSRX frontLift1 = new TalonSRX(RobotMap.FRONT_LIFT1);
+  TalonSRX frontLift2 = new TalonSRX(RobotMap.FRONT_LIFT2);
 
   public FrontLiftMotors() {
     frontLift2.follow(frontLift1);
@@ -28,6 +30,6 @@ public class FrontLiftMotors extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    //setDefaultCommand(new FrontLiftMotors());
+    setDefaultCommand(new FrontLiftCommand());
   }
 }

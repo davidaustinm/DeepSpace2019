@@ -10,13 +10,14 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
 public class IntakeRotateMotors extends Subsystem {
   //TODO: Change ID
-  VictorSPX rotateMotor1 = new VictorSPX(0);
+  VictorSPX rotateMotor1 = new VictorSPX(RobotMap.ROTATE_MOTOR);
 
   @Override
   public void initDefaultCommand() {

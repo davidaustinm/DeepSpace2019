@@ -17,6 +17,7 @@ import frc.robot.utilities.XboxTrigger;
  */
 public class OI {
   public XboxController driver = new XboxController(0);
+  public XboxController operator = new XboxController(1);
   XboxTrigger lowGear = new XboxTrigger(driver, XboxTrigger.A);
   XboxTrigger highGear = new XboxTrigger(driver, XboxTrigger.Y);
   public OI() {

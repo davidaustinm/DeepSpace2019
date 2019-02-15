@@ -7,32 +7,31 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class Shift extends Command {
-  boolean gear;
-  public Shift(boolean gear) {
-    // Use requires() here to declare subsystem dependencies
-    requires(Robot.pneumatics);
-    this.gear = gear;
+public class IntakeRollerCommand extends Command {
+  public IntakeRollerCommand() {
+    requires(Robot.intakeRoller);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.pneumatics.setState(Robot.pneumatics.SHIFT, gear);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double power = Robot.oi.operator.getY(Hand.kLeft);
+    Robot.intakeRoller.setPower(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

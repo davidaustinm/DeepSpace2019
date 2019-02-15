@@ -25,8 +25,8 @@ public class DriveTrainCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double left = -Robot.m_oi.driver.getY(Hand.kLeft);
-    double right = -Robot.m_oi.driver.getY(Hand.kRight);
+    double left = -Robot.oi.driver.getY(Hand.kLeft);
+    double right = -Robot.oi.driver.getY(Hand.kRight);
     Robot.driveTrain.setPower(left, right);
   }
 

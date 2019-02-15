@@ -32,12 +32,12 @@ public class ArcadeDriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double throttle = -Robot.m_oi.driver.getY(Hand.kLeft);
-    double steering = -0.5*Robot.m_oi.driver.getX(Hand.kRight);
+    double throttle = -Robot.oi.driver.getY(Hand.kLeft);
+    double steering = -0.5*Robot.oi.driver.getX(Hand.kRight);
     double power = (alpha * throttle) + (alpham1 * lastThrottle);
     double turn = (turnAlpha * steering) + turnAlpham1 * lastSteering;
     	
-    if (Robot.m_oi.driver.getTriggerAxis(Hand.kLeft) > 0.5) {
+    if (Robot.oi.driver.getTriggerAxis(Hand.kLeft) > 0.5) {
     	Robot.driveTrain.setMaxSpeed(0.6);
     } else {
     	Robot.driveTrain.setMaxSpeed(1.0);

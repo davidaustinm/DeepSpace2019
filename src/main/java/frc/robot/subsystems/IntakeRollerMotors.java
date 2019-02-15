@@ -11,13 +11,15 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
+import frc.robot.commands.IntakeRollerCommand;
 
 /**
  * Add your docs here.
  */
 public class IntakeRollerMotors extends Subsystem {
   //TODO: Change ID
-  VictorSPX rollerMotor = new VictorSPX(0);
+  VictorSPX rollerMotor = new VictorSPX(RobotMap.ROLLER_MOTOR);
 
   public void setPower(double power) {
     if (Math.abs(power) < 0.05) power = 0;
@@ -27,6 +29,6 @@ public class IntakeRollerMotors extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new IntakeRollerCommand());
   }
 }
