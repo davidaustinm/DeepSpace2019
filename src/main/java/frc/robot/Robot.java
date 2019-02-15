@@ -10,28 +10,18 @@ package frc.robot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.*;
-import frc.robot.commands.autonomous.Cargo1Left;
-import frc.robot.commands.autonomous.Cargo2Left;
-//import frc.robot.commands.autonomous.Cargo2Left;
-import frc.robot.commands.autonomous.Cargo3Left;
-import frc.robot.commands.autonomous.CenterLeftRocketBack;
-import frc.robot.commands.autonomous.LeftLeftRocketBack;
-import frc.robot.commands.autonomous.LeftRocketFront;
-import frc.robot.commands.autonomous.LeftRocketFrontBack;
+import frc.robot.commands.DriveToTarget;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.PowerUpDriveTrain;
 //import frc.robot.subsystems.PowerUpDriveTrain;
 import frc.robot.subsystems.Sensors;
 import frc.robot.subsystems.Shifter;
-import frc.robot.subsystems.SparkDriveTrain;
-import frc.robot.utilities.TargetCamera;
 import frc.robot.utilities.TCPClient;
+import frc.robot.utilities.TargetCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -165,21 +155,21 @@ public class Robot extends TimedRobot {
   double lastAverage = 0;
   @Override
   public void teleopPeriodic() {
-    long time = System.currentTimeMillis();
-    long elapsed = time - lastTime;
-    double[] encoders = sensors.getDriveEncoders();
+    //long time = System.currentTimeMillis();
+    //long elapsed = time - lastTime;
+    //double[] encoders = sensors.getDriveEncoders();
     //System.out.println(encoders[0] + " " + encoders[1]);
-    double average = (encoders[0] + encoders[1])/2.0;
-    double distance = (average - lastAverage)/sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
-    double speed = distance/elapsed * 1000;
+    //double average = (encoders[0] + encoders[1])/2.0;
+    //double distance = (average - lastAverage)/sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
+    //double speed = distance/elapsed * 1000;
     //System.out.println("speed = " + speed);
-    lastAverage = average;
-    lastTime = time;
+    //lastAverage = average;
+    //lastTime = time;
     Scheduler.getInstance().run();
     //sensors.updatePosition();
     //double[] position = sensors.getPosition();
     //.out.println(position[0] + " " + position[1]);
-    double[] targetInfo = client.getTargetInfo();
+    //double[] targetInfo = client.getTargetInfo();
     //System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
     System.out.println(client.getTargetArea());
   }
