@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Sensors;
+import frc.robot.subsystems.Shifter;
 
 public class ShiftOnTheFly extends Command {
   public ShiftOnTheFly() {
@@ -35,7 +36,14 @@ public class ShiftOnTheFly extends Command {
     	double changeLeftEncoder = Encoder[0] - lastLeftEncoder;
     	double changeRightEncoder = Encoder[1] - lastRightEncoder;
     	double distance = (changeLeftEncoder + changeRightEncoder)/2.0;
-    	double velocity = distance / elapsedTime;
+      double velocity = distance / elapsedTime;
+      //TODO: Change shift velocities
+      if(Robot.shifter.getState() && (velocity > 1.8)){
+          Robot.shifter.setState(true);
+      }
+      if((!Robot.shifter.getState()) && (velocity < 0.8)){
+        Robot.shifter.setState(false);
+    }
     }
 
     lastTime = currentTime;

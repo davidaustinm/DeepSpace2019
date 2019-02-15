@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.commands.ShiftOnTheFly;
 
 /**
  * Add your docs here.
@@ -25,11 +26,15 @@ public class Shifter extends Subsystem {
     extend.set(state);
     retract.set(!state);
   }
+
+  public boolean getState() {
+    return retract.get();
+  }
   
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    //setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new ShiftOnTheFly());
 
   }
 }
