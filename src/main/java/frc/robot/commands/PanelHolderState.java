@@ -23,6 +23,10 @@ public class PanelHolderState {
     public static final int RETRACT = 3;
     int state = REST;
 
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
     public void advanceState() {
         switch(state) {
             case REST: {

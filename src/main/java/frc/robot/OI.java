@@ -23,12 +23,16 @@ public class OI {
   XboxTrigger driveToTarget = new XboxTrigger(driver, XboxTrigger.RB);
 
   XboxTrigger panelHolderStateAdvance = new XboxTrigger(operator, XboxTrigger.B);
+  XboxTrigger panelCollect = new XboxTrigger(operator, XboxTrigger.DPADUP);
+  XboxTrigger panelPlace = new XboxTrigger(operator, XboxTrigger.DPADDOWN);
   public OI() {
     lowGear.whenActive(new Shift(false));
     highGear.whenActive(new Shift(true));
     driveToTarget.whileActive(new DriveToTarget(0.4));
 
     panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
+    panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));
+    panelPlace.whenActive(new ChangePanelState(PanelHolderState.PLACE));
   }
 
 }
