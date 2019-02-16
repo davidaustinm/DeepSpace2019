@@ -22,8 +22,9 @@ public class FrontLiftMotors extends Subsystem {
   }
 
   public void setPower(double power) {
+    if (Math.abs(power) < 0.05) power = 0;
     frontLift1.set(ControlMode.PercentOutput, power);
-    frontLift2.set(ControlMode.PercentOutput, power);
+    //frontLift2.set(ControlMode.PercentOutput, power);
   }
 
   @Override

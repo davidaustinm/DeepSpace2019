@@ -38,9 +38,6 @@ public class Pneumatics extends Subsystem {
     for(int i = 0; i < 5; i++) states[i] = false;
   }
 
-  Solenoid extend = new Solenoid(RobotMap.SHIFTER_EXTEND);
-  Solenoid retract = new Solenoid(RobotMap.SHIFTER_RETRACT);
-
   public void setState(int valve, boolean state) {
     if(valve == SHIFT){
       states[SHIFTER_EXTEND] = state;
@@ -63,6 +60,7 @@ public class Pneumatics extends Subsystem {
   }
 
   public boolean getState(int valve) {
+    if (value == SHIFT) return states[SHIFTER_EXTEND];
     return states[valve];
   }
     

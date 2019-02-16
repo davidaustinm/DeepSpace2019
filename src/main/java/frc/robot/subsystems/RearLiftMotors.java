@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -18,6 +19,12 @@ import frc.robot.RobotMap;
 public class RearLiftMotors extends Subsystem {
   TalonSRX lift1 = new TalonSRX(RobotMap.REAR_LIFT1);
   TalonSRX lift2 = new TalonSRX(RobotMap.REAR_LIFT2);
+
+  public void setPower(double power) {
+    if (Math.abs(power) < 0.1) power = 0;
+    lift1.set(ControlMode.PercentOutput, power);
+    lift2.set(ControlMode.PercentOutput, power);
+  }
 
   @Override
   public void initDefaultCommand() {

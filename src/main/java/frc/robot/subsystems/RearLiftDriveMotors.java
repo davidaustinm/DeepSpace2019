@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,6 +18,11 @@ import frc.robot.RobotMap;
  */
 public class RearLiftDriveMotors extends Subsystem {
   VictorSPX liftDriveMotor = new VictorSPX(RobotMap.REAR_LIFT_DRIVE_MOTOR);
+
+  public void setPower(double power) {
+    if (Math.abs(power) < 0.1) power = 0;
+    liftDriveMotor.set(ControlMode.PercentOutput, power);
+  }
 
   @Override
   public void initDefaultCommand() {

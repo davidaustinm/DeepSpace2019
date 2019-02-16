@@ -9,12 +9,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.Sensors;
 
 public class PneumaticsCommand extends Command {
   public PneumaticsCommand() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.pneumatics);
   }
 
   // Called just before this Command runs the first time
@@ -30,26 +31,28 @@ public class PneumaticsCommand extends Command {
     Robot.pneumatics.update();
 
     long currentTime = System.currentTimeMillis();
-    double[] Encoder = Robot.sensors.getDriveEncoders();
+    double[] encoder = Robot.sensors.getDriveEncoders();
+    double encoderCountsPerInch = Robot.pneumatics.getState(Pneumatics.SHIFT) ? 
+      Robot.sensors.ENCODER_COUNTS_PER_INCH_HIGH_GEAR : Robot.sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
       
     if (lastTime != 0) {
     	long elapsedTime = currentTime - lastTime;
-    	double changeLeftEncoder = Encoder[0] - lastLeftEncoder;
-    	double changeRightEncoder = Encoder[1] - lastRightEncoder;
-    	double distance = (changeLeftEncoder + changeRightEncoder)/2.0;
-      double velocity = distance / elapsedTime;
+    	double changeLeftEncoder = encoder[0] - lastLeftEncoder;
+    	double changeRightEncoder = encoder[1] - lastRightEncoder;
+    	double distance = (changeLeftEncoder + changeRightEncoder)/2.0/encoderCountsPerInch;
+      double velocity = distance / elapsedTime * 1000;
       //TODO: Change shift velocities
-      if(Robot.pneumatics.getState(Robot.pneumatics.SHIFTER_EXTEND) && (velocity > 1.8)){
+      if(Robot.pneumatics.getState(Robot.pneumatics.SHIFTER_EXTEND) && (velocity > 120)){
           Robot.pneumatics.setState(Robot.pneumatics.SHIFT, true);
       }
-      if((!Robot.pneumatics.getState(Robot.pneumatics.SHIFTER_EXTEND)) && (velocity < 0.8)){
+      if((!Robot.pneumatics.getState(Robot.pneumatics.SHIFTER_EXTEND)) && (velocity < 100)){
         Robot.pneumatics.setState(Robot.pneumatics.SHIFT, false);
       }
     }
 
     lastTime = currentTime;
-    lastLeftEncoder = Encoder[0];
-    lastRightEncoder = Encoder[1];
+    lastLeftEncoder = encoder[0];
+    lastRightEncoder = encoder[1];
   }
 
   // Make this return true when this Command no longer needs to run execute()
