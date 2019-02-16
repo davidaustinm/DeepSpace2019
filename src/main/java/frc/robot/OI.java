@@ -21,15 +21,28 @@ public class OI {
   XboxTrigger lowGear = new XboxTrigger(driver, XboxTrigger.A);
   XboxTrigger highGear = new XboxTrigger(driver, XboxTrigger.Y);
   XboxTrigger driveToTarget = new XboxTrigger(driver, XboxTrigger.RB);
+  XboxTrigger endgame = new XboxTrigger(driver, XboxTrigger.ENDGAME);
+  XboxTrigger teleop = new XboxTrigger(driver, XboxTrigger.TELEOP);
 
   
   XboxTrigger panelHolderStateAdvance = new XboxTrigger(operator, XboxTrigger.B);
-  public OI() {
+  XboxTrigger panelCollect = new XboxTrigger(operator, XboxTrigger.DPADUP);
+  XboxTrigger panelPlace = new XboxTrigger(operator, XboxTrigger.DPADDOWN);
+  XboxTrigger rotateOut = new XboxTrigger(operator, XboxTrigger.LB);
+  XboxTrigger rotateIn = new XboxTrigger(operator, XboxTrigger.RB);
+
+   public OI() {
     lowGear.whenActive(new Shift(false));
     highGear.whenActive(new Shift(true));
-    driveToTarget.whileActive(new DriveToTarget(0.4));
+    driveToTarget.whileActive(new DriveToTarget());
+    endgame.whenActive(new ChangeGameState(GameState.ENDGAME));
+    teleop.whenActive(new ChangeGameState(GameState.TELEOP));
 
     panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
+    panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));
+    panelPlace.whenActive(new ChangePanelState(PanelHolderState.PLACE));
+    rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
+    rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.IN));
   }
 
 }

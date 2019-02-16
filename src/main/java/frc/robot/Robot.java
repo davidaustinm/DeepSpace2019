@@ -15,11 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.GameState;
 import frc.robot.commands.PanelHolderState;
 import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FrontLiftMotors;
 import frc.robot.subsystems.IntakeRollerMotors;
+import frc.robot.subsystems.IntakeRotateMotors;
 //import frc.robot.subsystems.PowerUpDriveTrain;
 import frc.robot.subsystems.Sensors;
 import frc.robot.subsystems.Pneumatics;
@@ -40,6 +42,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static DeepSpaceDriveTrain driveTrain = new DeepSpaceDriveTrain();
   public static IntakeRollerMotors intakeRoller = new IntakeRollerMotors();
+  public static IntakeRotateMotors intakeRotate = new IntakeRotateMotors();
   public static FrontLiftMotors frontLift = new FrontLiftMotors();
   public static RearLiftMotors rearLift = new RearLiftMotors();
   public static RearLiftDriveMotors rearLiftDrive = new RearLiftDriveMotors();
@@ -48,6 +51,7 @@ public class Robot extends TimedRobot {
   public static TCPClient client = null;
   public static Pneumatics pneumatics = new Pneumatics();
   public static PanelHolderState panelHolderState = new PanelHolderState();
+  public static GameState gameState = new GameState();
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -116,7 +120,7 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
     
-    m_autonomousCommand = new DriveToTarget(0.4);
+    m_autonomousCommand = new DriveToTarget();
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();

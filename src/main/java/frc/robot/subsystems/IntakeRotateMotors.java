@@ -12,16 +12,26 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.IntakeRotateCommand;
 
 /**
  * Add your docs here.
  */
 public class IntakeRotateMotors extends Subsystem {
-  VictorSPX rotateMotor1 = new VictorSPX(RobotMap.ROTATE_MOTOR);
+  VictorSPX rotateMotor = new VictorSPX(RobotMap.ROTATE_MOTOR);
+  int state = IntakeRotateCommand.IN;
 
   public void setPower(double power) {
     if (Math.abs(power) < 0.05) power = 0;
-    rotateMotor1.set(ControlMode.PercentOutput, power);
+    rotateMotor.set(ControlMode.PercentOutput, power);
+  }
+
+  public void setState(int state) {
+    this.state = state;
+  }
+
+  public int getState() {
+    return state;
   }
 
   @Override

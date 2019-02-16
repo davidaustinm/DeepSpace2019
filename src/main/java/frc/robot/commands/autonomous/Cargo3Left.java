@@ -17,6 +17,6 @@ public class Cargo3Left extends CommandGroup {
    */
   public Cargo3Left() {
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/cargo3.profile.csv"));
-    addSequential(new DriveToTarget(0.4));
+    addSequential(new DriveToTarget());
   }
 }

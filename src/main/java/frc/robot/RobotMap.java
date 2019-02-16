@@ -36,7 +36,8 @@ public class RobotMap {
   public static final int REAR_LIFT_DRIVE_MOTOR = 13;
 
   // DIO
-  //public static final int 
+  public static final int INTAKE_ROTATE_ENCODER_A = 0;
+  public static final int INTAKE_ROTATE_ENCODER_B = 1;
 
   // PCM
   public static final int SHIFTER_EXTEND = 0;
