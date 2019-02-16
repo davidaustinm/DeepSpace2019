@@ -32,7 +32,7 @@ public class RaiseRearLift extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double pitch = Robot.sensors.getPitch();
+    double pitch = Robot.sensors.getPitch(); 
     if (pitch > 5) state = FRONTONLY;
     if (pitch < -5) state = REARONLY;
     if (Math.abs(pitch) < 2) state = BOTH;
