@@ -116,7 +116,7 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
     
-    m_autonomousCommand = new DriveToTarget(0.4);
+    m_autonomousCommand = new DriveToTarget();
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();

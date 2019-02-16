@@ -15,7 +15,7 @@ public class CenterCargoFront extends CommandGroup {
    * Add your docs here.
    */
   public CenterCargoFront() {
-    addSequential(new DriveToTarget(0.4));
+    addSequential(new DriveToTarget());
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

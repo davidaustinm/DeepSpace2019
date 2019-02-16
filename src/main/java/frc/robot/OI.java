@@ -28,7 +28,7 @@ public class OI {
   public OI() {
     lowGear.whenActive(new Shift(false));
     highGear.whenActive(new Shift(true));
-    driveToTarget.whileActive(new DriveToTarget(0.4));
+    driveToTarget.whileActive(new DriveToTarget());
 
     panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
     panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));

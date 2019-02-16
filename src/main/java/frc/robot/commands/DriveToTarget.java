@@ -17,6 +17,12 @@ public class DriveToTarget extends Command {
   boolean finished = false;
   boolean dontReadDistance = false;
   double speed;
+  final static double defaultSpeed = 0.4;
+
+  public DriveToTarget() {
+    this(defaultSpeed);
+  }
+
   public DriveToTarget(double speed) {
     this.speed = speed;
     requires(Robot.driveTrain);
