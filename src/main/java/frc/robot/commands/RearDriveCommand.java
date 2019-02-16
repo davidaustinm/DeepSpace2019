@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ArcadeDriveCommand extends Command {
-  public ArcadeDriveCommand() {
+public class RearDriveCommand extends Command {
+  public RearDriveCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.driveTrain);
+    requires(Robot.rearLiftDrive);
   }
 
   // Called just before this Command runs the first time
@@ -22,31 +22,12 @@ public class ArcadeDriveCommand extends Command {
   protected void initialize() {
   }
 
-  double alpha = 0.5; //0.74;
-  double turnAlpha = .7;
-  double lastTurn = 0;
-  double turnAlpham1 = 1-turnAlpha;
-  double alpham1 = 1-alpha;
-  double lastThrottle = 0;
-  double lastSteering = 0;
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double throttle = -Robot.oi.driver.getY(Hand.kLeft);
-    double steering = -0.5*Robot.oi.driver.getX(Hand.kRight);
-    double power = (alpha * throttle) + (alpham1 * lastThrottle);
-    double turn = (turnAlpha * steering) + turnAlpham1 * lastSteering;
-    if (Robot.gameState.isEndGame() && Math.abs(turn) < 0.2) turn = 0;
-    	
-    if (Robot.oi.driver.getTriggerAxis(Hand.kLeft) > 0.5) {
-    	Robot.driveTrain.setMaxSpeed(0.6);
-    } else {
-    	Robot.driveTrain.setMaxSpeed(1.0);
-    }
-    
-    Robot.driveTrain.arcadeDrive(power, turn, true);
-    lastThrottle = throttle;
-    lastSteering = steering;
+    if (Robot.gameState.isEndGame() == false) return; 
+    double power = -Robot.oi.driver.getY(Hand.kRight);
+    Robot.rearLiftDrive.setPower(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -58,7 +39,6 @@ public class ArcadeDriveCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.driveTrain.setPower(0, 0);
   }
 
   // Called when another command which requires one or more of the same
