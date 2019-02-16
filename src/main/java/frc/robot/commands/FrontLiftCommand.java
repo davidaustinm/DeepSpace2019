@@ -25,7 +25,7 @@ public class FrontLiftCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double power = Robot.oi.operator.getY(Hand.kRight);
+    double power = -Robot.oi.operator.getY(Hand.kRight);
     Robot.frontLift.setPower(power);
   }
 

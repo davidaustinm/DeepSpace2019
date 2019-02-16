@@ -24,7 +24,11 @@ public class IntakeRollerCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double power = Robot.oi.operator.getY(Hand.kLeft);
+    double leftTrigger = Robot.oi.operator.getTriggerAxis(Hand.kLeft);
+    double rightTrigger = Robot.oi.operator.getTriggerAxis(Hand.kRight);
+    double power = 0;
+    if (leftTrigger > 0.2) power = -leftTrigger;
+    else power = rightTrigger;
     Robot.intakeRoller.setPower(power);
   }
 
