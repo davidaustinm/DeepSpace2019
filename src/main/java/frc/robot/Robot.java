@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.PanelHolderState;
 import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FrontLiftMotors;
@@ -46,6 +47,7 @@ public class Robot extends TimedRobot {
   public static TargetCamera camera;
   public static TCPClient client = null;
   public static Pneumatics pneumatics = new Pneumatics();
+  public static PanelHolderState panelHolderState = new PanelHolderState();
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();

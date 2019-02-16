@@ -21,9 +21,11 @@ public class Pneumatics extends Subsystem {
   public static final int VAC_SYS = 2;
   public static final int SHIFTER_EXTEND = 3;
   public static final int SHIFTER_RETRACT = 4;
-  public static final int SHIFT = 5;
+  public static final int PUSHER = 5;
+  int numValves = 6;
+  public static final int SHIFT = 6;
   String[] labels = new String[] {
-      "Shifter Extend","Shifter Retract","RF Latch","Front Lift Shift","Vac Sys"
+      "Shifter Extend","Shifter Retract","RF Latch","Front Lift Shift","Vac Sys", "Pusher"
   };
 
   Solenoid[] solenoids = new Solenoid[5];
@@ -35,7 +37,8 @@ public class Pneumatics extends Subsystem {
     solenoids[VAC_SYS] = new Solenoid(RobotMap.VAC_SYS);
     solenoids[SHIFTER_EXTEND] = new Solenoid(RobotMap.SHIFTER_EXTEND);
     solenoids[SHIFTER_RETRACT] = new Solenoid(RobotMap.SHIFTER_RETRACT);
-    for(int i = 0; i < 5; i++) states[i] = false;
+    solenoids[PUSHER] = new Solenoid(RobotMap.PUSHER);
+    for(int i = 0; i < numValves; i++) states[i] = false;
   }
 
   public void setState(int valve, boolean state) {
@@ -57,6 +60,7 @@ public class Pneumatics extends Subsystem {
     solenoids[VAC_SYS].set(states[VAC_SYS]);
     solenoids[SHIFTER_EXTEND].set(states[SHIFTER_EXTEND]);
     solenoids[SHIFTER_RETRACT].set(states[SHIFTER_RETRACT]);
+    solenoids[PUSHER].set(states[PUSHER]);
   }
 
   public boolean getState(int valve) {

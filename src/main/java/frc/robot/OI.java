@@ -8,7 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.Shift;
+import frc.robot.commands.*;
 import frc.robot.utilities.XboxTrigger;
 
 /**
@@ -20,9 +20,15 @@ public class OI {
   public XboxController operator = new XboxController(1);
   XboxTrigger lowGear = new XboxTrigger(driver, XboxTrigger.A);
   XboxTrigger highGear = new XboxTrigger(driver, XboxTrigger.Y);
+  XboxTrigger driveToTarget = new XboxTrigger(driver, XboxTrigger.RB);
+
+  XboxTrigger panelHolderStateAdvance = new XboxTrigger(operator, XboxTrigger.B);
   public OI() {
     lowGear.whenActive(new Shift(false));
     highGear.whenActive(new Shift(true));
+    driveToTarget.whileActive(new DriveToTarget(0.4));
+
+    panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
   }
 
 }
