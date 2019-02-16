@@ -41,12 +41,11 @@ public class RobotMap {
   public static final int INTAKE_ROTATE_ENCODER_B = 1;
 
   // PCM
-  public static final int SHIFTER_EXTEND = 0;
-  public static final int SHIFTER_RETRACT = 1;
+  public static final int SHIFT = 0;
+  public static final int FRONT_LIFT_SHIFT = 1;
   public static final int RF_LATCH = 2;
-  public static final int FRONT_LIFT_SHIFT = 3;
-  public static final int VAC_SYS = 4;
-  public static final int PUSHER = 5;
+  public static final int VAC_SYS = 3;
+  public static final int PUSHER = 4;
 
   public static void setMode(int m) {
     mode = m;

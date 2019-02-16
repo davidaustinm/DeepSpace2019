@@ -33,7 +33,7 @@ public class Pneumatics extends Subsystem {
     solenoids[RF_LATCH] = new Solenoid(RobotMap.RF_LATCH);
     solenoids[FRONT_LIFT_SHIFT] = new Solenoid(RobotMap.FRONT_LIFT_SHIFT);
     solenoids[VAC_SYS] = new Solenoid(RobotMap.VAC_SYS);
-    solenoids[SHIFT] = new Solenoid(RobotMap.SHIFTER_EXTEND);
+    solenoids[SHIFT] = new Solenoid(RobotMap.SHIFT);
     solenoids[PUSHER] = new Solenoid(RobotMap.PUSHER);
     for(int i = 0; i < numValves; i++) states[i] = false;
   }
