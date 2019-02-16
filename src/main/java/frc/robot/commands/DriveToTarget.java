@@ -45,7 +45,7 @@ public class DriveToTarget extends Command {
   }
 
   // Called repeatedly when this Command is scheduled to run
-  double kAngle = 0.005;
+  double kAngle = 0.015;
   double rampDown = 40;
   double clipAnglePct = 0.2;
   double distanceCutOut = 30;

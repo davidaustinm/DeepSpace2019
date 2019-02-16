@@ -41,16 +41,16 @@ public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI oi;
   public static DeepSpaceDriveTrain driveTrain = new DeepSpaceDriveTrain();
-  public static IntakeRollerMotors intakeRoller; // = new IntakeRollerMotors();
-  public static IntakeRotateMotors intakeRotate; // = new IntakeRotateMotors();
-  public static FrontLiftMotors frontLift; // = new FrontLiftMotors();
-  public static RearLiftMotors rearLift; // = new RearLiftMotors();
-  public static RearLiftDriveMotors rearLiftDrive; // = new RearLiftDriveMotors();
+  public static IntakeRollerMotors intakeRoller = new IntakeRollerMotors();
+  public static IntakeRotateMotors intakeRotate= new IntakeRotateMotors();
+  public static FrontLiftMotors frontLift = new FrontLiftMotors();
+  public static RearLiftMotors rearLift = new RearLiftMotors();
+  public static RearLiftDriveMotors rearLiftDrive = new RearLiftDriveMotors();
   public static Sensors sensors = new Sensors();
   public static TargetCamera camera;
   public static TCPClient client = null;
   public static Pneumatics pneumatics = new Pneumatics();
-  public static PanelHolderState panelHolderState;// = new PanelHolderState();
+  public static PanelHolderState panelHolderState = new PanelHolderState();
   public static GameState gameState = new GameState();
 
   Command m_autonomousCommand;
