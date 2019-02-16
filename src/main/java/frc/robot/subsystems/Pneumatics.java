@@ -19,13 +19,11 @@ public class Pneumatics extends Subsystem {
   public static final int RF_LATCH = 0;
   public static final int FRONT_LIFT_SHIFT = 1;
   public static final int VAC_SYS = 2;
-  public static final int SHIFTER_EXTEND = 3;
-  public static final int SHIFTER_RETRACT = 4;
-  public static final int PUSHER = 5;
-  int numValves = 6;
-  public static final int SHIFT = 6;
+  public static final int SHIFT = 3;
+  public static final int PUSHER = 4;
+  int numValves = 5;
   String[] labels = new String[] {
-      "Shifter Extend","Shifter Retract","RF Latch","Front Lift Shift","Vac Sys", "Pusher"
+      "RF Latch","Front Lift Shift","Vac Sys","Shift", "Pusher"
   };
 
   Solenoid[] solenoids = new Solenoid[5];
@@ -35,19 +33,13 @@ public class Pneumatics extends Subsystem {
     solenoids[RF_LATCH] = new Solenoid(RobotMap.RF_LATCH);
     solenoids[FRONT_LIFT_SHIFT] = new Solenoid(RobotMap.FRONT_LIFT_SHIFT);
     solenoids[VAC_SYS] = new Solenoid(RobotMap.VAC_SYS);
-    solenoids[SHIFTER_EXTEND] = new Solenoid(RobotMap.SHIFTER_EXTEND);
-    solenoids[SHIFTER_RETRACT] = new Solenoid(RobotMap.SHIFTER_RETRACT);
+    solenoids[SHIFT] = new Solenoid(RobotMap.SHIFTER_EXTEND);
     solenoids[PUSHER] = new Solenoid(RobotMap.PUSHER);
     for(int i = 0; i < numValves; i++) states[i] = false;
   }
 
   public void setState(int valve, boolean state) {
-    if(valve == SHIFT){
-      states[SHIFTER_EXTEND] = state;
-      states[SHIFTER_RETRACT] = !state;
-    } else {
-      states[valve] = state;
-    } 
+    states[valve] = state;
   }
 
   public void toggleState(int valve) {
@@ -58,13 +50,11 @@ public class Pneumatics extends Subsystem {
     solenoids[RF_LATCH].set(states[RF_LATCH]);
     solenoids[FRONT_LIFT_SHIFT].set(states[FRONT_LIFT_SHIFT]);
     solenoids[VAC_SYS].set(states[VAC_SYS]);
-    solenoids[SHIFTER_EXTEND].set(states[SHIFTER_EXTEND]);
-    solenoids[SHIFTER_RETRACT].set(states[SHIFTER_RETRACT]);
+    solenoids[SHIFT].set(states[SHIFT]);
     solenoids[PUSHER].set(states[PUSHER]);
   }
 
   public boolean getState(int valve) {
-    if (valve == SHIFT) return states[SHIFTER_EXTEND];
     return states[valve];
   }
     

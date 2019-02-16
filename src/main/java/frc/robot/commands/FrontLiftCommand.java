@@ -12,6 +12,14 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class FrontLiftCommand extends Command {
+  double lastError = 0;
+
+  //TODO: change these values
+  double kp = 1/6000.0;
+  double kd = 1/60000.0;
+  int LOWERLIMIT = 2000;
+	int UPPERLIMIT = 48000;
+
   public FrontLiftCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.frontLift);
@@ -26,6 +34,23 @@ public class FrontLiftCommand extends Command {
   @Override
   protected void execute() {
     double power = -Robot.oi.operator.getY(Hand.kRight);
+    if(Math.abs(power) > 0.1) {
+    } else {
+      int position = Robot.frontLift.getPosition();
+      double error = Robot.frontLift.getHoldPosition() - position;
+      double changeError = lastError - error;
+      power = kp * error + kd * changeError;
+      if (Math.abs(power) > 1) {
+        if (power > 1) power = 1;
+        else power = -1;
+      }
+      lastError = error;
+    }
+    int liftPosition = Robot.frontLift.getPosition();
+    if (liftPosition < LOWERLIMIT && power < 0) power = 0;
+    if (liftPosition > UPPERLIMIT && power > 0) power = 0;
+    if (power < 0 && liftPosition < 10000) power *= 0.3;
+
     Robot.frontLift.setPower(power);
   }
 

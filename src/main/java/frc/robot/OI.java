@@ -22,6 +22,7 @@ public class OI {
   XboxTrigger highGear = new XboxTrigger(driver, XboxTrigger.Y);
   XboxTrigger driveToTarget = new XboxTrigger(driver, XboxTrigger.RB);
 
+  
   XboxTrigger panelHolderStateAdvance = new XboxTrigger(operator, XboxTrigger.B);
   public OI() {
     lowGear.whenActive(new Shift(false));
