@@ -21,6 +21,7 @@ import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FrontLiftMotors;
 import frc.robot.subsystems.IntakeRollerMotors;
+import frc.robot.subsystems.IntakeRotateMotors;
 //import frc.robot.subsystems.PowerUpDriveTrain;
 import frc.robot.subsystems.Sensors;
 import frc.robot.subsystems.Pneumatics;
@@ -41,6 +42,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static DeepSpaceDriveTrain driveTrain = new DeepSpaceDriveTrain();
   public static IntakeRollerMotors intakeRoller = new IntakeRollerMotors();
+  public static IntakeRotateMotors intakeRotate = new IntakeRotateMotors();
   public static FrontLiftMotors frontLift = new FrontLiftMotors();
   public static RearLiftMotors rearLift = new RearLiftMotors();
   public static RearLiftDriveMotors rearLiftDrive = new RearLiftDriveMotors();

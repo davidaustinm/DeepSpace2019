@@ -27,6 +27,9 @@ public class OI {
   XboxTrigger panelHolderStateAdvance = new XboxTrigger(operator, XboxTrigger.B);
   XboxTrigger panelCollect = new XboxTrigger(operator, XboxTrigger.DPADUP);
   XboxTrigger panelPlace = new XboxTrigger(operator, XboxTrigger.DPADDOWN);
+  XboxTrigger rotateOut = new XboxTrigger(operator, XboxTrigger.LB);
+  XboxTrigger rotateIn = new XboxTrigger(operator, XboxTrigger.RB);
+
    public OI() {
     lowGear.whenActive(new Shift(false));
     highGear.whenActive(new Shift(true));
@@ -37,6 +40,8 @@ public class OI {
     panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
     panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));
     panelPlace.whenActive(new ChangePanelState(PanelHolderState.PLACE));
+    rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
+    rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.IN));
   }
 
 }
