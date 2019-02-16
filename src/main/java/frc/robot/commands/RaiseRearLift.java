@@ -13,7 +13,7 @@ import frc.robot.Robot;
 public class RaiseRearLift extends Command {
   double frontDownSpeed = -0.8;
   double rearDownSpeed = -0.8;
-  final int frontBottom = 0;
+  final int frontBottom = 100;
   public RaiseRearLift() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.rearLift);
@@ -28,11 +28,13 @@ public class RaiseRearLift extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    int frontPosition = Robot.frontLift.getPosition();
-    if (frontPosition > frontBottom) {
-      Robot.frontLift.setPower(frontDownSpeed);
-      if (Robot.sensors.getPitch() > 5) Robot.rearLift.setPower(rearDownSpeed);
-    }
+    double frontPower = frontDownSpeed;
+    double rearPower = rearDownSpeed;
+    double pitch = Robot.sensors.getPitch();
+    if (pitch > 5) frontPower = 0;
+    if (pitch < -5) rearPower = 0;
+    Robot.frontLift.setPower(frontPower);
+    Robot.rearLift.setPower(rearPower);
   }
 
   // Make this return true when this Command no longer needs to run execute()
