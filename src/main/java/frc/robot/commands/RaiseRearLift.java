@@ -11,6 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class RaiseRearLift extends Command {
+  final int REARONLY = 0;
+  final int FRONTONLY = 1;
+  final int BOTH = 2;
+  int state = BOTH;
   double frontDownSpeed = -0.8;
   double rearDownSpeed = -0.8;
   final int frontBottom = 100;
@@ -28,11 +32,14 @@ public class RaiseRearLift extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double pitch = Robot.sensors.getPitch();
+    if (pitch > 5) state = FRONTONLY;
+    if (pitch < -5) state = REARONLY;
+    if (Math.abs(pitch) < 2) state = BOTH;
     double frontPower = frontDownSpeed;
     double rearPower = rearDownSpeed;
-    double pitch = Robot.sensors.getPitch();
-    if (pitch > 5) frontPower = 0;
-    if (pitch < -5) rearPower = 0;
+    if (state == FRONTONLY) rearPower = 0;
+    if (state == REARONLY) frontPower = 0;
     Robot.frontLift.setPower(frontPower);
     Robot.rearLift.setPower(rearPower);
   }
