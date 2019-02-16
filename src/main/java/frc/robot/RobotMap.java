@@ -15,6 +15,7 @@ package frc.robot;
  */
 public class RobotMap {
   public static boolean DEBUG = false;
+  public static int mode;
 
   // SPARK MAX
   public static final int LEFT_MASTER = 1;
@@ -46,4 +47,8 @@ public class RobotMap {
   public static final int FRONT_LIFT_SHIFT = 3;
   public static final int VAC_SYS = 4;
   public static final int PUSHER = 5;
+
+  public static void setMode(int m) {
+    mode = m;
+  }
 }

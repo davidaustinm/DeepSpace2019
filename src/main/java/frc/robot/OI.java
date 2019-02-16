@@ -24,11 +24,17 @@ public class OI {
   XboxTrigger endgame = new XboxTrigger(driver, XboxTrigger.ENDGAME);
   XboxTrigger teleop = new XboxTrigger(driver, XboxTrigger.TELEOP);
 
+  
   XboxTrigger panelHolderStateAdvance = new XboxTrigger(operator, XboxTrigger.B);
   XboxTrigger panelCollect = new XboxTrigger(operator, XboxTrigger.DPADUP);
   XboxTrigger panelPlace = new XboxTrigger(operator, XboxTrigger.DPADDOWN);
   XboxTrigger rotateOut = new XboxTrigger(operator, XboxTrigger.LB);
   XboxTrigger rotateIn = new XboxTrigger(operator, XboxTrigger.RB);
+  XboxTrigger modeCargo = new XboxTrigger(operator, XboxTrigger.DPADLEFT);
+  XboxTrigger modePanel = new XboxTrigger(operator, XboxTrigger.DPADRIGHT);
+  XboxTrigger level1 = new XboxTrigger(operator, XboxTrigger.A);
+  XboxTrigger level2 = new XboxTrigger(operator, XboxTrigger.X);
+  XboxTrigger level3 = new XboxTrigger(operator, XboxTrigger.Y);
 
    public OI() {
     lowGear.whenActive(new Shift(false));
@@ -42,6 +48,12 @@ public class OI {
     panelPlace.whenActive(new ChangePanelState(PanelHolderState.PLACE));
     rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
     rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.IN));
+    modeCargo.whenActive(new SetFrontLiftMode(Robot.frontLift.CARGO_MODE));
+    modePanel.whenActive(new SetFrontLiftMode(Robot.frontLift.PANEL_MODE));
+    level1.whenActive(new SetFrontLiftLevel(RobotMap.mode, Robot.frontLift.LEVEL_1));
+    level2.whenActive(new SetFrontLiftLevel(RobotMap.mode, Robot.frontLift.LEVEL_2));
+    level3.whenActive(new SetFrontLiftLevel(RobotMap.mode, Robot.frontLift.LEVEL_3));
+
   }
 
 }

@@ -42,10 +42,10 @@ public class PneumaticsCommand extends Command {
     	double distance = (changeLeftEncoder + changeRightEncoder)/2.0/encoderCountsPerInch;
       double velocity = distance / elapsedTime * 1000;
       //TODO: Change shift velocities
-      if(Robot.pneumatics.getState(Robot.pneumatics.SHIFTER_EXTEND) && (velocity > 120)){
+      if(Robot.pneumatics.getState(Robot.pneumatics.SHIFT) && (velocity > 120)){
           Robot.pneumatics.setState(Robot.pneumatics.SHIFT, true);
       }
-      if((!Robot.pneumatics.getState(Robot.pneumatics.SHIFTER_EXTEND)) && (velocity < 100)){
+      if((!Robot.pneumatics.getState(Robot.pneumatics.SHIFT)) && (velocity < 100)){
         Robot.pneumatics.setState(Robot.pneumatics.SHIFT, false);
       }
     }
