@@ -60,7 +60,7 @@ public class Pneumatics extends Subsystem {
   }
 
   public boolean getState(int valve) {
-    if (value == SHIFT) return states[SHIFTER_EXTEND];
+    if (valve == SHIFT) return states[SHIFTER_EXTEND];
     return states[valve];
   }
     
