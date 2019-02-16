@@ -64,7 +64,7 @@ public class DriveToTarget extends Command {
       countNotSeen = 0;
     }
     if(RobotMap.DEBUG){
-      System.out.println(position + " " + encoderTarget + " " + distance);
+      //System.out.println(position + " " + encoderTarget + " " + distance);
     }
     if (Double.isNaN(distance) && countNotSeen > 0) {
       countNotSeen++;
@@ -81,7 +81,7 @@ public class DriveToTarget extends Command {
     double leftPower = speed * ramp - correction;
     double rightPower = speed * ramp + correction;
     Robot.driveTrain.setPower(leftPower, rightPower);
-    //System.out.println(error + " " + leftPower + " " + rightPower);
+    System.out.println(error + " " + leftPower + " " + rightPower);
   }
 
   // Make this return true when this Command no longer needs to run execute()

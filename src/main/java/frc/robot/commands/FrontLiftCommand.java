@@ -14,6 +14,7 @@ import frc.robot.Robot;
 public class FrontLiftCommand extends Command {
   double lastError = 0;
 
+
   //TODO: change these values
   double kp = 1/6000.0;
   double kd = 1/60000.0;
@@ -35,6 +36,7 @@ public class FrontLiftCommand extends Command {
   protected void execute() {
     double power = -Robot.oi.operator.getY(Hand.kRight);
     if(Math.abs(power) > 0.1) {
+      Robot.frontLift.setManual(true);
     } else {
       int position = Robot.frontLift.getPosition();
       double error = Robot.frontLift.getHoldPosition() - position;

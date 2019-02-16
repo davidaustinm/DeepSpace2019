@@ -14,7 +14,7 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-  public static boolean DEBUG = false;
+  public static boolean DEBUG = true;
   public static int mode;
 
   // SPARK MAX

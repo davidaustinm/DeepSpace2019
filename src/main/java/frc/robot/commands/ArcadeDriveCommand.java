@@ -33,7 +33,7 @@ public class ArcadeDriveCommand extends Command {
   @Override
   protected void execute() {
     double throttle = -Robot.oi.driver.getY(Hand.kLeft);
-    double steering = -0.5*Robot.oi.driver.getX(Hand.kRight);
+    double steering = -0.6*Robot.oi.driver.getX(Hand.kRight);
     double power = (alpha * throttle) + (alpham1 * lastThrottle);
     double turn = (turnAlpha * steering) + turnAlpham1 * lastSteering;
     if (Robot.gameState.isEndGame() && Math.abs(turn) < 0.2) turn = 0;

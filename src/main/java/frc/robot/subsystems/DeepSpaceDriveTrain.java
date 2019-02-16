@@ -35,8 +35,8 @@ public class DeepSpaceDriveTrain extends Subsystem {
     leftMaster = new CANSparkMax(RobotMap.LEFT_MASTER, MotorType.kBrushless);
     leftSlave1 = new CANSparkMax(RobotMap.LEFT_SLAVE1, MotorType.kBrushless);
     leftSlave2 = new CANSparkMax(RobotMap.LEFT_SLAVE2, MotorType.kBrushless);
-    leftSlave1.setInverted(true);
-    rightMaster.setInverted(true);
+    leftMaster.setInverted(true);
+    rightSlave1.setInverted(true);
     rightSlave2.setInverted(true);
     
     leftEncoder = leftMaster.getEncoder();

@@ -40,19 +40,19 @@ public class OI {
     lowGear.whenActive(new Shift(false));
     highGear.whenActive(new Shift(true));
     driveToTarget.whileActive(new DriveToTarget());
-    endgame.whenActive(new ChangeGameState(GameState.ENDGAME));
-    teleop.whenActive(new ChangeGameState(GameState.TELEOP));
+    // endgame.whenActive(new ChangeGameState(GameState.ENDGAME));
+    // teleop.whenActive(new ChangeGameState(GameState.TELEOP));
 
-    panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
-    panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));
-    panelPlace.whenActive(new ChangePanelState(PanelHolderState.PLACE));
-    rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
-    rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.IN));
-    modeCargo.whenActive(new SetFrontLiftMode(Robot.frontLift.CARGO_MODE));
-    modePanel.whenActive(new SetFrontLiftMode(Robot.frontLift.PANEL_MODE));
-    level1.whenActive(new SetFrontLiftLevel(RobotMap.mode, Robot.frontLift.LEVEL_1));
-    level2.whenActive(new SetFrontLiftLevel(RobotMap.mode, Robot.frontLift.LEVEL_2));
-    level3.whenActive(new SetFrontLiftLevel(RobotMap.mode, Robot.frontLift.LEVEL_3));
+    // panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
+    // panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));
+    // panelPlace.whenActive(new ChangePanelState(PanelHolderState.PLACE));
+    // rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
+    // rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.IN));
+    // modeCargo.whenActive(new SetFrontLiftMode(Robot.frontLift.CARGO_MODE));
+    // modePanel.whenActive(new SetFrontLiftMode(Robot.frontLift.PANEL_MODE));
+    // level1.whenActive(new SetFrontLiftLevel(RobotMap.mode, Robot.frontLift.LEVEL_1));
+    // level2.whenActive(new SetFrontLiftLevel(RobotMap.mode, Robot.frontLift.LEVEL_2));
+    // level3.whenActive(new SetFrontLiftLevel(RobotMap.mode, Robot.frontLift.LEVEL_3));
 
   }
 

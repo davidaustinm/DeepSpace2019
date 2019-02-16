@@ -45,6 +45,10 @@ public class FrontLiftMotors extends Subsystem {
     levels[PANEL_MODE][LEVEL_3] = 0;
   }
 
+  public void setManual(boolean b) {
+    manual = b;
+  }
+
   //public void setMode() 
 
   public void setLevel(int m, int l) {
