@@ -7,6 +7,9 @@
 
 package frc.robot.commands;
 
+import frc.robot.Robot;
+import frc.robot.subsystems.Pneumatics;
+
 /**
  * Add your docs here.
  */
@@ -16,6 +19,8 @@ public class GameState {
     int state = TELEOP;
     public void setState(int state) {
         this.state = state;
+        if (state == ENDGAME) Robot.pneumatics.setState(Pneumatics.FRONT_LIFT_SHIFT, true);
+        else Robot.pneumatics.setState(Pneumatics.FRONT_LIFT_SHIFT, false);
     }
     public boolean isEndGame() {
         return state == ENDGAME;

@@ -10,29 +10,35 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ChangeGameState extends Command {
-  int state;
-  public ChangeGameState(int state) {
-    this.state = state;
+public class RaiseRearLift extends Command {
+  double frontDownSpeed = -0.8;
+  double rearDownSpeed = -0.8;
+  final int frontBottom = 0;
+  public RaiseRearLift() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.rearLift);
+    requires(Robot.frontLift);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.gameState.setState(state);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    int frontPosition = Robot.frontLift.getPosition();
+    if (frontPosition > frontBottom) {
+      Robot.frontLift.setPower(frontDownSpeed);
+      if (Robot.sensors.getPitch() > 5) Robot.rearLift.setPower(rearDownSpeed);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return Robot.frontLift.getPosition() <= frontBottom;
   }
 
   // Called once after isFinished returns true

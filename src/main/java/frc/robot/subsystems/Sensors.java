@@ -9,9 +9,11 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
   
@@ -21,6 +23,7 @@ public class Sensors extends Subsystem {
   double cutPoint = 180;
   double[] driveEncoderOffsets = new double[] {0,0};
   Encoder intakeRotateEncoder = new Encoder(RobotMap.INTAKE_ROTATE_ENCODER_A, RobotMap.INTAKE_ROTATE_ENCODER_B);
+  Accelerometer accelerometer = new BuiltInAccelerometer(Accelerometer.Range.k4G);
   //public final double ENCODERCOUNTSPERINCH = 0.8; // wooden robot
   public final double ENCODER_COUNTS_PER_INCH_HIGH_GEAR = 0.44444; // new Drive train no extras
   public final double ENCODER_COUNTS_PER_INCH_LOW_GEAR = .63;
@@ -31,6 +34,10 @@ public class Sensors extends Subsystem {
         
   public Sensors() {
     navx = new AHRS(I2C.Port.kMXP);
+  }
+
+  public double getPitch() {
+    return accelerometer.getY();
   }
 
   public int getIntakeRotatePosition() {

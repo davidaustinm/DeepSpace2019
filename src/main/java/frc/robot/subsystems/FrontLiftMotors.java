@@ -27,6 +27,10 @@ public class FrontLiftMotors extends Subsystem {
     //frontLift2.set(ControlMode.PercentOutput, power);
   }
 
+  public int getPosition() {
+    return frontLift1.getSelectedSensorPosition();
+  }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
