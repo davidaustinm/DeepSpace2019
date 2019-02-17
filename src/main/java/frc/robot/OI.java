@@ -35,13 +35,16 @@ public class OI {
   XboxTrigger level1 = new XboxTrigger(operator, XboxTrigger.A);
   XboxTrigger level2 = new XboxTrigger(operator, XboxTrigger.X);
   XboxTrigger level3 = new XboxTrigger(operator, XboxTrigger.Y);
+ // XboxTrigger latch = new XboxTrigger(operator, XboxTrigger.LT);
 
    public OI() {
     lowGear.whenActive(new Shift(false));
     highGear.whenActive(new Shift(true));
     driveToTarget.whileActive(new DriveToTarget());
-    // endgame.whenActive(new ChangeGameState(GameState.ENDGAME));
-    // teleop.whenActive(new ChangeGameState(GameState.TELEOP));
+
+    endgame.whenActive(new ChangeGameState(GameState.ENDGAME));
+    teleop.whenActive(new ChangeGameState(GameState.TELEOP));
+    //latch.whenActive(new LatchCommand(true));
 
     // panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
     // panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));

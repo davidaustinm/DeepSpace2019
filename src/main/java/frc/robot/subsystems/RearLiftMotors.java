@@ -21,10 +21,23 @@ public class RearLiftMotors extends Subsystem {
   TalonSRX lift1 = new TalonSRX(RobotMap.REAR_LIFT1);
   TalonSRX lift2 = new TalonSRX(RobotMap.REAR_LIFT2);
 
+  int encoderOffset = 0;
+
+  public RearLiftMotors(){
+    lift2.follow(lift1);
+  }
+
   public void setPower(double power) {
     if (Math.abs(power) < 0.1) power = 0;
     lift1.set(ControlMode.PercentOutput, power);
-    lift2.set(ControlMode.PercentOutput, power);
+  }
+
+  public void resetEncoder() {
+    encoderOffset = lift1.getSelectedSensorPosition(0);
+  }
+
+  public double getPosition() {
+    return lift1.getSelectedSensorPosition(0) - encoderOffset;
   }
 
   @Override

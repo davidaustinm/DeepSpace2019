@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class IntakeRollerCommand extends Command {
@@ -29,6 +30,7 @@ public class IntakeRollerCommand extends Command {
     double power = 0;
     if (leftTrigger > 0.2) power = -leftTrigger;
     else power = rightTrigger;
+    SmartDashboard.putNumber("Intake Roller Power", power);
     Robot.intakeRoller.setPower(power);
   }
 

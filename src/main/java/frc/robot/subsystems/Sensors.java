@@ -21,6 +21,7 @@ public class Sensors extends Subsystem {
   double cutPoint = 180;
   double[] driveEncoderOffsets = new double[] {0,0};
   Encoder intakeRotateEncoder = new Encoder(RobotMap.INTAKE_ROTATE_ENCODER_A, RobotMap.INTAKE_ROTATE_ENCODER_B);
+  int rotateMotorOffset = 0;
   //public final double ENCODERCOUNTSPERINCH = 0.8; // wooden robot
   public final double ENCODER_COUNTS_PER_INCH_HIGH_GEAR = 0.44444; // new Drive train no extras
   public final double ENCODER_COUNTS_PER_INCH_LOW_GEAR = .63;
@@ -37,8 +38,12 @@ public class Sensors extends Subsystem {
     return navx.getPitch();
   }
 
+  public void resetRotateEncoder() {
+    rotateMotorOffset = intakeRotateEncoder.get();
+  }
+
   public int getIntakeRotatePosition() {
-    return intakeRotateEncoder.get();
+    return intakeRotateEncoder.get() - rotateMotorOffset;
   }
 
   public double readGyro() {

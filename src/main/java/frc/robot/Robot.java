@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().startAutomaticCapture();
     client = new TCPClient();
     client.start();
 
@@ -96,6 +96,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    pneumatics.setState(pneumatics.RF_LATCH, false);
   }
 
   @Override
@@ -124,6 +125,9 @@ public class Robot extends TimedRobot {
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();
+    sensors.resetRotateEncoder();
+    frontLift.resetEncoder();
+    rearLift.resetEncoder();
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -159,6 +163,9 @@ public class Robot extends TimedRobot {
     sensors.resetPosition();
     sensors.resetDriveEncoders();
     sensors.resetGyro();
+    sensors.resetRotateEncoder();
+    frontLift.resetEncoder();
+    rearLift.resetEncoder();
     //driveTrain.switchDirection();
     if(Robot.driveTrain.isSwitched()) Robot.driveTrain.switchDirection();
   }
@@ -169,6 +176,8 @@ public class Robot extends TimedRobot {
   double lastAverage = 0;
   @Override
   public void teleopPeriodic() {
+    double[] driveEncoders = sensors.getDriveEncoders();
+    //System.out.println(driveEncoders[0] + " " + driveEncoders[1]);
     /*
     long time = System.currentTimeMillis();
     long elapsed = time - lastTime;
@@ -185,6 +194,10 @@ public class Robot extends TimedRobot {
     double[] targetInfo = client.getTargetInfo();
     System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
     */
+    SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
+    SmartDashboard.putNumber("Front Lift Encoder", frontLift.getPosition());
+    SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
+    SmartDashboard.putNumber("Front Lift State", RobotMap.mode);
     Scheduler.getInstance().run();
     //sensors.updatePosition();
     if(RobotMap.DEBUG){

@@ -17,7 +17,7 @@ public class DriveToTarget extends Command {
   boolean finished = false;
   boolean dontReadDistance = false;
   double speed;
-  final static double defaultSpeed = 0.4;
+  final static double defaultSpeed = 0.3;
 
   public DriveToTarget() {
     this(defaultSpeed);
@@ -45,10 +45,10 @@ public class DriveToTarget extends Command {
   }
 
   // Called repeatedly when this Command is scheduled to run
-  double kAngle = 0.015;
-  double rampDown = 40;
+  double kAngle = 0.0075;
+  double rampDown = 50;
   double clipAnglePct = 0.2;
-  double distanceCutOut = 30;
+  double distanceCutOut = 35;
   int countNotSeen = 0;
   @Override
   protected void execute() {
@@ -64,7 +64,7 @@ public class DriveToTarget extends Command {
       countNotSeen = 0;
     }
     if(RobotMap.DEBUG){
-      //System.out.println(position + " " + encoderTarget + " " + distance);
+      System.out.println(position + " " + encoderTarget + " " + distance);
     }
     if (Double.isNaN(distance) && countNotSeen > 0) {
       countNotSeen++;
@@ -81,7 +81,7 @@ public class DriveToTarget extends Command {
     double leftPower = speed * ramp - correction;
     double rightPower = speed * ramp + correction;
     Robot.driveTrain.setPower(leftPower, rightPower);
-    System.out.println(error + " " + leftPower + " " + rightPower);
+    //System.out.println(error + " " + leftPower + " " + rightPower);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -89,7 +89,7 @@ public class DriveToTarget extends Command {
   protected boolean isFinished() {
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
     double position = (driveEncoders[0] + driveEncoders[1])/2.0;
-    return finished || position >= encoderTarget;
+    return finished || position + 30 >= encoderTarget;
   }
 
   // Called once after isFinished returns true

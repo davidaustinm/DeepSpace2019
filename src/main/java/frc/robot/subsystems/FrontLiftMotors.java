@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -29,11 +30,14 @@ public class FrontLiftMotors extends Subsystem {
   boolean manual = false;
   int level = LEVEL_GROUND;
   int holdPosition = 0;
+  int encoderOffset = 0;
 
   TalonSRX frontLift1 = new TalonSRX(RobotMap.FRONT_LIFT1);
   TalonSRX frontLift2 = new TalonSRX(RobotMap.FRONT_LIFT2);
 
   public FrontLiftMotors() {
+    frontLift1.setNeutralMode(NeutralMode.Brake);
+    frontLift2.setNeutralMode(NeutralMode.Brake);
     frontLift2.follow(frontLift1);
     levels[CARGO_MODE][LEVEL_GROUND] = 0;
     levels[CARGO_MODE][LEVEL_1] = 0;
@@ -67,11 +71,16 @@ public class FrontLiftMotors extends Subsystem {
 
   public void setPower(double power) {
     if (Math.abs(power) < 0.05) power = 0;
+    power *= 0.5;
     frontLift1.set(ControlMode.PercentOutput, power);
   }
 
+  public void resetEncoder() {
+    encoderOffset = frontLift1.getSelectedSensorPosition(0);
+  }
+
   public int getPosition() {
-		return frontLift1.getSelectedSensorPosition(0);
+		return frontLift1.getSelectedSensorPosition(0) - encoderOffset;
 	}
 
   @Override

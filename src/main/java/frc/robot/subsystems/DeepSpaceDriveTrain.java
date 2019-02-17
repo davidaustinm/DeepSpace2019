@@ -49,12 +49,12 @@ public class DeepSpaceDriveTrain extends Subsystem {
     rightSlave2.follow(rightMaster);
     */
 
-    leftMaster.setIdleMode(IdleMode.kBrake);
-    leftSlave1.setIdleMode(IdleMode.kBrake);
-    leftSlave2.setIdleMode(IdleMode.kBrake);
-    rightMaster.setIdleMode(IdleMode.kBrake);
-    rightSlave1.setIdleMode(IdleMode.kBrake);
-    rightSlave2.setIdleMode(IdleMode.kBrake);
+    leftMaster.setIdleMode(IdleMode.kCoast);
+    leftSlave1.setIdleMode(IdleMode.kCoast);
+    leftSlave2.setIdleMode(IdleMode.kCoast);
+    rightMaster.setIdleMode(IdleMode.kCoast);
+    rightSlave1.setIdleMode(IdleMode.kCoast);
+    rightSlave2.setIdleMode(IdleMode.kCoast);
     
     leftSlave1.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
     leftMaster.setPeriodicFramePeriod(PeriodicFrame.kStatus2,10);
@@ -73,14 +73,14 @@ public class DeepSpaceDriveTrain extends Subsystem {
       left *= -1;
       right *= -1;
     }
-    /*
+    
     SmartDashboard.putNumber("rightMaster", rightMaster.getOutputCurrent());
     SmartDashboard.putNumber("rightSlave1", rightSlave1.getOutputCurrent());
     SmartDashboard.putNumber("rightSlave2", rightSlave2.getOutputCurrent());
     SmartDashboard.putNumber("leftMaster", leftMaster.getOutputCurrent());
     SmartDashboard.putNumber("leftSlave1", leftSlave1.getOutputCurrent());
     SmartDashboard.putNumber("leftSlave2", leftSlave2.getOutputCurrent());
-    */
+    
 
     leftMaster.set(left);
     leftSlave1.set(left);
@@ -138,13 +138,13 @@ public class DeepSpaceDriveTrain extends Subsystem {
   public double[] getDriveEncoders() {
     if (switched) {
       return new double[] {
-        rightEncoder.getPosition(),
+        -rightEncoder.getPosition(),
         -leftEncoder.getPosition()
       };
     } else {
       return new double[] {
         leftEncoder.getPosition(),
-        -rightEncoder.getPosition()
+        rightEncoder.getPosition()
       };
     }
   }
