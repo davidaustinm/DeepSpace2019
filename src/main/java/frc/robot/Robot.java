@@ -177,7 +177,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     double[] driveEncoders = sensors.getDriveEncoders();
-    //System.out.println(driveEncoders[0] + " " + driveEncoders[1]);
     /*
     long time = System.currentTimeMillis();
     long elapsed = time - lastTime;
