@@ -125,7 +125,7 @@ public class Robot extends TimedRobot {
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();
-    sensors.resetRotateEncoder();
+    intakeRotate.resetOffset();
     frontLift.resetEncoder();
     rearLift.resetEncoder();
     /*
@@ -163,7 +163,7 @@ public class Robot extends TimedRobot {
     sensors.resetPosition();
     sensors.resetDriveEncoders();
     sensors.resetGyro();
-    sensors.resetRotateEncoder();
+    intakeRotate.resetOffset();
     frontLift.resetEncoder();
     rearLift.resetEncoder();
     //driveTrain.switchDirection();

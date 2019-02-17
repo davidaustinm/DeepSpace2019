@@ -30,15 +30,13 @@ public class RobotMap {
   public static final int FRONT_LIFT2 = 8;
   public static final int REAR_LIFT1 = 9;
   public static final int REAR_LIFT2 = 10;
+  public static final int ROTATE_MOTOR = 11;
 
   //VICTOR SPX
-  public static final int ROLLER_MOTOR = 11;
-  public static final int ROTATE_MOTOR = 12;
+  public static final int ROLLER_MOTOR = 12;
   public static final int REAR_LIFT_DRIVE_MOTOR = 13;
 
   // DIO
-  public static final int INTAKE_ROTATE_ENCODER_A = 0;
-  public static final int INTAKE_ROTATE_ENCODER_B = 1;
 
   // PCM
   public static final int SHIFT = 0;
