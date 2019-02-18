@@ -16,25 +16,31 @@ import frc.robot.commands.PneumaticsCommand;
  * Add your docs here.
  */
 public class Pneumatics extends Subsystem {
-  public static final int RF_LATCH = 0;
+  public static final int SHIFT = 0;
   public static final int FRONT_LIFT_SHIFT = 1;
-  public static final int VAC_SYS = 2;
-  public static final int SHIFT = 3;
+  public static final int RF_LATCH = 2;
+  //public static final int NOTHING = 3;
   public static final int PUSHER = 4;
-  int numValves = 5;
+  public static final int VAC_POWER = 5;
+  public static final int VAC_VAC_ON = 6;
+  public static final int VAC_VAC_OFF = 7;
+
+  int numValves = 7;
   String[] labels = new String[] {
       "RF Latch","Front Lift Shift","Vac Sys","Shift", "Pusher"
   };
 
-  Solenoid[] solenoids = new Solenoid[5];
-  boolean[] states = new boolean[5];
+  Solenoid[] solenoids = new Solenoid[7];
+  boolean[] states = new boolean[7];
 
   public Pneumatics() {
-    solenoids[RF_LATCH] = new Solenoid(RobotMap.RF_LATCH);
-    solenoids[FRONT_LIFT_SHIFT] = new Solenoid(RobotMap.FRONT_LIFT_SHIFT);
-    solenoids[VAC_SYS] = new Solenoid(RobotMap.VAC_SYS);
     solenoids[SHIFT] = new Solenoid(RobotMap.SHIFT);
+    solenoids[FRONT_LIFT_SHIFT] = new Solenoid(RobotMap.FRONT_LIFT_SHIFT);
+    solenoids[RF_LATCH] = new Solenoid(RobotMap.RF_LATCH);
     solenoids[PUSHER] = new Solenoid(RobotMap.PUSHER);
+    solenoids[VAC_POWER] = new Solenoid(RobotMap.VAC_POWER);
+    solenoids[VAC_VAC_ON] = new Solenoid(RobotMap.VAC_VAC_ON);
+    solenoids[VAC_VAC_OFF] = new Solenoid(RobotMap.VAC_VAC_OFF);
     for(int i = 0; i < numValves; i++) states[i] = false;
   }
 
@@ -47,11 +53,13 @@ public class Pneumatics extends Subsystem {
   }
 
   public void update() {
-    solenoids[RF_LATCH].set(states[RF_LATCH]);
-    solenoids[FRONT_LIFT_SHIFT].set(states[FRONT_LIFT_SHIFT]);
-    solenoids[VAC_SYS].set(states[VAC_SYS]);
     solenoids[SHIFT].set(states[SHIFT]);
+    solenoids[FRONT_LIFT_SHIFT].set(states[FRONT_LIFT_SHIFT]);
+    solenoids[RF_LATCH].set(states[RF_LATCH]);
     solenoids[PUSHER].set(states[PUSHER]);
+    solenoids[VAC_POWER].set(states[VAC_POWER]);
+    solenoids[VAC_VAC_ON].set(states[VAC_VAC_ON]);
+    solenoids[VAC_VAC_OFF].set(states[VAC_VAC_OFF]);
   }
 
   public boolean getState(int valve) {

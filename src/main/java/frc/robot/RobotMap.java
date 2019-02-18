@@ -42,9 +42,11 @@ public class RobotMap {
   public static final int SHIFT = 0;
   public static final int FRONT_LIFT_SHIFT = 1;
   public static final int RF_LATCH = 2;
-  public static final int VAC_SYS = 3;
+  //public static final int NOTHING = 3;
   public static final int PUSHER = 4;
-
+  public static final int VAC_POWER = 5;
+  public static final int VAC_VAC_ON = 6;
+  public static final int VAC_VAC_OFF = 7;
   public static void setMode(int m) {
     mode = m;
   }
