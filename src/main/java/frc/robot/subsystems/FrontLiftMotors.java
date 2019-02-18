@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -37,6 +38,7 @@ public class FrontLiftMotors extends Subsystem {
 
   public FrontLiftMotors() {
     frontLift1.setNeutralMode(NeutralMode.Brake);
+    frontLift2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
     frontLift2.setNeutralMode(NeutralMode.Brake);
     frontLift2.follow(frontLift1);
     levels[CARGO_MODE][LEVEL_GROUND] = 0;
@@ -72,15 +74,15 @@ public class FrontLiftMotors extends Subsystem {
   public void setPower(double power) {
     if (Math.abs(power) < 0.05) power = 0;
     power *= 0.5;
-    frontLift1.set(ControlMode.PercentOutput, power);
+    frontLift2.set(ControlMode.PercentOutput, power);
   }
 
   public void resetEncoder() {
-    encoderOffset = frontLift1.getSelectedSensorPosition(0);
+    encoderOffset = frontLift2.getSelectedSensorPosition(0);
   }
 
   public int getPosition() {
-		return frontLift1.getSelectedSensorPosition(0) - encoderOffset;
+		return frontLift2.getSelectedSensorPosition(0) - encoderOffset;
 	}
 
   @Override

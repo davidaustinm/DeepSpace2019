@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -41,6 +42,7 @@ public class IntakeRotateCommand extends Command {
       Robot.sensors.getIntakeRotatePosition();
     double changeInError = error - lastError;
     double power = Kp*error + Kd*changeInError;
+    //power = Robot.oi.operator.getY(Hand.kLeft);
     Robot.intakeRotate.setPower(power);
   }
 

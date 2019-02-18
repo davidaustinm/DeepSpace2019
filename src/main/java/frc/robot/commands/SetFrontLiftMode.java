@@ -8,7 +8,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.FrontLiftMotors;
 
 public class SetFrontLiftMode extends Command {
 
@@ -28,6 +30,9 @@ public class SetFrontLiftMode extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if (mode == FrontLiftMotors.CARGO_MODE) {
+      Robot.frontLift.setLevel(mode, 0);
+    }
     RobotMap.setMode(mode);
   }
 

@@ -46,7 +46,7 @@ public class DriveToTarget extends Command {
 
   // Called repeatedly when this Command is scheduled to run
   double kAngle = 0.0075;
-  double rampDown = 50;
+  double rampDown = 40;
   double clipAnglePct = 0.2;
   double distanceCutOut = 35;
   int countNotSeen = 0;
@@ -89,7 +89,7 @@ public class DriveToTarget extends Command {
   protected boolean isFinished() {
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
     double position = (driveEncoders[0] + driveEncoders[1])/2.0;
-    return finished || position + 30 >= encoderTarget;
+    return finished || position + 12 >= encoderTarget;
   }
 
   // Called once after isFinished returns true

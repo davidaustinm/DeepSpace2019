@@ -49,9 +49,11 @@ public class FrontLiftCommand extends Command {
       lastError = error;
     }
     int liftPosition = Robot.frontLift.getPosition();
+    /*
     if (liftPosition < LOWERLIMIT && power < 0) power = 0;
     if (liftPosition > UPPERLIMIT && power > 0) power = 0;
     if (power < 0 && liftPosition < 10000) power *= 0.3;
+    */
 
     Robot.frontLift.setPower(power);
   }

@@ -20,10 +20,10 @@ public class Pneumatics extends Subsystem {
   public static final int FRONT_LIFT_SHIFT = 1;
   public static final int RF_LATCH = 2;
   //public static final int NOTHING = 3;
-  public static final int PUSHER = 4;
-  public static final int VAC_VAC_ON = 5;
-  public static final int VAC_VAC_OFF = 6;
-  public static final int VAC_POWER = 7;
+  public static final int PUSHER = 3;
+  public static final int VAC_VAC_ON = 4;
+  public static final int VAC_VAC_OFF = 5;
+  public static final int VAC_POWER = 6;
 
   int numValves = 7;
   String[] labels = new String[] {
@@ -46,6 +46,7 @@ public class Pneumatics extends Subsystem {
   }
 
   public void setState(int valve, boolean state) {
+    System.out.println(valve + " " + state);
     states[valve] = state;
   }
 

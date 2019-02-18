@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.Sensors;
@@ -41,12 +42,13 @@ public class PneumaticsCommand extends Command {
     	double changeRightEncoder = encoder[1] - lastRightEncoder;
     	double distance = (changeLeftEncoder + changeRightEncoder)/2.0/encoderCountsPerInch;
       double velocity = distance / elapsedTime * 1000;
+      SmartDashboard.putNumber("velocity", velocity);
       //TODO: Change shift velocities
-      if(Robot.pneumatics.getState(Robot.pneumatics.SHIFT) && (velocity > 120)){
-          Robot.pneumatics.setState(Robot.pneumatics.SHIFT, true);
+      if(!Robot.pneumatics.getState(Pneumatics.SHIFT) && (velocity > 120)){
+          Robot.pneumatics.setState(Pneumatics.SHIFT, true);
       }
-      if((!Robot.pneumatics.getState(Robot.pneumatics.SHIFT)) && (velocity < 100)){
-        Robot.pneumatics.setState(Robot.pneumatics.SHIFT, false);
+      if((Robot.pneumatics.getState(Pneumatics.SHIFT)) && (velocity < 100)){
+        Robot.pneumatics.setState(Pneumatics.SHIFT, false);
       }
     }
 

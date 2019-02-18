@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -42,7 +43,7 @@ public class Robot extends TimedRobot {
   public static OI oi;
   public static DeepSpaceDriveTrain driveTrain = new DeepSpaceDriveTrain();
   public static IntakeRollerMotors intakeRoller = new IntakeRollerMotors();
-  public static IntakeRotateMotors intakeRotate= new IntakeRotateMotors();
+  public static IntakeRotateMotors intakeRotate = new IntakeRotateMotors();
   public static FrontLiftMotors frontLift = new FrontLiftMotors();
   public static RearLiftMotors rearLift = new RearLiftMotors();
   public static RearLiftDriveMotors rearLiftDrive = new RearLiftDriveMotors();
@@ -62,9 +63,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    Compressor compressor = new Compressor(0);
+    compressor.setClosedLoopControl(true);
     //CameraServer.getInstance().startAutomaticCapture();
-    client = new TCPClient();
-    client.start();
+    //client = new TCPClient();
+    //client.start();
 
     oi = new OI();
 
@@ -74,7 +77,7 @@ public class Robot extends TimedRobot {
 
     //camera = new TargetCamera();
     //camera.start();
-    pneumatics.setState(pneumatics.SHIFT, false);
+    //pneumatics.setState(pneumatics.SHIFT, false);
   }
 
   /**
@@ -96,7 +99,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    pneumatics.setState(pneumatics.RF_LATCH, false);
+    //pneumatics.setState(pneumatics.RF_LATCH, false);
   }
 
   @Override
@@ -125,17 +128,12 @@ public class Robot extends TimedRobot {
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();
+    /*
     intakeRotate.resetOffset();
     frontLift.resetEncoder();
     rearLift.resetEncoder();
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
+    */
 
-    // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
     }
@@ -159,6 +157,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    /*
     pneumatics.setState(pneumatics.SHIFT, false);
     sensors.resetPosition();
     sensors.resetDriveEncoders();
@@ -166,8 +165,9 @@ public class Robot extends TimedRobot {
     intakeRotate.resetOffset();
     frontLift.resetEncoder();
     rearLift.resetEncoder();
-    //driveTrain.switchDirection();
+    
     if(Robot.driveTrain.isSwitched()) Robot.driveTrain.switchDirection();
+    */
   }
   /**
    * This function is called periodically during operator control.
@@ -176,8 +176,9 @@ public class Robot extends TimedRobot {
   double lastAverage = 0;
   @Override
   public void teleopPeriodic() {
-    double[] driveEncoders = sensors.getDriveEncoders();
     /*
+    double[] driveEncoders = sensors.getDriveEncoders();
+  
     long time = System.currentTimeMillis();
     long elapsed = time - lastTime;
     double[] encoders = sensors.getDriveEncoders();
@@ -192,11 +193,17 @@ public class Robot extends TimedRobot {
     System.out.println(position[0] + " " + position[1]);
     double[] targetInfo = client.getTargetInfo();
     System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
-    */
+    
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
     SmartDashboard.putNumber("Front Lift Encoder", frontLift.getPosition());
     SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
     SmartDashboard.putNumber("Front Lift State", RobotMap.mode);
+    SmartDashboard.putNumber("Left drive", driveEncoders[0]);
+    SmartDashboard.putNumber("Right drive", driveEncoders[1]);
+    */
+    SmartDashboard.putNumber("Front Lift Encoder", frontLift.getPosition());
+    SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
+    SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
     Scheduler.getInstance().run();
     //sensors.updatePosition();
     if(RobotMap.DEBUG){

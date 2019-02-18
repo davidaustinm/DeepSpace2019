@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
+import frc.robot.subsystems.FrontLiftMotors;
 import frc.robot.utilities.XboxTrigger;
 
 /**
@@ -38,24 +39,27 @@ public class OI {
  // XboxTrigger latch = new XboxTrigger(operator, XboxTrigger.LT);
 
    public OI() {
+    
     lowGear.whenActive(new Shift(false));
     highGear.whenActive(new Shift(true));
     driveToTarget.whileActive(new DriveToTarget());
+    
 
     endgame.whenActive(new ChangeGameState(GameState.ENDGAME));
     teleop.whenActive(new ChangeGameState(GameState.TELEOP));
+    
     //latch.whenActive(new LatchCommand(true));
 
-    // panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
-    // panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));
-    // panelPlace.whenActive(new ChangePanelState(PanelHolderState.PLACE));
-    // rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
-    // rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.IN));
-    // modeCargo.whenActive(new SetFrontLiftMode(Robot.frontLift.CARGO_MODE));
-    // modePanel.whenActive(new SetFrontLiftMode(Robot.frontLift.PANEL_MODE));
-    // level1.whenActive(new SetFrontLiftLevel(RobotMap.mode, Robot.frontLift.LEVEL_1));
-    // level2.whenActive(new SetFrontLiftLevel(RobotMap.mode, Robot.frontLift.LEVEL_2));
-    // level3.whenActive(new SetFrontLiftLevel(RobotMap.mode, Robot.frontLift.LEVEL_3));
+    panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
+    panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));
+    panelPlace.whenActive(new ChangePanelState(PanelHolderState.PLACE));
+    rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
+    rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.IN));
+    modeCargo.whenActive(new SetFrontLiftMode(FrontLiftMotors.CARGO_MODE));
+    modePanel.whenActive(new SetFrontLiftMode(FrontLiftMotors.PANEL_MODE));
+    level1.whenActive(new SetFrontLiftLevel(RobotMap.mode, FrontLiftMotors.LEVEL_1));
+    level2.whenActive(new SetFrontLiftLevel(RobotMap.mode, FrontLiftMotors.LEVEL_2));
+    level3.whenActive(new SetFrontLiftLevel(RobotMap.mode, FrontLiftMotors.LEVEL_3));
 
   }
 

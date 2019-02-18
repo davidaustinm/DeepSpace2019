@@ -8,6 +8,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -25,6 +27,9 @@ public class RearLiftMotors extends Subsystem {
 
   public RearLiftMotors(){
     lift2.follow(lift1);
+    lift1.setNeutralMode(NeutralMode.Brake);
+    lift2.setNeutralMode(NeutralMode.Brake);
+    lift2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
   }
 
   public void setPower(double power) {
@@ -33,11 +38,11 @@ public class RearLiftMotors extends Subsystem {
   }
 
   public void resetEncoder() {
-    encoderOffset = lift1.getSelectedSensorPosition(0);
+    encoderOffset = lift2.getSelectedSensorPosition(0);
   }
 
   public double getPosition() {
-    return lift1.getSelectedSensorPosition(0) - encoderOffset;
+    return lift2.getSelectedSensorPosition(0) - encoderOffset;
   }
 
   @Override
