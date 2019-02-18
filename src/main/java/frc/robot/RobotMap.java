@@ -37,6 +37,7 @@ public class RobotMap {
   public static final int REAR_LIFT_DRIVE_MOTOR = 13;
 
   // DIO
+  public static final int VAC_SENSE = 0;
 
   // PCM
   public static final int SHIFT = 0;

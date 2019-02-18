@@ -8,15 +8,19 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class Sensors extends Subsystem {
   AHRS navx;
   double gyroOffset = 0;
   double cutPoint = 180;
   double[] driveEncoderOffsets = new double[] {0,0};
+  DigitalInput vacSense = new DigitalInput(RobotMap.VAC_SENSE);
   //public final double ENCODERCOUNTSPERINCH = 0.8; // wooden robot
   public final double ENCODER_COUNTS_PER_INCH_HIGH_GEAR = 0.44444; // new Drive train no extras
   public final double ENCODER_COUNTS_PER_INCH_LOW_GEAR = .63;
@@ -27,6 +31,10 @@ public class Sensors extends Subsystem {
         
   public Sensors() {
     navx = new AHRS(I2C.Port.kMXP);
+  }
+
+  public boolean getVacSense() {
+    return vacSense.get();
   }
 
   public double getPitch() {

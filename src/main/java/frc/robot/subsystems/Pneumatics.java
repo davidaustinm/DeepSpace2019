@@ -21,9 +21,9 @@ public class Pneumatics extends Subsystem {
   public static final int RF_LATCH = 2;
   //public static final int NOTHING = 3;
   public static final int PUSHER = 4;
-  public static final int VAC_POWER = 5;
-  public static final int VAC_VAC_ON = 6;
-  public static final int VAC_VAC_OFF = 7;
+  public static final int VAC_VAC_ON = 5;
+  public static final int VAC_VAC_OFF = 6;
+  public static final int VAC_POWER = 7;
 
   int numValves = 7;
   String[] labels = new String[] {
@@ -38,10 +38,11 @@ public class Pneumatics extends Subsystem {
     solenoids[FRONT_LIFT_SHIFT] = new Solenoid(RobotMap.FRONT_LIFT_SHIFT);
     solenoids[RF_LATCH] = new Solenoid(RobotMap.RF_LATCH);
     solenoids[PUSHER] = new Solenoid(RobotMap.PUSHER);
-    solenoids[VAC_POWER] = new Solenoid(RobotMap.VAC_POWER);
     solenoids[VAC_VAC_ON] = new Solenoid(RobotMap.VAC_VAC_ON);
     solenoids[VAC_VAC_OFF] = new Solenoid(RobotMap.VAC_VAC_OFF);
-    for(int i = 0; i < numValves; i++) states[i] = false;
+    solenoids[VAC_POWER] = new Solenoid(RobotMap.VAC_POWER);
+    for(int i = 0; i < numValves - 1; i++) states[i] = false;
+    states[VAC_POWER] = true;
   }
 
   public void setState(int valve, boolean state) {
