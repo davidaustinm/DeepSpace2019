@@ -17,7 +17,7 @@ import frc.robot.commands.FrontLiftCommand;
 
 public class FrontLiftMotors extends Subsystem {
   public static final int LEVEL_GROUND = 0;
-  public static final int LEVEL_1= 1;
+  public static final int LEVEL_1 = 1;
   public static final int LEVEL_2 = 2;
   public static final int LEVEL_3 = 3;
   
