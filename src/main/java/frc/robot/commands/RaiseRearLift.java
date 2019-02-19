@@ -18,6 +18,7 @@ public class RaiseRearLift extends Command {
   double frontDownSpeed = -0.8;
   double rearDownSpeed = -0.8;
   final int frontBottom = 100;
+  final int rearBottom = -5000;
   public RaiseRearLift() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.rearLift);
@@ -28,26 +29,36 @@ public class RaiseRearLift extends Command {
   @Override
   protected void initialize() {
   }
-
+  double kp = 0.02;
+  double ki = 0.005;
+  double totalPitch = 0;
+  double alpha = 0.8;
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if (Robot.gameState.isEndGame() == false) return;
     double pitch = Robot.sensors.getPitch(); 
     if (pitch > 3) state = FRONTONLY;
     if (pitch < -3) state = REARONLY;
     if (Math.abs(pitch) < 1.5) state = BOTH;
+
     double frontPower = frontDownSpeed;
+    if (pitch > 0) frontPower += kp*pitch + ki*totalPitch;
     double rearPower = rearDownSpeed;
+    if (pitch < 0) rearPower += kp*pitch + ki*totalPitch;
     if (state == FRONTONLY) rearPower = 0;
     if (state == REARONLY) frontPower = 0;
     Robot.frontLift.setPower(frontPower);
     Robot.rearLift.setPower(rearPower);
+    totalPitch = pitch + alpha * totalPitch;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.frontLift.getPosition() <= frontBottom;
+    boolean inPosition = Robot.frontLift.getPosition() < frontBottom &&
+      Robot.rearLift.getPosition() < rearBottom;
+    return (Robot.gameState.isEndGame() == false) || inPosition;
   }
 
   // Called once after isFinished returns true

@@ -22,7 +22,7 @@ public class GameState {
         
         if (state == ENDGAME) {
             Robot.pneumatics.setState(Pneumatics.FRONT_LIFT_SHIFT, true);
-            Robot.pneumatics.setState(Pneumatics.RF_LATCH, true);
+            //Robot.pneumatics.setState(Pneumatics.RF_LATCH, true);
         }
         else Robot.pneumatics.setState(Pneumatics.FRONT_LIFT_SHIFT, false);
         

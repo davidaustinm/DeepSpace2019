@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.*;
 
-public class TCPClient implements Runnable {
+public class TCPClient implements Runnable, TargetInfo {
 	private final Object lock = new Object();
 	protected double[] targetInfo = new double[] {-1, -1, -1};
 	/*

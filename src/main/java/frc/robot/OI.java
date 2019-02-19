@@ -26,6 +26,7 @@ public class OI {
   XboxTrigger driveToTarget = new XboxTrigger(driver, XboxTrigger.RB);
   XboxTrigger endgame = new XboxTrigger(driver, XboxTrigger.ENDGAME);
   XboxTrigger teleop = new XboxTrigger(driver, XboxTrigger.TELEOP);
+  XboxTrigger raiseLift = new XboxTrigger(driver, XboxTrigger.RT);
     
   XboxTrigger panelHolderStateAdvance = new XboxTrigger(operator, XboxTrigger.B);
   XboxTrigger panelCollect = new XboxTrigger(operator, XboxTrigger.DPADUP);
@@ -45,10 +46,11 @@ public class OI {
     highGear.whenActive(new Shift(true));
     //lowFront.whenActive(new FrontShift(true));
     //highFront.whenActive(new FrontShift(false));
-    driveToTarget.whileActive(new DriveToTarget());
+    driveToTarget.whileActive(new NewDriveToTarget());
   
     endgame.whenActive(new ChangeGameState(GameState.ENDGAME));
     teleop.whenActive(new ChangeGameState(GameState.TELEOP));
+    raiseLift.whileActive(new RaiseRearLift());
 
     panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
     panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));

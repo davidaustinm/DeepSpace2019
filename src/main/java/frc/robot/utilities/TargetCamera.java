@@ -20,13 +20,14 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class TargetCamera implements Runnable {
+public class TargetCamera implements Runnable, TargetInfo {
     Object lock = new Object();
     double distance;
     CvSink cvSink;
@@ -37,10 +38,18 @@ public class TargetCamera implements Runnable {
     double fieldOfView = 15 / 26.0;
     double imageWidth = 160;
     double angle = 0;
+    /*
     double[] coefficients = new double[] {
         15.5887262581734, 38646.2278445553, -7.35691471763911e+6,
         8.80924154583584e8, -4.04032044493288e+10
     };
+    */
+    protected double[] coefficients = new double[] {
+		20.075,
+		30236.23,
+		-2.4818e+6,
+		1.1185e+8
+	};
     public TargetCamera() {
         System.out.println("start camera thread");
         
@@ -73,12 +82,13 @@ public class TargetCamera implements Runnable {
             contours = new ArrayList<MatOfPoint>();
           Imgproc.resize(source, source, new Size(320, 240));
           Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-          Imgproc.threshold(output, mask, 200, 255, Imgproc.THRESH_BINARY);
+          Imgproc.threshold(output, mask, 100, 255, Imgproc.THRESH_BINARY);
           Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
           long elapsed = System.currentTimeMillis() - start;
           String s = "";
           double area = 0;
           double center = 0;
+          //System.out.println(contours.size());
           for (int i=0; i < contours.size(); i++) {
 
             try {
@@ -98,7 +108,7 @@ public class TargetCamera implements Runnable {
           area /= contours.size();
           
           center /= contours.size();
-          double[] targetInfo = Robot.client.getTargetInfo();
+          //double[] targetInfo = Robot.targetInfo.getTargetInfo();
           double distance = coefficients[0];
           double x = 1/area;
           for (int i = 1; i < coefficients.length; i++) {
@@ -108,10 +118,12 @@ public class TargetCamera implements Runnable {
           
           setDistance(distance);
           angle = -Math.toDegrees(Math.atan(fieldOfView / imageWidth * center));
+          SmartDashboard.putNumber("distance", distance);
+          SmartDashboard.putNumber("angle", angle);
           if(RobotMap.DEBUG){
-            System.out.println(/*elapsed + " " + */distance + " " + angle);
+            //System.out.println(/*elapsed + " " + */distance + " " + angle);
           }
-          //outputStream.putFrame(mask);
+          outputStream.putFrame(output);
           //System.out.println(area + " " + center + " " + distance + " " + x + " " + angle);
           
         }
@@ -119,23 +131,15 @@ public class TargetCamera implements Runnable {
     }
 
     public double getDistance(){
-        synchronized(lock) {
             return distance;
-        }
     }
     public void setDistance(double d) {
-        synchronized(lock) {
             distance = d;
-        }
     }
     public double getAngle(){
-        synchronized(lock) {
             return angle;
-        }
     }
     public void setAngle(double a) {
-        synchronized(lock) {
             angle = a;
-        }
     }
 }

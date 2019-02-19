@@ -17,7 +17,7 @@ public class DriveToTarget extends Command {
   boolean finished = false;
   boolean dontReadDistance = false;
   double speed;
-  final static double defaultSpeed = 0.3;
+  final static double defaultSpeed = 0.40;
 
   public DriveToTarget() {
     this(defaultSpeed);
@@ -31,8 +31,9 @@ public class DriveToTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    dontReadDistance = false;
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
-    double distance = Robot.client.getDistance();
+    double distance = Robot.targetInfo.getDistance();
     if (Double.isNaN(distance)) {
       System.out.println("distance = NaN");
       //finished = true;
@@ -46,13 +47,13 @@ public class DriveToTarget extends Command {
 
   // Called repeatedly when this Command is scheduled to run
   double kAngle = 0.0075;
-  double rampDown = 40;
+  double rampDown = 35;
   double clipAnglePct = 0.2;
-  double distanceCutOut = 35;
+  double distanceCutOut = 30;
   int countNotSeen = 0;
   @Override
   protected void execute() {
-    double distance = Robot.client.getDistance();
+    double distance = Robot.targetInfo.getDistance();
     if(distance < distanceCutOut) dontReadDistance = true;
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
     double position = (driveEncoders[0]+driveEncoders[1])/2.0;
@@ -60,7 +61,7 @@ public class DriveToTarget extends Command {
     if (!Double.isNaN(distance) && !dontReadDistance) {
       encoderTarget = position + distance*Robot.sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
       if(distance < 0) encoderTarget = Double.POSITIVE_INFINITY;
-      error = Robot.client.getAngle();
+      error = Robot.targetInfo.getAngle();
       countNotSeen = 0;
     }
     if(RobotMap.DEBUG){
@@ -89,7 +90,7 @@ public class DriveToTarget extends Command {
   protected boolean isFinished() {
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
     double position = (driveEncoders[0] + driveEncoders[1])/2.0;
-    return finished || position + 12 >= encoderTarget;
+    return finished || position + 10 >= encoderTarget;
   }
 
   // Called once after isFinished returns true

@@ -25,7 +25,8 @@ public class RearLiftCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double power = -Robot.oi.operator.getY(Hand.kLeft);
+    if (Robot.gameState.isEndGame() == false) return; 
+    double power = -Robot.oi.driver.getY(Hand.kRight);
     Robot.rearLift.setPower(power);
   }
 

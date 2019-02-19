@@ -25,8 +25,10 @@ public class ExecuteDriveProfile extends Command implements Runnable {
 	boolean isNotifierRunning = false;
   int currentPoint = 0;
   Object lock = new Object();
+  String filename;
 
   public ExecuteDriveProfile(String filename) {
+    this.filename = filename;
     CSVReader reader = new CSVReader(filename);
     profile = reader.parseCSV();
     System.out.println("length of profile " + profile.length);
@@ -41,7 +43,7 @@ public class ExecuteDriveProfile extends Command implements Runnable {
     Robot.sensors.resetDriveEncoders();
     isNotifierRunning = true;
     notifier.startPeriodic(0.01);
-    System.out.println("initializing profile");
+    System.out.println("initializing profile " + filename);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -98,7 +100,7 @@ public class ExecuteDriveProfile extends Command implements Runnable {
    	double leftError = leftPos-currentLeftPos;   	
     double rightError = rightPos-currentRightPos;
     if(RobotMap.DEBUG){
-      System.out.println(leftError + " " + rightError);
+      //System.out.println(leftError + " " + rightError);
     }
     double angleError = Utilities.normalizeAngle(heading - Robot.sensors.getHeading(), 180);
     double correction = kAngle * angleError;

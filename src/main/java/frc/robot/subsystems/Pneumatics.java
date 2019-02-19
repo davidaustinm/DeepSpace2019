@@ -43,7 +43,6 @@ public class Pneumatics extends Subsystem {
   }
 
   public void setState(int valve, boolean state) {
-    System.out.println(valve + " " + state);
     states[valve] = state;
   }
 

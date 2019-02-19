@@ -20,6 +20,7 @@ import frc.robot.commands.GameState;
 import frc.robot.commands.PanelHolderState;
 import frc.robot.commands.VacuumCommand;
 import frc.robot.commands.VacuumState;
+import frc.robot.commands.autonomous.*;
 import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FrontLiftMotors;
@@ -33,6 +34,7 @@ import frc.robot.subsystems.RearLiftDriveMotors;
 import frc.robot.subsystems.RearLiftMotors;
 import frc.robot.utilities.TCPClient;
 import frc.robot.utilities.TargetCamera;
+import frc.robot.utilities.TargetInfo;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -58,8 +60,7 @@ public class Robot extends TimedRobot {
   public static Pneumatics pneumatics = new Pneumatics();
   public static PanelHolderState panelHolderState = new PanelHolderState();
   public static GameState gameState = new GameState();
-
-  
+  public static TargetInfo targetInfo;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -73,8 +74,6 @@ public class Robot extends TimedRobot {
     Compressor compressor = new Compressor(0);
     compressor.setClosedLoopControl(true);
     //CameraServer.getInstance().startAutomaticCapture();
-    client = new TCPClient();
-    client.start();
 
     oi = new OI();
 
@@ -82,8 +81,18 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
 
-    //camera = new TargetCamera();
-    //camera.start();
+    boolean pi = true;
+    if (pi) {
+      client = new TCPClient();
+      client.start();
+      targetInfo = client;
+    } else {
+      camera = new TargetCamera();
+      camera.start();
+      targetInfo = camera;
+    }
+
+    
     //pneumatics.setState(pneumatics.SHIFT, false);
   }
 
@@ -131,7 +140,7 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
     
-    m_autonomousCommand = new DriveToTarget();
+    m_autonomousCommand = new LeftLeftCargo1();
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();
@@ -204,15 +213,19 @@ public class Robot extends TimedRobot {
     double[] targetInfo = client.getTargetInfo();
     System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
     */
-    
+    double[] driveEncoders = sensors.getDriveEncoders();
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
+    SmartDashboard.putNumber("Left drive", driveEncoders[0]);
+    SmartDashboard.putNumber("Right drive", driveEncoders[1]);
+    SmartDashboard.putNumber("gyro", sensors.getHeading());
+    
     /*
     SmartDashboard.putNumber("Front Lift Encoder", frontLift.getPosition());
     SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
     SmartDashboard.putNumber("Front Lift State", RobotMap.mode);
     SmartDashboard.putNumber("Left drive", driveEncoders[0]);
     SmartDashboard.putNumber("Right drive", driveEncoders[1]);
-    */
+    
     SmartDashboard.putBoolean("DIO Vac Sense", vacSys.getVacSense());
     SmartDashboard.putBoolean("DIO Vac on", vacSys.getVacOn());
     SmartDashboard.putBoolean("DIO Vac release", vacSys.getVacRelease());
@@ -221,6 +234,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Front Lift Encoder", frontLift.getPosition());
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
     SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
+    */
     Scheduler.getInstance().run();
     //sensors.updatePosition();
     if(RobotMap.DEBUG){
