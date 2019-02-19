@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class FrontLiftCommand extends Command {
@@ -36,16 +37,19 @@ public class FrontLiftCommand extends Command {
   protected void execute() {
     double power = -Robot.oi.operator.getY(Hand.kRight);
     if(Math.abs(power) > 0.1) {
+      Robot.frontLift.setHoldPosition(Robot.frontLift.getPosition());
       Robot.frontLift.setManual(true);
     } else {
       int position = Robot.frontLift.getPosition();
       double error = Robot.frontLift.getHoldPosition() - position;
       double changeError = lastError - error;
+      
       power = kp * error + kd * changeError;
       if (Math.abs(power) > 1) {
         if (power > 1) power = 1;
         else power = -1;
       }
+      
       lastError = error;
     }
     int liftPosition = Robot.frontLift.getPosition();
@@ -54,7 +58,7 @@ public class FrontLiftCommand extends Command {
     if (liftPosition > UPPERLIMIT && power > 0) power = 0;
     if (power < 0 && liftPosition < 10000) power *= 0.3;
     */
-
+    SmartDashboard.putNumber("lift power", power);
     Robot.frontLift.setPower(power);
   }
 

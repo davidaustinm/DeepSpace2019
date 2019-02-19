@@ -21,28 +21,25 @@ public class Pneumatics extends Subsystem {
   public static final int RF_LATCH = 2;
   //public static final int NOTHING = 3;
   public static final int PUSHER = 3;
-  public static final int VAC_VAC_ON = 4;
-  public static final int VAC_VAC_OFF = 5;
-  public static final int VAC_POWER = 6;
+  public static final int VAC_POWER = 4;
 
-  int numValves = 7;
+  int numValves = 5;
   String[] labels = new String[] {
       "RF Latch","Front Lift Shift","Vac Sys","Shift", "Pusher"
   };
 
-  Solenoid[] solenoids = new Solenoid[7];
-  boolean[] states = new boolean[7];
+  Solenoid[] solenoids = new Solenoid[5];
+  boolean[] states = new boolean[5];
 
   public Pneumatics() {
     solenoids[SHIFT] = new Solenoid(RobotMap.SHIFT);
     solenoids[FRONT_LIFT_SHIFT] = new Solenoid(RobotMap.FRONT_LIFT_SHIFT);
     solenoids[RF_LATCH] = new Solenoid(RobotMap.RF_LATCH);
     solenoids[PUSHER] = new Solenoid(RobotMap.PUSHER);
-    solenoids[VAC_VAC_ON] = new Solenoid(RobotMap.VAC_VAC_ON);
-    solenoids[VAC_VAC_OFF] = new Solenoid(RobotMap.VAC_VAC_OFF);
     solenoids[VAC_POWER] = new Solenoid(RobotMap.VAC_POWER);
     for(int i = 0; i < numValves - 1; i++) states[i] = false;
     states[VAC_POWER] = true;
+    states[FRONT_LIFT_SHIFT] = true;
   }
 
   public void setState(int valve, boolean state) {
@@ -60,8 +57,8 @@ public class Pneumatics extends Subsystem {
     solenoids[RF_LATCH].set(states[RF_LATCH]);
     solenoids[PUSHER].set(states[PUSHER]);
     solenoids[VAC_POWER].set(states[VAC_POWER]);
-    solenoids[VAC_VAC_ON].set(states[VAC_VAC_ON]);
-    solenoids[VAC_VAC_OFF].set(states[VAC_VAC_OFF]);
+    //solenoids[VAC_VAC_ON].set(states[VAC_VAC_ON]);
+    //solenoids[VAC_VAC_OFF].set(states[VAC_VAC_OFF]);
   }
 
   public boolean getState(int valve) {

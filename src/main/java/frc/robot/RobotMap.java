@@ -37,11 +37,13 @@ public class RobotMap {
   public static final int REAR_LIFT_DRIVE_MOTOR = 13;
 
   // DIO
-  public static final int VAC_SENSE = 0;
+  public static final int VAC_ON = 7;
+  public static final int VAC_RELEASE = 8;
+  public static final int VAC_SENSE = 9;
 
   // PCM
-  public static final int SHIFT = 0;
-  public static final int FRONT_LIFT_SHIFT = 1;
+  public static final int SHIFT = 1;
+  public static final int FRONT_LIFT_SHIFT = 0;
   public static final int RF_LATCH = 2;
   //public static final int NOTHING = 3;
   public static final int PUSHER = 4;

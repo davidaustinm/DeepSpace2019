@@ -21,6 +21,8 @@ public class OI {
   public XboxController operator = new XboxController(1);
   XboxTrigger lowGear = new XboxTrigger(driver, XboxTrigger.A);
   XboxTrigger highGear = new XboxTrigger(driver, XboxTrigger.Y);
+  XboxTrigger lowFront = new XboxTrigger(driver, XboxTrigger.B);
+  XboxTrigger highFront = new XboxTrigger(driver, XboxTrigger.X);
   XboxTrigger driveToTarget = new XboxTrigger(driver, XboxTrigger.RB);
   XboxTrigger endgame = new XboxTrigger(driver, XboxTrigger.ENDGAME);
   XboxTrigger teleop = new XboxTrigger(driver, XboxTrigger.TELEOP);
@@ -42,6 +44,8 @@ public class OI {
     
     lowGear.whenActive(new Shift(false));
     highGear.whenActive(new Shift(true));
+    lowFront.whenActive(new FrontShift(false));
+    highFront.whenActive(new FrontShift(true));
     driveToTarget.whileActive(new DriveToTarget());
     
 
@@ -54,7 +58,7 @@ public class OI {
     panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));
     panelPlace.whenActive(new ChangePanelState(PanelHolderState.PLACE));
     rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
-    rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.IN));
+    rotateIn.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.IN));
     modeCargo.whenActive(new SetFrontLiftMode(FrontLiftMotors.CARGO_MODE));
     modePanel.whenActive(new SetFrontLiftMode(FrontLiftMotors.PANEL_MODE));
     level1.whenActive(new SetFrontLiftLevel(RobotMap.mode, FrontLiftMotors.LEVEL_1));

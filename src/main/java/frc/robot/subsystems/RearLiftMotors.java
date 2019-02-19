@@ -26,7 +26,7 @@ public class RearLiftMotors extends Subsystem {
   int encoderOffset = 0;
 
   public RearLiftMotors(){
-    lift2.follow(lift1);
+    lift1.follow(lift2);
     lift1.setNeutralMode(NeutralMode.Brake);
     lift2.setNeutralMode(NeutralMode.Brake);
     lift2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,0,0);
@@ -34,7 +34,7 @@ public class RearLiftMotors extends Subsystem {
 
   public void setPower(double power) {
     if (Math.abs(power) < 0.1) power = 0;
-    lift1.set(ControlMode.PercentOutput, power);
+    lift2.set(ControlMode.PercentOutput, power);
   }
 
   public void resetEncoder() {

@@ -40,15 +40,15 @@ public class FrontLiftMotors extends Subsystem {
     frontLift1.setNeutralMode(NeutralMode.Brake);
     frontLift2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
     frontLift2.setNeutralMode(NeutralMode.Brake);
-    frontLift2.follow(frontLift1);
+    frontLift1.follow(frontLift2);
     levels[CARGO_MODE][LEVEL_GROUND] = 0;
-    levels[CARGO_MODE][LEVEL_1] = 0;
-    levels[CARGO_MODE][LEVEL_2] = 0;
-    levels[CARGO_MODE][LEVEL_3] = 0;
+    levels[CARGO_MODE][LEVEL_1] = 9000;
+    levels[CARGO_MODE][LEVEL_2] = 20500;
+    levels[CARGO_MODE][LEVEL_3] = 31000;
     levels[PANEL_MODE][LEVEL_GROUND] = 0;
-    levels[PANEL_MODE][LEVEL_1] = 0;
-    levels[PANEL_MODE][LEVEL_2] = 0;
-    levels[PANEL_MODE][LEVEL_3] = 0;
+    levels[PANEL_MODE][LEVEL_1] = 6000;
+    levels[PANEL_MODE][LEVEL_2] = 17300;
+    levels[PANEL_MODE][LEVEL_3] = 28600;
   }
 
   public void setManual(boolean b) {
@@ -73,7 +73,7 @@ public class FrontLiftMotors extends Subsystem {
 
   public void setPower(double power) {
     if (Math.abs(power) < 0.05) power = 0;
-    power *= 0.5;
+    //power *= 0.5;
     frontLift2.set(ControlMode.PercentOutput, power);
   }
 

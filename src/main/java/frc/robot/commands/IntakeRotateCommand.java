@@ -16,8 +16,8 @@ public class IntakeRotateCommand extends Command {
   public static int OUT = 0;
   public static int IN = 1;
   int state = IN;
-  double encoderOut = 0;
-  double encoderIn = 100;
+  double encoderIn = 0;
+  double encoderOut = 2250;
   double[] encoderStops = new double[] {encoderOut, encoderIn};
   public IntakeRotateCommand() {
     // Use requires() here to declare subsystem dependencies
@@ -32,8 +32,8 @@ public class IntakeRotateCommand extends Command {
   @Override
   protected void initialize() {
   }
-  double Kp = 0.0001;
-  double Kd = 0.0001;
+  double Kp = 0.00075;
+  double Kd = 0.00075;
   double lastError = 0;
   // Called repeatedly when this Command is scheduled to run
   @Override
@@ -42,8 +42,8 @@ public class IntakeRotateCommand extends Command {
       Robot.sensors.getIntakeRotatePosition();
     double changeInError = error - lastError;
     double power = Kp*error + Kd*changeInError;
-    //power = Robot.oi.operator.getY(Hand.kLeft);
-    Robot.intakeRotate.setPower(power);
+    //power = 0.2 * Robot.oi.operator.getX(Hand.kLeft);
+    Robot.intakeRotate.setPower(power * 0.8);
   }
 
   // Make this return true when this Command no longer needs to run execute()

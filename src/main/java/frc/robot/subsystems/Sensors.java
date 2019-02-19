@@ -20,7 +20,8 @@ public class Sensors extends Subsystem {
   double gyroOffset = 0;
   double cutPoint = 180;
   double[] driveEncoderOffsets = new double[] {0,0};
-  DigitalInput vacSense = new DigitalInput(RobotMap.VAC_SENSE);
+  double pitchOffset = 0;
+  //DigitalInput vacSense = new DigitalInput(RobotMap.VAC_SENSE);
   //public final double ENCODERCOUNTSPERINCH = 0.8; // wooden robot
   public final double ENCODER_COUNTS_PER_INCH_HIGH_GEAR = 0.44444; // new Drive train no extras
   public final double ENCODER_COUNTS_PER_INCH_LOW_GEAR = .63;
@@ -33,12 +34,18 @@ public class Sensors extends Subsystem {
     navx = new AHRS(I2C.Port.kMXP);
   }
 
+  /*
   public boolean getVacSense() {
     return vacSense.get();
   }
+  */
+
+  public void resetPitch() {
+    pitchOffset = navx.getPitch();
+  }
 
   public double getPitch() {
-    return navx.getPitch();
+    return navx.getRoll() - pitchOffset;
   }
 
   public int getIntakeRotatePosition() {

@@ -28,12 +28,10 @@ public class PanelHolderState {
 
     public void setVacuumState() {
         if (mode == COLLECT) {
-            Robot.pneumatics.setState(Pneumatics.VAC_VAC_ON, true);
-            Robot.pneumatics.setState(Pneumatics.VAC_VAC_OFF, false);
+            Robot.vacState.setState(VacuumState.ON);
         }
         else {
-            Robot.pneumatics.setState(Pneumatics.VAC_VAC_ON, false);
-            Robot.pneumatics.setState(Pneumatics.VAC_VAC_OFF, true);
+            Robot.vacState.setState(VacuumState.RELEASE);
         }
     }
 
@@ -50,9 +48,10 @@ public class PanelHolderState {
                 break;
             }
             case HANDLE: {
-                if(!Robot.sensors.getVacSense()){
+                if(!Robot.vacSys.getVacSense() && mode == COLLECT){
                     return;
                 }
+                if (mode == PLACE) Robot.vacState.setState(VacuumState.REST);
                 Robot.pneumatics.setState(Pneumatics.PUSHER, false);
                 state = REST;
                 break;

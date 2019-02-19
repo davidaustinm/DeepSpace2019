@@ -10,44 +10,31 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class RaiseRearLift extends Command {
-  final int REARONLY = 0;
-  final int FRONTONLY = 1;
-  final int BOTH = 2;
-  int state = BOTH;
-  double frontDownSpeed = -0.8;
-  double rearDownSpeed = -0.8;
-  final int frontBottom = 100;
-  public RaiseRearLift() {
+public class TimedReleaseCommand extends Command {
+  long stopTime;
+  public TimedReleaseCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.rearLift);
-    requires(Robot.frontLift);
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    stopTime = System.currentTimeMillis() + 200;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double pitch = Robot.sensors.getPitch(); 
-    if (pitch > 3) state = FRONTONLY;
-    if (pitch < -3) state = REARONLY;
-    if (Math.abs(pitch) < 1.5) state = BOTH;
-    double frontPower = frontDownSpeed;
-    double rearPower = rearDownSpeed;
-    if (state == FRONTONLY) rearPower = 0;
-    if (state == REARONLY) frontPower = 0;
-    Robot.frontLift.setPower(frontPower);
-    Robot.rearLift.setPower(rearPower);
+    if(System.currentTimeMillis() > stopTime) {
+      Robot.vacSys.setVacRelease(false);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.frontLift.getPosition() <= frontBottom;
+    return System.currentTimeMillis() > stopTime;
   }
 
   // Called once after isFinished returns true

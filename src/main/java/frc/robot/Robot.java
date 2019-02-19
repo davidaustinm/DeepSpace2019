@@ -18,6 +18,8 @@ import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GameState;
 import frc.robot.commands.PanelHolderState;
+import frc.robot.commands.VacuumCommand;
+import frc.robot.commands.VacuumState;
 import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FrontLiftMotors;
@@ -25,6 +27,7 @@ import frc.robot.subsystems.IntakeRollerMotors;
 import frc.robot.subsystems.IntakeRotateMotors;
 //import frc.robot.subsystems.PowerUpDriveTrain;
 import frc.robot.subsystems.Sensors;
+import frc.robot.subsystems.VacuumSubsystem;
 import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.RearLiftDriveMotors;
 import frc.robot.subsystems.RearLiftMotors;
@@ -47,12 +50,16 @@ public class Robot extends TimedRobot {
   public static FrontLiftMotors frontLift = new FrontLiftMotors();
   public static RearLiftMotors rearLift = new RearLiftMotors();
   public static RearLiftDriveMotors rearLiftDrive = new RearLiftDriveMotors();
+  public static VacuumSubsystem vacSys = new VacuumSubsystem();
+  public static VacuumState vacState = new VacuumState();
   public static Sensors sensors = new Sensors();
   public static TargetCamera camera;
   public static TCPClient client = null;
   public static Pneumatics pneumatics = new Pneumatics();
   public static PanelHolderState panelHolderState = new PanelHolderState();
   public static GameState gameState = new GameState();
+
+  
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -99,7 +106,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    //pneumatics.setState(pneumatics.RF_LATCH, false);
+    pneumatics.setState(pneumatics.RF_LATCH, false);
   }
 
   @Override
@@ -128,11 +135,12 @@ public class Robot extends TimedRobot {
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();
-    /*
+    sensors.resetPitch();
+    
     intakeRotate.resetOffset();
     frontLift.resetEncoder();
     rearLift.resetEncoder();
-    */
+    
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
@@ -157,7 +165,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    /*
+    
     pneumatics.setState(pneumatics.SHIFT, false);
     sensors.resetPosition();
     sensors.resetDriveEncoders();
@@ -165,9 +173,10 @@ public class Robot extends TimedRobot {
     intakeRotate.resetOffset();
     frontLift.resetEncoder();
     rearLift.resetEncoder();
+    sensors.resetPitch();
     
     if(Robot.driveTrain.isSwitched()) Robot.driveTrain.switchDirection();
-    */
+    
   }
   /**
    * This function is called periodically during operator control.
@@ -176,6 +185,7 @@ public class Robot extends TimedRobot {
   double lastAverage = 0;
   @Override
   public void teleopPeriodic() {
+    //vacSys.setVacRelease(true);
     /*
     double[] driveEncoders = sensors.getDriveEncoders();
   
@@ -193,14 +203,21 @@ public class Robot extends TimedRobot {
     System.out.println(position[0] + " " + position[1]);
     double[] targetInfo = client.getTargetInfo();
     System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
+    */
     
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
+    /*
     SmartDashboard.putNumber("Front Lift Encoder", frontLift.getPosition());
     SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
     SmartDashboard.putNumber("Front Lift State", RobotMap.mode);
     SmartDashboard.putNumber("Left drive", driveEncoders[0]);
     SmartDashboard.putNumber("Right drive", driveEncoders[1]);
     */
+    SmartDashboard.putBoolean("DIO Vac Sense", vacSys.getVacSense());
+    SmartDashboard.putBoolean("DIO Vac on", vacSys.getVacOn());
+    SmartDashboard.putBoolean("DIO Vac release", vacSys.getVacRelease());
+
+    SmartDashboard.putNumber("Pitch", sensors.getPitch());
     SmartDashboard.putNumber("Front Lift Encoder", frontLift.getPosition());
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
     SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
