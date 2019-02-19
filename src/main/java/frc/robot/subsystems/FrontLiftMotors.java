@@ -32,6 +32,7 @@ public class FrontLiftMotors extends Subsystem {
   int level = LEVEL_GROUND;
   int holdPosition = 0;
   int encoderOffset = 0;
+  int mode = PANEL_MODE;
 
   TalonSRX frontLift1 = new TalonSRX(RobotMap.FRONT_LIFT1);
   TalonSRX frontLift2 = new TalonSRX(RobotMap.FRONT_LIFT2);
@@ -42,25 +43,27 @@ public class FrontLiftMotors extends Subsystem {
     frontLift2.setNeutralMode(NeutralMode.Brake);
     frontLift1.follow(frontLift2);
     levels[CARGO_MODE][LEVEL_GROUND] = 0;
-    levels[CARGO_MODE][LEVEL_1] = 9000;
-    levels[CARGO_MODE][LEVEL_2] = 20500;
-    levels[CARGO_MODE][LEVEL_3] = 31000;
+    levels[CARGO_MODE][LEVEL_1] = 11000;
+    levels[CARGO_MODE][LEVEL_2] = 23500;
+    levels[CARGO_MODE][LEVEL_3] = 35000;
     levels[PANEL_MODE][LEVEL_GROUND] = 0;
-    levels[PANEL_MODE][LEVEL_1] = 6000;
-    levels[PANEL_MODE][LEVEL_2] = 17300;
-    levels[PANEL_MODE][LEVEL_3] = 28600;
+    levels[PANEL_MODE][LEVEL_1] = 7000;
+    levels[PANEL_MODE][LEVEL_2] = 17500;
+    levels[PANEL_MODE][LEVEL_3] = 29500;
   }
 
   public void setManual(boolean b) {
     manual = b;
   }
 
-  //public void setMode() 
+  public void setMode(int m) {
+    mode = m;
+  } 
 
   public void setLevel(int m, int l) {
     level = l;
     manual = false;
-    setHoldPosition(levels[m][l]);
+    setHoldPosition(levels[mode][l]);
   }
 
   public void setHoldPosition(int p) {

@@ -73,8 +73,8 @@ public class Robot extends TimedRobot {
     Compressor compressor = new Compressor(0);
     compressor.setClosedLoopControl(true);
     //CameraServer.getInstance().startAutomaticCapture();
-    //client = new TCPClient();
-    //client.start();
+    client = new TCPClient();
+    client.start();
 
     oi = new OI();
 

@@ -33,8 +33,11 @@ public class RearLiftMotors extends Subsystem {
   }
 
   public void setPower(double power) {
+    //System.out.println(power);
     if (Math.abs(power) < 0.1) power = 0;
+    if (power > 0 && getPosition() > 0) power = 0;
     lift2.set(ControlMode.PercentOutput, power);
+    
   }
 
   public void resetEncoder() {

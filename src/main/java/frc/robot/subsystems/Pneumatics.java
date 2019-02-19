@@ -39,7 +39,7 @@ public class Pneumatics extends Subsystem {
     solenoids[VAC_POWER] = new Solenoid(RobotMap.VAC_POWER);
     for(int i = 0; i < numValves - 1; i++) states[i] = false;
     states[VAC_POWER] = true;
-    states[FRONT_LIFT_SHIFT] = true;
+    //states[FRONT_LIFT_SHIFT] = true;
   }
 
   public void setState(int valve, boolean state) {
@@ -52,6 +52,7 @@ public class Pneumatics extends Subsystem {
   }
 
   public void update() {
+   //System.out.println(states[FRONT_LIFT_SHIFT]);
     solenoids[SHIFT].set(states[SHIFT]);
     solenoids[FRONT_LIFT_SHIFT].set(states[FRONT_LIFT_SHIFT]);
     solenoids[RF_LATCH].set(states[RF_LATCH]);
