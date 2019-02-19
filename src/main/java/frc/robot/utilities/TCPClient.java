@@ -56,6 +56,7 @@ public class TCPClient implements Runnable {
 	}
 
 	protected void setTargetInfo(double x, double y, double averArea) {
+		//System.out.println(x + " " + y + " " + averArea);
 		this.currX = x;
 		this.currY = y;
 		this.currArea = averArea;
@@ -76,7 +77,7 @@ public class TCPClient implements Runnable {
 		long time = System.currentTimeMillis();
 		double elapsed = time - lastTime;
 		lastTime = time;
-        //System.out.println(elapsed + " " + distance + " " + angle);
+		//System.out.println(elapsed + " " + distance + " " + angle);
         SmartDashboard.putNumber("distance", distance);
         SmartDashboard.putNumber("angle", angle);
 

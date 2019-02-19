@@ -26,6 +26,7 @@ public class PneumaticsCommand extends Command {
 
   // Called repeatedly when this Command is scheduled to run
   long lastTime = 0;
+  int count = 0;
   double lastLeftEncoder, lastRightEncoder;
   @Override
   protected void execute() {
@@ -44,10 +45,11 @@ public class PneumaticsCommand extends Command {
       double velocity = distance / elapsedTime * 1000;
       SmartDashboard.putNumber("velocity", velocity);
       //TODO: Change shift velocities
-      if(!Robot.pneumatics.getState(Pneumatics.SHIFT) && (velocity > 120)){
-          Robot.pneumatics.setState(Pneumatics.SHIFT, true);
-      }
-      if((Robot.pneumatics.getState(Pneumatics.SHIFT)) && (velocity < 100)){
+      if(!Robot.pneumatics.getState(Pneumatics.SHIFT) && (Math.abs(velocity) > 120)){
+        count += 1;
+        if (count > 5) Robot.pneumatics.setState(Pneumatics.SHIFT, true);
+      } else count = 0;
+      if((Robot.pneumatics.getState(Pneumatics.SHIFT)) && (Math.abs(velocity) < 80)){
         Robot.pneumatics.setState(Pneumatics.SHIFT, false);
       }
     }
