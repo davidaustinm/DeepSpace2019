@@ -42,6 +42,8 @@ public class FrontLiftMotors extends Subsystem {
     frontLift2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
     frontLift2.setNeutralMode(NeutralMode.Brake);
     frontLift1.follow(frontLift2);
+    frontLift1.setInverted(true);
+    frontLift2.setInverted(true);
     levels[CARGO_MODE][LEVEL_GROUND] = 0;
     levels[CARGO_MODE][LEVEL_1] = 11000;
     levels[CARGO_MODE][LEVEL_2] = 23500;

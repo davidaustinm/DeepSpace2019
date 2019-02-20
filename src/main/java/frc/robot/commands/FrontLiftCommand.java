@@ -57,7 +57,7 @@ public class FrontLiftCommand extends Command {
     if (liftPosition < LOWERLIMIT && power < 0) power = 0;
     if (liftPosition > UPPERLIMIT && power > 0) power = 0;
     */
-    if (power < 0) {
+    if (power < 0 && Robot.gameState.isEndGame() == false) {
       if (liftPosition < 10000) power *= 0.3;
       else power *= 0.6;
     }

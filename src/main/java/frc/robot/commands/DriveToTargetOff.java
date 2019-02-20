@@ -10,8 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class NewDriveToTarget extends Command {
-  public NewDriveToTarget() {
+public class DriveToTargetOff extends Command {
+  public DriveToTargetOff() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -19,9 +19,7 @@ public class NewDriveToTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    DriveToTarget dt = new DriveToTarget();
-    Robot.sensors.setDriveToTarget(dt);
-    dt.start();
+    Robot.sensors.driveToTargetOff();
   }
 
   // Called repeatedly when this Command is scheduled to run

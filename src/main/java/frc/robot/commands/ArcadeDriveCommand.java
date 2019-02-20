@@ -22,7 +22,7 @@ public class ArcadeDriveCommand extends Command {
   protected void initialize() {
   }
 
-  double alpha = 0.5; //0.74;
+  double alpha = 0.6; //0.74;
   double turnAlpha = .7;
   double lastTurn = 0;
   double turnAlpham1 = 1-turnAlpha;
@@ -40,6 +40,7 @@ public class ArcadeDriveCommand extends Command {
     double throttle = -Robot.oi.driver.getY(Hand.kLeft);
     double steering = -0.6*Robot.oi.driver.getX(Hand.kRight);
     double power = (alpha * throttle) + (alpham1 * lastThrottle);
+    if (Math.abs(throttle) < Math.abs(lastThrottle)) power = throttle;
     double turn = (turnAlpha * steering) + turnAlpham1 * lastSteering;
     if (Robot.gameState.isEndGame() && Math.abs(turn) < 0.2) turn = 0;
     	

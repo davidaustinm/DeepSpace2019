@@ -16,8 +16,8 @@ public class PanelHolderState {
     int mode = COLLECT;
     public static final int REST = 0;
     public static final int EXTEND = 1;
-    public static final int HANDLE = 2;
-    public static final int RETRACT = 3;
+    public static final int VAC_ON = 2;
+    public static final int VAC_OFF = 3;
     int state = REST;
 
     public void setMode(int mode) {
@@ -28,14 +28,14 @@ public class PanelHolderState {
 
     public void setVacuumState() {
         if (mode == COLLECT) {
-            Robot.vacState.setState(VacuumState.ON);
+            
         }
         else {
-            Robot.vacState.setState(VacuumState.RELEASE);
         }
     }
 
     public void advanceState() {
+        System.out.println(state + " " + mode);
         switch(state) {
             case REST: {
                 Robot.pneumatics.setState(Pneumatics.PUSHER, true);
@@ -43,15 +43,16 @@ public class PanelHolderState {
                 break;
             }
             case EXTEND: {
-                setVacuumState();
-                state = HANDLE;
+                Robot.vacState.setState(VacuumState.ON);
+                state = VAC_ON;
                 break;
             }
-            case HANDLE: {
-                if(!Robot.vacSys.getVacSense() && mode == COLLECT){
-                    return;
-                }
-                if (mode == PLACE) Robot.vacState.setState(VacuumState.REST);
+            case VAC_ON: {
+                Robot.vacState.setState(VacuumState.RELEASE);
+                state = VAC_OFF;
+                break;
+            }
+            case VAC_OFF: {
                 Robot.pneumatics.setState(Pneumatics.PUSHER, false);
                 state = REST;
                 break;

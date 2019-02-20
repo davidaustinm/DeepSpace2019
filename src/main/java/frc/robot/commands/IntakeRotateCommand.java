@@ -15,10 +15,12 @@ import frc.robot.Robot;
 public class IntakeRotateCommand extends Command {
   public static int OUT = 0;
   public static int IN = 1;
+  public static int END = 2;
   int state = IN;
   double encoderIn = 0;
   double encoderOut = 2250;
-  double[] encoderStops = new double[] {encoderOut, encoderIn};
+  double encoderEnd = 2700;
+  double[] encoderStops = new double[] {encoderOut, encoderIn, encoderEnd};
   public IntakeRotateCommand() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.intakeRotate);

@@ -17,7 +17,7 @@ public class DriveToTarget extends Command {
   boolean finished = false;
   boolean dontReadDistance = false;
   double speed;
-  final static double defaultSpeed = 0.40;
+  final static double defaultSpeed = 0.30;
 
   public DriveToTarget() {
     this(defaultSpeed);
@@ -46,7 +46,7 @@ public class DriveToTarget extends Command {
   }
 
   // Called repeatedly when this Command is scheduled to run
-  double kAngle = 0.0075;
+  double kAngle = 0.005; //0.0075;
   double rampDown = 35;
   double clipAnglePct = 0.2;
   double distanceCutOut = 30;

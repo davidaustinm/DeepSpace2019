@@ -7,9 +7,6 @@
 
 package frc.robot.utilities;
 
-/**
- * Add your docs here.
- */
 public interface TargetInfo {
     public double getDistance();
     public double getAngle();

@@ -73,7 +73,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     Compressor compressor = new Compressor(0);
     compressor.setClosedLoopControl(true);
-    //CameraServer.getInstance().startAutomaticCapture();
+    CameraServer.getInstance().startAutomaticCapture();
 
     oi = new OI();
 
@@ -140,7 +140,7 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
     
-    m_autonomousCommand = new LeftLeftCargo1();
+    m_autonomousCommand = new LeftRocketFrontBack();
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();
@@ -176,10 +176,11 @@ public class Robot extends TimedRobot {
     }
     
     pneumatics.setState(pneumatics.SHIFT, false);
+    
     sensors.resetPosition();
     sensors.resetDriveEncoders();
     sensors.resetGyro();
-    intakeRotate.resetOffset();
+    // intakeRotate.resetOffset();
     frontLift.resetEncoder();
     rearLift.resetEncoder();
     sensors.resetPitch();

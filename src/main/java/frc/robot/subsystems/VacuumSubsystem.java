@@ -9,16 +9,17 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.VacuumCommand;
 
 public class VacuumSubsystem extends Subsystem {
-  DigitalOutput vacOn = new DigitalOutput(RobotMap.VAC_ON);
-  DigitalOutput vacRelease = new DigitalOutput(RobotMap.VAC_RELEASE);
-  DigitalInput vacSense = new DigitalInput(RobotMap.VAC_SENSE);
-
-  
+  // DigitalOutput vacOn = new DigitalOutput(RobotMap.VAC_ON);
+  // Digital/Output vacRelease = new DigitalOutput(RobotMap.VAC_RELEASE);
+  // DigitalInput vacSense = new DigitalInput(RobotMap.VAC_SENSE);
+  Solenoid vacOn = new Solenoid(RobotMap.VAC_ON);
+  Solenoid vacRelease = new Solenoid(RobotMap.VAC_OFF);
 
   public void setVacOn(boolean b){
     vacOn.set(b);
@@ -29,7 +30,7 @@ public class VacuumSubsystem extends Subsystem {
   }
 
   public boolean getVacSense() {
-    return vacSense.get();
+    return true;
   }
 
   public boolean getVacOn() {

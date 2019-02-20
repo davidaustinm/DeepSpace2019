@@ -21,12 +21,13 @@ public class OI {
   public XboxController operator = new XboxController(1);
   XboxTrigger lowGear = new XboxTrigger(driver, XboxTrigger.A);
   XboxTrigger highGear = new XboxTrigger(driver, XboxTrigger.Y);
-  XboxTrigger lowFront = new XboxTrigger(driver, XboxTrigger.B);
-  XboxTrigger highFront = new XboxTrigger(driver, XboxTrigger.X);
+  //XboxTrigger lowFront = new XboxTrigger(driver, XboxTrigger.B);
+  // XboxTrigger highFront = new XboxTrigger(driver, XboxTrigger.X);
   XboxTrigger driveToTarget = new XboxTrigger(driver, XboxTrigger.RB);
   XboxTrigger endgame = new XboxTrigger(driver, XboxTrigger.ENDGAME);
   XboxTrigger teleop = new XboxTrigger(driver, XboxTrigger.TELEOP);
   XboxTrigger raiseLift = new XboxTrigger(driver, XboxTrigger.RT);
+  XboxTrigger driveToTargetOff = new XboxTrigger(driver, XboxTrigger.LB);
     
   XboxTrigger panelHolderStateAdvance = new XboxTrigger(operator, XboxTrigger.B);
   XboxTrigger panelCollect = new XboxTrigger(operator, XboxTrigger.DPADUP);
@@ -46,15 +47,16 @@ public class OI {
     highGear.whenActive(new Shift(true));
     //lowFront.whenActive(new FrontShift(true));
     //highFront.whenActive(new FrontShift(false));
-    driveToTarget.whileActive(new NewDriveToTarget());
+    driveToTarget.whenActive(new NewDriveToTarget());
+    driveToTargetOff.whenActive(new DriveToTargetOff());;
   
     endgame.whenActive(new ChangeGameState(GameState.ENDGAME));
     teleop.whenActive(new ChangeGameState(GameState.TELEOP));
-    raiseLift.whileActive(new RaiseRearLift());
+    raiseLift.toggleWhenActive(new RaiseRearLift());
 
     panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
-    panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));
-    panelPlace.whenActive(new ChangePanelState(PanelHolderState.PLACE));
+    // panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));
+    // panelPlace.whenActive(new ChangePanelState(PanelHolderState.PLACE));
     rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
     rotateIn.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.IN));
     modeCargo.whenActive(new SetFrontLiftMode(FrontLiftMotors.CARGO_MODE));
