@@ -30,7 +30,7 @@ public class RotateToHeading extends Command {
   @Override
   protected void execute() {
     double error = heading - Robot.sensors.getHeading();
-    double correction = 0.015 * error;
+    double correction = 0.01 * error;
     if(correction > 1) correction = 1;
     if(correction < -1) correction = -1;
     Robot.driveTrain.setPower(-correction * leftSpeed, correction * rightSpeed);

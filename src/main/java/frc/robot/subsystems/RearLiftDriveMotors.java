@@ -7,20 +7,27 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
+import frc.robot.commands.RearDriveCommand;
 
 /**
  * Add your docs here.
  */
 public class RearLiftDriveMotors extends Subsystem {
-  //TODO: Change ID
-  VictorSPX liftDriveMotor = new VictorSPX(0);
+  VictorSPX liftDriveMotor = new VictorSPX(RobotMap.REAR_LIFT_DRIVE_MOTOR);
+
+  public void setPower(double power) {
+    if (Math.abs(power) < 0.1) power = 0;
+    liftDriveMotor.set(ControlMode.PercentOutput, power);
+  }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new RearDriveCommand());
   }
 }

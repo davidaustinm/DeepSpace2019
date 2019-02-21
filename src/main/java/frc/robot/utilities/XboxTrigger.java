@@ -22,7 +22,9 @@ public class XboxTrigger extends Trigger {
     public static final int DPADSW = 14;
     public static final int DPADNW = 15;
     public static final int LT = 16;
-    public static final int RT = 17;
+	public static final int RT = 17;
+	public static final int ENDGAME = 18;
+	public static final int TELEOP = 19;
 	
 	XboxController xbox;
 	int button;
@@ -49,7 +51,9 @@ public class XboxTrigger extends Trigger {
     		case DPADSW: return xbox.getPOV(0) == 225;
     		case DPADNW: return xbox.getPOV(0) == 315;
     		case LT: return Math.abs(xbox.getTriggerAxis(Hand.kLeft)) > 0.5;
-    		case RT: return Math.abs(xbox.getTriggerAxis(Hand.kRight)) > 0.5;
+			case RT: return Math.abs(xbox.getTriggerAxis(Hand.kRight)) > 0.5;
+			case ENDGAME: return xbox.getPOV(0) == 270 && xbox.getBButton();
+			case TELEOP: return xbox.getPOV(0) == 270 && xbox.getXButton();
     	}
         return false;
     }

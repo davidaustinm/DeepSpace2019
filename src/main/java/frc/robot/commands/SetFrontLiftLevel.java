@@ -10,23 +10,27 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class Shift extends Command {
-  boolean gear;
-  public Shift(boolean gear) {
+public class SetFrontLiftLevel extends Command {
+
+  int level;
+  int mode;
+
+  public SetFrontLiftLevel(int m, int l) {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.pneumatics);
-    this.gear = gear;
+    // eg. requires(chassis);
+    mode = m;
+    level = l;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.pneumatics.setState(Robot.pneumatics.SHIFT, gear);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.frontLift.setLevel(mode, level);
   }
 
   // Make this return true when this Command no longer needs to run execute()

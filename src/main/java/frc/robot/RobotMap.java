@@ -14,13 +14,44 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-  // For example to map the left and right motors, you could define the
-  // following variables to use with your drivetrain subsystem.
-  // public static int leftMotor = 1;
-  // public static int rightMotor = 2;
+  public static boolean DEBUG = true;
+  public static int mode;
 
-  // If you are using multiple modules, make sure to define both the port
-  // number and the module. For example you with a rangefinder:
-  // public static int rangefinderPort = 1;
-  // public static int rangefinderModule = 1;
+  // SPARK MAX
+  public static final int LEFT_MASTER = 1;
+  public static final int LEFT_SLAVE1 = 2;
+  public static final int LEFT_SLAVE2 = 3;
+  public static final int RIGHT_MASTER = 4;
+  public static final int RIGHT_SLAVE1 = 5;
+  public static final int RIGHT_SLAVE2 = 6;
+
+  //TALON SRX
+  public static final int FRONT_LIFT1 = 7;
+  public static final int FRONT_LIFT2 = 8;
+  public static final int REAR_LIFT1 = 9;
+  public static final int REAR_LIFT2 = 10;
+  public static final int ROTATE_MOTOR = 11;
+
+  //VICTOR SPX
+  public static final int ROLLER_MOTOR = 12;
+  public static final int REAR_LIFT_DRIVE_MOTOR = 13;
+
+  // DIO
+  //public static final int VAC_ON = 7;
+  // public static final int VAC_RELEASE = 8;
+  //public static final int VAC_SENSE = 9;
+
+  // PCM
+  public static final int SHIFT = 1;
+  public static final int FRONT_LIFT_SHIFT = 0;
+  public static final int RF_LATCH = 2;
+  //public static final int NOTHING = 3;
+  public static final int PUSHER = 4;
+
+  public static final int VAC_POWER = 5;
+  public static final int VAC_ON = 6;
+  public static final int VAC_OFF = 7;
+  public static void setMode(int m) {
+    mode = m;
+  }
 }

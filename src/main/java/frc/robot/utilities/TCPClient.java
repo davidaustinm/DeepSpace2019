@@ -2,7 +2,6 @@ package frc.robot.utilities;
 
 import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,15 +11,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.*;
 
-public class TCPClient implements Runnable {
+public class TCPClient implements Runnable, TargetInfo {
 	private final Object lock = new Object();
 	protected double[] targetInfo = new double[] {-1, -1, -1};
+	/*
 	protected double[] coefficients = new double[] {
 												15.5887262581734,
 												38646.2278445553,
 												-7.35691471763911e+6,
 												8.80924154583584e8,
 												-4.04032044493288e+10 };
+												*/
+	protected double[] coefficients = new double[] {
+		20.075,
+		30236.23,
+		-2.4818e+6,
+		1.1185e+8
+	};
 	protected double distance;
 	protected double angle;
 	protected double fieldOfView = 15 / 26.0;
@@ -49,6 +56,7 @@ public class TCPClient implements Runnable {
 	}
 
 	protected void setTargetInfo(double x, double y, double averArea) {
+		//System.out.println(x + " " + y + " " + averArea);
 		this.currX = x;
 		this.currY = y;
 		this.currArea = averArea;
@@ -69,7 +77,7 @@ public class TCPClient implements Runnable {
 		long time = System.currentTimeMillis();
 		double elapsed = time - lastTime;
 		lastTime = time;
-        //System.out.println(elapsed + " " + distance + " " + angle);
+		//System.out.println(elapsed + " " + distance + " " + angle);
         SmartDashboard.putNumber("distance", distance);
         SmartDashboard.putNumber("angle", angle);
 
@@ -117,12 +125,9 @@ public class TCPClient implements Runnable {
 		Socket client = connectToPi(serverIP, port);
 
 		while(!Thread.interrupted()) {
-			if (client == null) { 
-				// TODO: Extend the if to check for socket connectivity, reconnect if needed.
-				client = connectToPi(serverIP, port);
-			}
 			try {
 				if (client == null) {
+					client = connectToPi(serverIP, port);
 					continue; 
 				}
 				InputStream in = client.getInputStream();
@@ -149,6 +154,8 @@ public class TCPClient implements Runnable {
 					setTargetInfo(x, y, area);
 				}
 			} catch (Exception e) {
+				client = null;
+				System.out.println("Error in TCP code, going to reconnect.");
 				e.printStackTrace();
 			}
 		}

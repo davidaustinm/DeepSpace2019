@@ -30,7 +30,7 @@ public class DriveForwardForTime extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveTrain.setPower(0.3, 0.3);
+    Robot.driveTrain.setPower(speed, speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()

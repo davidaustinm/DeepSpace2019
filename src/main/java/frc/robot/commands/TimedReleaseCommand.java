@@ -10,29 +10,31 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class Shift extends Command {
-  boolean gear;
-  public Shift(boolean gear) {
+public class TimedReleaseCommand extends Command {
+  long stopTime;
+  public TimedReleaseCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.pneumatics);
-    this.gear = gear;
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.pneumatics.setState(Robot.pneumatics.SHIFT, gear);
+    stopTime = System.currentTimeMillis() + 200;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if(System.currentTimeMillis() > stopTime) {
+      Robot.vacSys.setVacRelease(false);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return System.currentTimeMillis() > stopTime;
   }
 
   // Called once after isFinished returns true
