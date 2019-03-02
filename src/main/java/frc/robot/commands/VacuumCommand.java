@@ -15,7 +15,7 @@ public class VacuumCommand extends Command {
 
   public VacuumCommand() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.vacSys);
+    //requires(Robot.vacSys);
     
   }
 
@@ -27,6 +27,7 @@ public class VacuumCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    /*
     int currentState = Robot.vacState.getState();
     if(currentState == lastState) return;
     lastState = currentState;
@@ -43,6 +44,7 @@ public class VacuumCommand extends Command {
     }
     Robot.vacSys.setVacOn(false);
     Robot.vacSys.setVacRelease(false);
+    */
   }
 
   // Make this return true when this Command no longer needs to run execute()

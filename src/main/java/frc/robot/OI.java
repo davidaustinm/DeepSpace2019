@@ -29,7 +29,7 @@ public class OI {
   XboxTrigger raiseLift = new XboxTrigger(driver, XboxTrigger.RT);
   XboxTrigger driveToTargetOff = new XboxTrigger(driver, XboxTrigger.LB);
     
-  XboxTrigger panelHolderStateAdvance = new XboxTrigger(operator, XboxTrigger.B);
+  //XboxTrigger panelHolderStateAdvance = new XboxTrigger(operator, XboxTrigger.B);
   XboxTrigger panelCollect = new XboxTrigger(operator, XboxTrigger.DPADUP);
   XboxTrigger panelPlace = new XboxTrigger(operator, XboxTrigger.DPADDOWN);
   XboxTrigger rotateOut = new XboxTrigger(operator, XboxTrigger.LB);
@@ -54,9 +54,9 @@ public class OI {
     teleop.whenActive(new ChangeGameState(GameState.TELEOP));
     raiseLift.toggleWhenActive(new RaiseRearLift());
 
-    panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
-    // panelCollect.whenActive(new ChangePanelState(PanelHolderState.COLLECT));
-    // panelPlace.whenActive(new ChangePanelState(PanelHolderState.PLACE));
+    //panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
+    panelCollect.whenActive(new ExtendPusher(true));
+    panelPlace.whenActive(new ExtendPusher(false));
     rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
     rotateIn.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.IN));
     modeCargo.whenActive(new SetFrontLiftMode(FrontLiftMotors.CARGO_MODE));

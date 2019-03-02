@@ -52,13 +52,13 @@ public class Robot extends TimedRobot {
   public static FrontLiftMotors frontLift = new FrontLiftMotors();
   public static RearLiftMotors rearLift = new RearLiftMotors();
   public static RearLiftDriveMotors rearLiftDrive = new RearLiftDriveMotors();
-  public static VacuumSubsystem vacSys = new VacuumSubsystem();
-  public static VacuumState vacState = new VacuumState();
+  //public static VacuumSubsystem vacSys = new VacuumSubsystem();
+  //public static VacuumState vacState = new VacuumState();
   public static Sensors sensors = new Sensors();
   public static TargetCamera camera;
   public static TCPClient client = null;
   public static Pneumatics pneumatics = new Pneumatics();
-  public static PanelHolderState panelHolderState = new PanelHolderState();
+  //public static PanelHolderState panelHolderState = new PanelHolderState();
   public static GameState gameState = new GameState();
   public static TargetInfo targetInfo;
 

@@ -9,19 +9,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Pneumatics;
 
-public class ChangePanelState extends Command {
-  int state;
-  public ChangePanelState(int state) {
+public class ExtendPusher extends Command {
+  boolean extend;
+  public ExtendPusher(boolean extend) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    this.state = state;
+    this.extend = extend;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //Robot.panelHolderState.setMode(state);
+    Robot.pneumatics.setState(Pneumatics.PUSHER, extend);
   }
 
   // Called repeatedly when this Command is scheduled to run

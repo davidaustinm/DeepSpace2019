@@ -35,6 +35,7 @@ public class PanelHolderState {
     }
 
     public void advanceState() {
+        /*
         System.out.println(state + " " + mode);
         switch(state) {
             case REST: {
@@ -59,5 +60,6 @@ public class PanelHolderState {
             }
 
         }
+        */
     }
 }

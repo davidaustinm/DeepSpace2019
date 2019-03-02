@@ -37,6 +37,7 @@ public class RobotMap {
   public static final int REAR_LIFT_DRIVE_MOTOR = 13;
 
   // DIO
+  public static final int LIDAR = 0;
   //public static final int VAC_ON = 7;
   // public static final int VAC_RELEASE = 8;
   //public static final int VAC_SENSE = 9;

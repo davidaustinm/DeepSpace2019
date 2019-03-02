@@ -19,7 +19,7 @@ public class AdvancePanelHolder extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.panelHolderState.advanceState();
+    //Robot.panelHolderState.advanceState();
 
   }
 
