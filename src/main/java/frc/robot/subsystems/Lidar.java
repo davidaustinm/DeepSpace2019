@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.LidarCommand;
 
 /**
  * Add your docs here.
@@ -27,8 +28,16 @@ public class Lidar extends Subsystem {
     counter.reset();
   }
 
-  public Counter getCounter() {
-    return counter;
+  public double getReading() {
+    double cm;
+    double reading = 0;
+    if (counter.get() < 1) {
+      System.out.println("waiting for distance");
+    } else{ 
+      cm = (counter.getPeriod() * 100000.0);
+      reading= cm/2.54;
+    }
+    return reading;
   }
 
   public void setDistance(double distance) {
@@ -43,6 +52,6 @@ public class Lidar extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new LidarCommand());
   }
 }

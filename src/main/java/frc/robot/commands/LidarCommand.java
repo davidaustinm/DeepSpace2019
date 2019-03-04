@@ -28,16 +28,7 @@ public class LidarCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Counter counter = Robot.lidar.getCounter();
-    double cm;
-    double distance = 0;
-    if (counter.get() < 1) {
-      System.out.println("waiting for distance");
-    } else{ 
-      cm = (counter.getPeriod() * 100000.0);
-      distance= cm/2.54;
-    }
-    readings[count] = distance;
+    readings[count] = Robot.lidar.getReading();
     count ++;
     if (count >= numAvg) count = 0;
     double sum = 0;
