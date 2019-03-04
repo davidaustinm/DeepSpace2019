@@ -30,6 +30,10 @@ public class ArcadeDriveCommand extends Command {
   double lastThrottle = 0;
   double lastSteering = 0;
   // Called repeatedly when this Command is scheduled to run
+
+  public void run() {
+    execute();
+  }
   @Override
   protected void execute() {
     if (Robot.gameState.isEndGame()) {

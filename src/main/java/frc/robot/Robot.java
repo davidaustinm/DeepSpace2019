@@ -26,9 +26,11 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FrontLiftMotors;
 import frc.robot.subsystems.IntakeRollerMotors;
 import frc.robot.subsystems.IntakeRotateMotors;
+import frc.robot.subsystems.Lidar;
 //import frc.robot.subsystems.PowerUpDriveTrain;
 import frc.robot.subsystems.Sensors;
 import frc.robot.subsystems.VacuumSubsystem;
+import frc.robot.subsystems.VelocityRecord;
 import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.RearLiftDriveMotors;
 import frc.robot.subsystems.RearLiftMotors;
@@ -61,6 +63,9 @@ public class Robot extends TimedRobot {
   //public static PanelHolderState panelHolderState = new PanelHolderState();
   public static GameState gameState = new GameState();
   public static TargetInfo targetInfo;
+  public static VelocityRecord velocityRecord = new VelocityRecord();
+  public static Lidar lidar = new Lidar();
+  boolean manualStart = false;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -106,6 +111,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    velocityRecord.updateVelocity();
   }
 
   /**
@@ -151,7 +157,7 @@ public class Robot extends TimedRobot {
     rearLift.resetEncoder();
     
 
-    if (m_autonomousCommand != null) {
+    if (m_autonomousCommand != null && !manualStart) {
       m_autonomousCommand.start();
     }
   }
@@ -162,6 +168,16 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     sensors.updatePosition();
+    if (m_autonomousCommand != null && Robot.oi.driver.getBButton()) {
+      if (manualStart && !m_autonomousCommand.isRunning()) {
+        m_autonomousCommand.start();
+        manualStart = false;
+      }
+    }
+    if (m_autonomousCommand != null && Robot.oi.driver.getXButton()) {
+      m_autonomousCommand.cancel();
+      m_autonomousCommand = null;
+    }
     Scheduler.getInstance().run();
   }
 
@@ -171,9 +187,6 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
     
     pneumatics.setState(pneumatics.SHIFT, false);
     
@@ -236,6 +249,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
     SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
     */
+    if (oi.driver.getBButton() && m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
     Scheduler.getInstance().run();
     //sensors.updatePosition();
     if(RobotMap.DEBUG){
