@@ -19,6 +19,7 @@ public class Lidar extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   Counter counter;
+  double distance;
   public Lidar() {
     counter = new Counter(new DigitalInput(RobotMap.LIDAR));
     counter.setMaxPeriod(1.0);
@@ -26,14 +27,17 @@ public class Lidar extends Subsystem {
     counter.reset();
   }
 
+  public Counter getCounter() {
+    return counter;
+  }
+
+  public void setDistance(double distance) {
+    this.distance = distance;
+  }
+
   public double getDistance() {
-    double cm;
-    if (counter.get() < 1) {
-      System.out.println("waiting for distance");
-      return 0;
-    }
-    cm = (counter.getPeriod() * 100000.0);
-    return cm/2.54;
+    return distance;
+    
   }
 
   @Override
