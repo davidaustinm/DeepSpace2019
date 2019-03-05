@@ -27,6 +27,7 @@ public class VelocityRecord extends Subsystem {
       velocity = change/(currentTime - lastTime) * 1000;
       lastEncoderAvg = avgEncoder;
       lastTime = currentTime;
+      System.out.println("velocity record = " + velocity);
   }
 
   public double getVelocity() {
