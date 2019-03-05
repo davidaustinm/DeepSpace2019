@@ -8,13 +8,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.DriveForwardForDistance;
-import frc.robot.commands.DriveForwardForTime;
-import frc.robot.commands.DriveToTarget;
-import frc.robot.commands.ExecuteDriveProfile;
-import frc.robot.commands.RotateToHeading;
-import frc.robot.commands.SwitchDirection;
-import frc.robot.commands.Wait;
+import frc.robot.commands.*;
 
 public class LeftRocketFront extends CommandGroup {
   /**
@@ -22,7 +16,8 @@ public class LeftRocketFront extends CommandGroup {
    */
   public LeftRocketFront() {
     //addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
-    addSequential(new DriveToTarget());
+    addSequential(new DriveToTarget2());
+    addSequential(new AutoActivatePusher(false));
     addSequential(new DriveForwardForTime(350, -0.5));
     addSequential(new RotateToHeading(135, 0.5, 0.5));
     addSequential(new DriveForwardForDistance(60, 0.4, 135, true));
@@ -30,14 +25,17 @@ public class LeftRocketFront extends CommandGroup {
     // addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/turn-left-rocket-front.profile.csv"));
     // addSequential(new SwitchDirection());
     // addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/drive-to-portal.profile.csv"));
-    addSequential(new DriveToTarget());
+    addSequential(new DriveToTarget2());
+    addSequential(new AutoActivatePusher(true));
     addSequential(new SwitchDirection());
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/backaway-from-portal.profile.csv"));
     addSequential(new SwitchDirection());
     addSequential(new RotateToHeading(-20, 0.5, 0.5));
     addSequential(new Wait(50));
     //addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/return-to-rocket.profile.csv"));
-    addSequential(new DriveToTarget());
+    addSequential(new DriveToTarget2());
+    addSequential(new AutoActivatePusher(false));
+    
     /*
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-front.profile.csv"));
     addSequential(new SwitchDirection());

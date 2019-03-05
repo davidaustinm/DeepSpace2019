@@ -8,8 +8,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.DriveToTarget;
-import frc.robot.commands.ExecuteDriveProfile;
+import frc.robot.commands.*;
 
 public class LeftLeftCargo1 extends CommandGroup {
   /**
@@ -17,7 +16,8 @@ public class LeftLeftCargo1 extends CommandGroup {
    */
   public LeftLeftCargo1() {
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-left-cargo-1.profile.csv"));
-    addSequential(new DriveToTarget());
+    addSequential(new DriveToTarget2());
+    addSequential(new AutoActivatePusher(false));
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

@@ -38,6 +38,13 @@ public class RobotMap {
 
   // DIO
   public static final int LIDAR = 0;
+  public static final int AUTOSWITCH0 = 10;
+  public static final int AUTOSWITCH1 = 11;
+  public static final int AUTOSWITCH2 = 12;
+  public static final int AUTOSWITCH3 = 13;
+  public static final int AUTOSWITCH4 = 14;
+  public static final int AUTOSWITCH5 = 15;
+
   //public static final int VAC_ON = 7;
   // public static final int VAC_RELEASE = 8;
   //public static final int VAC_SENSE = 9;

@@ -8,7 +8,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.DriveToTarget;
+import frc.robot.commands.*;
 import frc.robot.commands.ExecuteDriveProfile;
 
 public class RightRightRocketBack extends CommandGroup {
@@ -17,7 +17,8 @@ public class RightRightRocketBack extends CommandGroup {
    */
   public RightRightRocketBack() {
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/right-right-rocket-back.profile.csv"));
-    addSequential(new DriveToTarget());
+    addSequential(new DriveToTarget2());
+    addSequential(new AutoActivatePusher(false));
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

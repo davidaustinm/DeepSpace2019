@@ -21,6 +21,7 @@ import frc.robot.commands.PanelHolderState;
 import frc.robot.commands.VacuumCommand;
 import frc.robot.commands.VacuumState;
 import frc.robot.commands.autonomous.*;
+import frc.robot.subsystems.AutoSwitches;
 import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FrontLiftMotors;
@@ -65,6 +66,8 @@ public class Robot extends TimedRobot {
   public static TargetInfo targetInfo;
   public static VelocityRecord velocityRecord = new VelocityRecord();
   public static Lidar lidar = new Lidar();
+
+  //public static AutoSwitches autoSwitches = new AutoSwitches();
   boolean manualStart = false;
 
   Command m_autonomousCommand;
@@ -147,6 +150,10 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = new DriveToTarget(0.4);
     
     m_autonomousCommand = new LeftRocketFrontBack();
+
+    //m_autonomousCommand = autoSwitches.getAutonCommand();
+    //manualStart = autoSwitches.getManualMode();
+
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();
@@ -156,7 +163,6 @@ public class Robot extends TimedRobot {
     frontLift.resetEncoder();
     rearLift.resetEncoder();
     
-
     if (m_autonomousCommand != null && !manualStart) {
       m_autonomousCommand.start();
     }
