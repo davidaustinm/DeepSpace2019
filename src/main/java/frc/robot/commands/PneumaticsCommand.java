@@ -37,6 +37,7 @@ public class PneumaticsCommand extends Command {
     double encoderCountsPerInch = Robot.pneumatics.getState(Pneumatics.SHIFT) ? 
       Robot.sensors.ENCODER_COUNTS_PER_INCH_HIGH_GEAR : Robot.sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
       
+    /*  
     if (lastTime != 0) {
     	long elapsedTime = currentTime - lastTime;
     	double changeLeftEncoder = encoder[0] - lastLeftEncoder;
@@ -52,7 +53,7 @@ public class PneumaticsCommand extends Command {
       if((Robot.pneumatics.getState(Pneumatics.SHIFT)) && (Math.abs(velocity) < 80)){
         Robot.pneumatics.setState(Pneumatics.SHIFT, false);
       }
-    }
+    }*/
 
     lastTime = currentTime;
     lastLeftEncoder = encoder[0];
