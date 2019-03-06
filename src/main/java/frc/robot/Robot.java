@@ -194,7 +194,7 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     
-    pneumatics.setState(pneumatics.SHIFT, false);
+    //pneumatics.setState(pneumatics.SHIFT, false);
     
     sensors.resetPosition();
     sensors.resetDriveEncoders();
