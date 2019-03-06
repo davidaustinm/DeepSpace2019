@@ -54,7 +54,7 @@ public class RobotMap {
   public static final int FRONT_LIFT_SHIFT = 0;
   public static final int RF_LATCH = 2;
   //public static final int NOTHING = 3;
-  public static final int PUSHER = 4;
+  public static final int PUSHER = 5;
 
   public static final int VAC_POWER = 5;
   public static final int VAC_ON = 6;

@@ -49,7 +49,7 @@ public class AutoSwitches extends Subsystem {
   }
 
   public Command getCenterCommand() {
-    direction = switches[4].get() ? LEFT: RIGHT;
+    direction = switches[4].get() ? RIGHT:LEFT;
     if (target == CARGO) {      // going to cargo ship
       if (side == FRONT) return new CenterCargoFront();
       else {

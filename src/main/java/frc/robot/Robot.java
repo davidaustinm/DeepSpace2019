@@ -114,7 +114,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    velocityRecord.updateVelocity();
+    //velocityRecord.updateVelocity();
   }
 
   /**
@@ -234,6 +234,7 @@ public class Robot extends TimedRobot {
     System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
     */
     double[] driveEncoders = sensors.getDriveEncoders();
+    System.out.println(driveEncoders[0] + " " + driveEncoders[1]);
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
     SmartDashboard.putNumber("Left drive", driveEncoders[0]);
     SmartDashboard.putNumber("Right drive", driveEncoders[1]);
@@ -255,7 +256,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
     SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
     */
-    if (oi.driver.getBButton() && m_autonomousCommand != null) {
+    if (oi.driver.getXButton() && m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
     Scheduler.getInstance().run();

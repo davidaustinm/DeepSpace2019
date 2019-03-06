@@ -55,8 +55,8 @@ public class OI {
     raiseLift.toggleWhenActive(new RaiseRearLift());
 
     //panelHolderStateAdvance.whenActive(new AdvancePanelHolder());
-    panelCollect.whenActive(new ExtendPusher(true));
-    panelPlace.whenActive(new ExtendPusher(false));
+    panelCollect.whenActive(new ExtendPusher(false));
+    panelPlace.whenActive(new ExtendPusher(true));
     rotateOut.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
     rotateIn.whenActive(new ChangeIntakeRotateState(IntakeRotateCommand.IN));
     modeCargo.whenActive(new SetFrontLiftMode(FrontLiftMotors.CARGO_MODE));

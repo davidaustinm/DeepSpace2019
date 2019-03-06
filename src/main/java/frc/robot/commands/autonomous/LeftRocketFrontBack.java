@@ -16,7 +16,7 @@ public class LeftRocketFrontBack extends CommandGroup {
    */
   public LeftRocketFrontBack() {
     addSequential(new DriveToTarget2());
-    addSequential(new AutoActivatePusher(false));
+    addSequential(new AutoActivatePusher(true));
     addSequential(new DriveForwardForTime(350, -0.5));
     addSequential(new RotateToHeading(135, 0.5, 0.5));
     addSequential(new DriveForwardForDistance(60, 0.4, 135, true));
@@ -25,14 +25,14 @@ public class LeftRocketFrontBack extends CommandGroup {
     // addSequential(new SwitchDirection());
     // addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/drive-to-portal.profile.csv"));
     addSequential(new DriveToTarget2());
-    addSequential(new AutoActivatePusher(true));
+    addSequential(new AutoActivatePusher(false));
     addSequential(new SwitchDirection());
     addSequential(new DriveForwardForDistance(12*12, 0.6, -55, true));
     addSequential(new DriveForwardForDistance(130, 0.6, -51));
     addSequential(new SwitchDirection());
     addSequential(new RotateToHeading(90, 0.57, 0.57));
     addSequential(new DriveToTarget2());
-    addSequential(new AutoActivatePusher(false));
+    addSequential(new AutoActivatePusher(true));
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
