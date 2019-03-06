@@ -54,6 +54,7 @@ public class DriveToTarget2 extends Command {
   double clipAnglePct = 0.2;
   double distanceCutOut = 30;
   int countNotSeen = 0;
+  double frontEnd = 12;
   @Override
   protected void execute() {
     double distance = Robot.targetInfo.getDistance();
@@ -118,7 +119,7 @@ public class DriveToTarget2 extends Command {
     if (timer != null && timer.get() > 1.5) return true;
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
     double position = (driveEncoders[0] + driveEncoders[1])/2.0;
-    return position + 5 >= encoderTarget;
+    return position + frontEnd >= encoderTarget;
   }
 
   // Called once after isFinished returns true

@@ -43,8 +43,8 @@ public class OI {
 
    public OI() {
     
-    lowGear.whenActive(new Shift(false));
-    highGear.whenActive(new Shift(true));
+    lowGear.whenActive(new Shift(true));
+    highGear.whenActive(new Shift(false));
     //lowFront.whenActive(new FrontShift(true));
     //highFront.whenActive(new FrontShift(false));
     driveToTarget.whenActive(new NewDriveToTarget());

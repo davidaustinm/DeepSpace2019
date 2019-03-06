@@ -239,9 +239,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Left drive", driveEncoders[0]);
     SmartDashboard.putNumber("Right drive", driveEncoders[1]);
     SmartDashboard.putNumber("gyro", sensors.getHeading());
-    
-    /*
     SmartDashboard.putNumber("Front Lift Encoder", frontLift.getPosition());
+    /*
     SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
     SmartDashboard.putNumber("Front Lift State", RobotMap.mode);
     SmartDashboard.putNumber("Left drive", driveEncoders[0]);
