@@ -15,8 +15,8 @@ public class RaiseRearLift extends Command {
   final int FRONTONLY = 1;
   final int BOTH = 2;
   int state = BOTH;
-  double frontDownSpeed = -0.8;
-  double rearDownSpeed = -0.8;
+  double frontDownSpeed = -0.6;
+  double rearDownSpeed = -0.6;
   final int frontBottom = 100;
   final int rearBottom = -5000;
   public RaiseRearLift() {
@@ -29,8 +29,8 @@ public class RaiseRearLift extends Command {
   @Override
   protected void initialize() {
   }
-  double kp = 0.02;
-  double ki = 0.005;
+  double kp = 0.02; //2; //0.02
+  double ki = 0.00; // 0.005
   double totalPitch = 0;
   double alpha = 0.8;
   // Called repeatedly when this Command is scheduled to run
@@ -46,8 +46,8 @@ public class RaiseRearLift extends Command {
     if (pitch > 0) frontPower += kp*pitch + ki*totalPitch;
     double rearPower = rearDownSpeed;
     if (pitch < 0) rearPower += kp*pitch + ki*totalPitch;
-    if (state == FRONTONLY) rearPower = 0;
-    if (state == REARONLY) frontPower = 0;
+    //if (state == FRONTONLY) rearPower = 0;
+    //if (state == REARONLY) frontPower = 0;
     Robot.frontLift.setPower(frontPower);
     Robot.rearLift.setPower(rearPower);
     totalPitch = pitch + alpha * totalPitch;

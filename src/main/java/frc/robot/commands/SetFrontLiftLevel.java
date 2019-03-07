@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class SetFrontLiftLevel extends Command {
 
@@ -30,7 +31,7 @@ public class SetFrontLiftLevel extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.frontLift.setLevel(mode, level);
+    Robot.frontLift.setLevel(RobotMap.mode, level);
   }
 
   // Make this return true when this Command no longer needs to run execute()

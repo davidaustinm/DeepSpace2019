@@ -45,13 +45,13 @@ public class FrontLiftMotors extends Subsystem {
     frontLift1.setInverted(true);
     frontLift2.setInverted(true);
     levels[CARGO_MODE][LEVEL_GROUND] = 0;
-    levels[CARGO_MODE][LEVEL_1] = 11000;
-    levels[CARGO_MODE][LEVEL_2] = 23500;
-    levels[CARGO_MODE][LEVEL_3] = 35000;
+    levels[CARGO_MODE][LEVEL_1] = 9400;
+    levels[CARGO_MODE][LEVEL_2] = 20700;
+    levels[CARGO_MODE][LEVEL_3] = 30000;
     levels[PANEL_MODE][LEVEL_GROUND] = 0;
-    levels[PANEL_MODE][LEVEL_1] = 7000;
-    levels[PANEL_MODE][LEVEL_2] = 17500;
-    levels[PANEL_MODE][LEVEL_3] = 29500;
+    levels[PANEL_MODE][LEVEL_1] = 2400;
+    levels[PANEL_MODE][LEVEL_2] = 13900;
+    levels[PANEL_MODE][LEVEL_3] = 25500;
   }
 
   public void setManual(boolean b) {
@@ -64,6 +64,7 @@ public class FrontLiftMotors extends Subsystem {
 
   public void setLevel(int m, int l) {
     level = l;
+    mode = m;
     manual = false;
     setHoldPosition(levels[mode][l]);
   }

@@ -27,8 +27,8 @@ public class RobotMap {
 
   //TALON SRX
   public static final int FRONT_LIFT1 = 7;
-  public static final int FRONT_LIFT2 = 8;
-  public static final int REAR_LIFT1 = 9;
+  public static final int FRONT_LIFT2 = 9;
+  public static final int REAR_LIFT1 = 8;
   public static final int REAR_LIFT2 = 10;
   public static final int ROTATE_MOTOR = 11;
 

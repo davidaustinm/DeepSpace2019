@@ -149,7 +149,7 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
     
-    m_autonomousCommand = new LeftRocketFrontBack();
+    m_autonomousCommand = new Cargo1Left();
 
     //m_autonomousCommand = autoSwitches.getAutonCommand();
     //manualStart = autoSwitches.getManualMode();
@@ -181,6 +181,7 @@ public class Robot extends TimedRobot {
       }
     }
     if (m_autonomousCommand != null && Robot.oi.driver.getXButton()) {
+      //m_autonomousCommand.end();
       m_autonomousCommand.cancel();
       m_autonomousCommand = null;
     }
@@ -234,7 +235,8 @@ public class Robot extends TimedRobot {
     System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
     */
     double[] driveEncoders = sensors.getDriveEncoders();
-    System.out.println(driveEncoders[0] + " " + driveEncoders[1]);
+    //System.out.println(driveEncoders[0] + " " + driveEncoders[1]);
+    //System.out.println("pitch = " + sensors.getHeading());
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
     SmartDashboard.putNumber("Left drive", driveEncoders[0]);
     SmartDashboard.putNumber("Right drive", driveEncoders[1]);

@@ -9,7 +9,6 @@ package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.*;
-import frc.robot.commands.ExecuteDriveProfile;
 
 public class Cargo1Left extends CommandGroup {
   /**
@@ -19,6 +18,14 @@ public class Cargo1Left extends CommandGroup {
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/cargo1.profile.csv"));
     addSequential(new DriveToTarget2());
     addSequential(new AutoActivatePusher(true));
+    addSequential(new SwitchDirection());
+    addSequential(new DriveForwardForDistance(48, 0.5, 90));
+    addSequential(new SwitchDirection());
+    addSequential(new RotateToHeading(175, 0.6, 0.6));
+    addSequential(new DriveForwardForDistance(100, 0.5, 175));
+    addSequential(new DriveToTarget2());
+    addSequential(new AutoActivatePusher(false));
+    addSequential(new DriveForwardForTime(1000, -0.5));
     
   }
 }

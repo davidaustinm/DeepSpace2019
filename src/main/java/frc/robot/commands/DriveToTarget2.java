@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
@@ -88,6 +89,10 @@ public class DriveToTarget2 extends Command {
     double remaining = (encoderTarget - position)/Robot.sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
     if (remaining < rampDown) ramp = remaining/rampDown;
     currentSpeed *= ramp;
+
+    if (Math.abs(Robot.oi.driver.getX(Hand.kRight)) > 0.3) {
+      correction = -Robot.oi.driver.getX(Hand.kRight);
+    }
     correction = Utilities.clip(correction, -clipAnglePct * currentSpeed, clipAnglePct * currentSpeed);
     double leftPower = currentSpeed - correction;
     double rightPower = currentSpeed + correction;

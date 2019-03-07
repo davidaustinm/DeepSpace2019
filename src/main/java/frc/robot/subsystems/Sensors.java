@@ -32,7 +32,7 @@ public class Sensors extends Subsystem {
   double positionY = 0;
   double[] lastDriveEncoder = new double[] {0,0};
   //DriveToTarget driveToTarget = null;
-  DriveToTarget2 driveToTarget = null;
+  DriveToTarget driveToTarget = null;
   public Sensors() {
     navx = new AHRS(I2C.Port.kMXP);
   }
@@ -43,7 +43,7 @@ public class Sensors extends Subsystem {
   }
   */
 
-  public void setDriveToTarget(DriveToTarget2 dt) {
+  public void setDriveToTarget(DriveToTarget dt) {
     driveToTarget = dt;
   }
 

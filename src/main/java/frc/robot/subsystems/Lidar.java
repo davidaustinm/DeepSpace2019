@@ -32,7 +32,7 @@ public class Lidar extends Subsystem {
     double cm;
     double reading = 0;
     if (counter.get() < 1) {
-      System.out.println("waiting for distance");
+      System.out.println("waiting for lidar");
     } else{ 
       cm = (counter.getPeriod() * 100000.0);
       reading= cm/2.54;
