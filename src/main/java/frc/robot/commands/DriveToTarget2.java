@@ -23,6 +23,7 @@ public class DriveToTarget2 extends Command implements AutoTarget {
   double lastDistance = 1000;
   Timer timer;
   final static double defaultSpeed = 0.30;
+  long stopTime;
 
   public DriveToTarget2() {
     this(defaultSpeed);
@@ -36,6 +37,7 @@ public class DriveToTarget2 extends Command implements AutoTarget {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    stopTime = System.currentTimeMillis() + 3000;
     timer = null;
     dontReadDistance = false;
     double distance = Robot.targetInfo.getDistance();
@@ -121,6 +123,7 @@ public class DriveToTarget2 extends Command implements AutoTarget {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    if (System.currentTimeMillis() > stopTime) return true;
     if (timer != null && timer.get() > 1.5) return true;
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
     double position = (driveEncoders[0] + driveEncoders[1])/2.0;
