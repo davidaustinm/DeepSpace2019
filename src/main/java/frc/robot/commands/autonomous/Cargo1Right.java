@@ -16,6 +16,7 @@ public class Cargo1Right extends CommandGroup {
    * Add your docs here.
    */
   public Cargo1Right() {
+    addParallel(new ReadyIntake());
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/right-cargo1.profile.csv"));
     addSequential(new DriveToTarget2());
     addSequential(new AutoActivatePusher(true));

@@ -5,20 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.autonomous;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.*;
+import frc.robot.RobotMap;
+import frc.robot.subsystems.FrontLiftMotors;
 
-public class LeftLeftCargo1 extends CommandGroup {
+public class ReadyIntake extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public LeftLeftCargo1() {
-    addParallel(new ReadyIntake());
-    addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-left-cargo-1.profile.csv"));
-    addSequential(new DriveToTarget2());
-    addSequential(new AutoActivatePusher(true));
+  public ReadyIntake() {
+    addSequential(new Wait(2000));
+    addSequential(new SetFrontLiftMode(FrontLiftMotors.PANEL_MODE));
+    addSequential(new SetFrontLiftLevel(RobotMap.mode, FrontLiftMotors.LEVEL_1));
+    addSequential(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
+    
+
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

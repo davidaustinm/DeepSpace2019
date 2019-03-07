@@ -14,6 +14,7 @@ import frc.robot.commands.DriveForwardForTime;
 import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.DriveToTarget2;
 import frc.robot.commands.ExecuteDriveProfile;
+import frc.robot.commands.ReadyIntake;
 import frc.robot.commands.RotateToHeading;
 import frc.robot.commands.SwitchDirection;
 import frc.robot.commands.Wait;
@@ -23,6 +24,7 @@ public class RightRocketFront extends CommandGroup {
    * Add your docs here.
    */
   public RightRocketFront() {
+    addParallel(new ReadyIntake());
     addSequential(new DriveToTarget2());
     addSequential(new AutoActivatePusher(true));
     addSequential(new DriveForwardForTime(350, -0.5));

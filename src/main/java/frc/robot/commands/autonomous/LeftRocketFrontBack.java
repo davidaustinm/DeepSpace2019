@@ -15,6 +15,7 @@ public class LeftRocketFrontBack extends CommandGroup {
    * Add your docs here.
    */
   public LeftRocketFrontBack() {
+    addParallel(new ReadyIntake());
     addSequential(new DriveToTarget2());
     addSequential(new AutoActivatePusher(true));
     addSequential(new DriveForwardForTime(350, -0.5));

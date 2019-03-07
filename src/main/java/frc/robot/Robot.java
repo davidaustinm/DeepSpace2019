@@ -183,7 +183,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null && Robot.oi.driver.getXButton()) {
       //m_autonomousCommand.end();
       m_autonomousCommand.cancel();
-      m_autonomousCommand = null;
+      //m_autonomousCommand = null;
     }
     Scheduler.getInstance().run();
   }
@@ -201,11 +201,12 @@ public class Robot extends TimedRobot {
     sensors.resetDriveEncoders();
     sensors.resetGyro();
     // intakeRotate.resetOffset();
-    frontLift.resetEncoder();
-    rearLift.resetEncoder();
+    //frontLift.resetEncoder();
+    //rearLift.resetEncoder();
     sensors.resetPitch();
     
     if(Robot.driveTrain.isSwitched()) Robot.driveTrain.switchDirection();
+    if(m_autonomousCommand != null) m_autonomousCommand.cancel();
     
   }
   /**
@@ -257,14 +258,14 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
     SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
     */
+    /*
     if (oi.driver.getXButton() && m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    */
     Scheduler.getInstance().run();
     //sensors.updatePosition();
-    if(RobotMap.DEBUG){
-      //System.out.println(client.getTargetArea());
-    }
+    
   }
 
   /**

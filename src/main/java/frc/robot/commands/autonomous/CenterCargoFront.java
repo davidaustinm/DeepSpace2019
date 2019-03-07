@@ -15,6 +15,7 @@ public class CenterCargoFront extends CommandGroup {
    * Add your docs here.
    */
   public CenterCargoFront() {
+    addParallel(new ReadyIntake());
     addSequential(new DriveToTarget2());
     addSequential(new AutoActivatePusher(true));
     

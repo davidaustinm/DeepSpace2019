@@ -14,7 +14,7 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.utilities.Utilities;
 
-public class DriveToTarget2 extends Command {
+public class DriveToTarget2 extends Command implements AutoTarget {
   double encoderTarget;
   boolean finished = false;
   boolean dontReadDistance = false;

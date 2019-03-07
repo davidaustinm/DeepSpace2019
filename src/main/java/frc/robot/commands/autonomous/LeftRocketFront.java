@@ -16,6 +16,7 @@ public class LeftRocketFront extends CommandGroup {
    */
   public LeftRocketFront() {
     //addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
+    addParallel(new ReadyIntake());
     addSequential(new DriveToTarget2());
     addSequential(new AutoActivatePusher(true));
     addSequential(new DriveForwardForTime(350, -0.5));

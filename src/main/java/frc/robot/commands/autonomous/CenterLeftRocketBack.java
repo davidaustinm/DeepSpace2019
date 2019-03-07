@@ -15,6 +15,7 @@ public class CenterLeftRocketBack extends CommandGroup {
    * Add your docs here.
    */
   public CenterLeftRocketBack() {
+    addParallel(new ReadyIntake());
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-back.profile.csv"));
     addSequential(new DriveToTarget2());
     addSequential(new AutoActivatePusher(true));
