@@ -61,11 +61,15 @@ public class DriveToTarget2 extends Command implements AutoTarget {
   @Override
   protected void execute() {
     double distance = Robot.targetInfo.getDistance();
+
+    /*  allow driver control
     if (Double.isNaN(distance) && neverSeen) {
       // we haven't seen the target yet so let the driver move robot
       Robot.driveTrain.runDefaultCommand();
       return;
     }
+    */
+
     neverSeen = true; // ok, we've seen the target
     distance = getDistance();
     if(distance < distanceCutOut && timer == null) {
@@ -92,13 +96,16 @@ public class DriveToTarget2 extends Command implements AutoTarget {
     if (remaining < rampDown) ramp = remaining/rampDown;
     currentSpeed *= ramp;
 
+    /* Allow driver control
     if (Math.abs(Robot.oi.driver.getX(Hand.kRight)) > 0.3) {
       correction = -Robot.oi.driver.getX(Hand.kRight);
     }
+    */
+
     correction = Utilities.clip(correction, -clipAnglePct * currentSpeed, clipAnglePct * currentSpeed);
     double leftPower = currentSpeed - correction;
     double rightPower = currentSpeed + correction;
-    Robot.driveTrain.setPower(leftPower, rightPower);
+    //Robot.driveTrain.setPower(leftPower, rightPower);
     //System.out.println(error + " " + leftPower + " " + rightPower);
   }
 
@@ -117,14 +124,15 @@ public class DriveToTarget2 extends Command implements AutoTarget {
     double alpha = 1/(1+Math.exp(-(lastDistance-40)/2.0));
     double distance = alpha*cameraDistance + (1-alpha)*lidarDistance;
     lastDistance = distance;
+    System.out.println(lidarDistance + " " + cameraDistance + " " + distance);
     return distance;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (System.currentTimeMillis() > stopTime) return true;
-    if (timer != null && timer.get() > 1.5) return true;
+    //if (System.currentTimeMillis() > stopTime) return true;
+    //if (timer != null && timer.get() > 1.5) return true;
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
     double position = (driveEncoders[0] + driveEncoders[1])/2.0;
     return position + frontEnd >= encoderTarget;
