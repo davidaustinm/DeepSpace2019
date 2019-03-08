@@ -23,6 +23,7 @@ public class IntakeRotateMotors extends Subsystem {
   TalonSRX rotateMotor = new TalonSRX(RobotMap.ROTATE_MOTOR);
   int state = IntakeRotateCommand.IN;
   int encoderOffset = 0;
+  boolean manual = false;
   public IntakeRotateMotors() {
     rotateMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
   }
@@ -30,6 +31,14 @@ public class IntakeRotateMotors extends Subsystem {
   public void setPower(double power) {
     if (Math.abs(power) < 0.05) power = 0;
     rotateMotor.set(ControlMode.PercentOutput, power);
+  }
+
+  public void setManual(boolean b) {
+    manual = b;
+  }
+
+  public boolean getManual() {
+    return manual;
   }
 
   public int getPosition() {

@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -28,6 +29,7 @@ public class DeepSpaceDriveTrain extends Subsystem {
   CANEncoder leftEncoder, rightEncoder;
   double maxSpeed = 1;
   boolean switched = false;
+  ArcadeDriveCommand defaultCommand;
   public DeepSpaceDriveTrain() {
     rightMaster = new CANSparkMax(RobotMap.RIGHT_MASTER, MotorType.kBrushless);
     rightSlave1 = new CANSparkMax(RobotMap.RIGHT_SLAVE1, MotorType.kBrushless);
@@ -73,14 +75,14 @@ public class DeepSpaceDriveTrain extends Subsystem {
       left *= -1;
       right *= -1;
     }
-    
+    /*
     SmartDashboard.putNumber("rightMaster", rightMaster.getOutputCurrent());
     SmartDashboard.putNumber("rightSlave1", rightSlave1.getOutputCurrent());
     SmartDashboard.putNumber("rightSlave2", rightSlave2.getOutputCurrent());
     SmartDashboard.putNumber("leftMaster", leftMaster.getOutputCurrent());
     SmartDashboard.putNumber("leftSlave1", leftSlave1.getOutputCurrent());
     SmartDashboard.putNumber("leftSlave2", leftSlave2.getOutputCurrent());
-    
+    */
 
     leftMaster.set(left);
     leftSlave1.set(left);
@@ -168,9 +170,14 @@ public class DeepSpaceDriveTrain extends Subsystem {
     Robot.sensors.resetDriveEncoders();
   }
 
+  public void runDefaultCommand() {
+    defaultCommand.run();
+  }
+
   @Override
   public void initDefaultCommand() {
+    defaultCommand = new ArcadeDriveCommand();
     // Set the default command for a subsystem here.
-    setDefaultCommand(new ArcadeDriveCommand());
+    setDefaultCommand(defaultCommand);
   }
 }

@@ -5,20 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.autonomous;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.*;
+import frc.robot.RobotMap;
+import frc.robot.subsystems.FrontLiftMotors;
 
-public class CenterRightRocketBack extends CommandGroup {
+public class ReadyIntake extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CenterRightRocketBack() {
-    addParallel(new ReadyIntake());
-    addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/right-rocket-back.profile.csv"));
-    addSequential(new DriveToTarget());
-    addSequential(new AutoActivatePusher(true));
+  public ReadyIntake() {
+    addSequential(new Wait(2000));
+    addSequential(new SetFrontLiftMode(FrontLiftMotors.PANEL_MODE));
+    addSequential(new SetFrontLiftLevel(RobotMap.mode, FrontLiftMotors.LEVEL_1));
+    addSequential(new ChangeIntakeRotateState(IntakeRotateCommand.OUT));
+    
+
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

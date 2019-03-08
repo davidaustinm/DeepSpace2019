@@ -14,7 +14,9 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commands.AutoTarget;
 import frc.robot.commands.DriveToTarget;
+import frc.robot.commands.DriveToTarget2;
 
 public class Sensors extends Subsystem {
   AHRS navx;
@@ -30,7 +32,9 @@ public class Sensors extends Subsystem {
   double positionX = 0;
   double positionY = 0;
   double[] lastDriveEncoder = new double[] {0,0};
-  DriveToTarget driveToTarget = null;
+  //DriveToTarget driveToTarget = null;
+  AutoTarget driveToTarget = null;
+
   public Sensors() {
     navx = new AHRS(I2C.Port.kMXP);
   }
@@ -41,7 +45,7 @@ public class Sensors extends Subsystem {
   }
   */
 
-  public void setDriveToTarget(DriveToTarget dt) {
+  public void setDriveToTarget(AutoTarget dt) {
     driveToTarget = dt;
   }
 
@@ -50,6 +54,7 @@ public class Sensors extends Subsystem {
       return;
     }
     driveToTarget.cancel();
+    driveToTarget = null;
   }
 
   public void resetPitch() {

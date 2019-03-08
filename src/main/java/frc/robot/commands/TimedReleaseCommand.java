@@ -27,7 +27,7 @@ public class TimedReleaseCommand extends Command {
   @Override
   protected void execute() {
     if(System.currentTimeMillis() > stopTime) {
-      Robot.vacSys.setVacRelease(false);
+      //Robot.vacSys.setVacRelease(false);
     }
   }
 

@@ -41,7 +41,8 @@ public class CSVReader {
 	        }
 	        inputStream.close();
 	    } catch (FileNotFoundException e) {
-	        e.printStackTrace();
+			e.printStackTrace();
+			System.out.println("Error loading " + filename);
 	    }
 	    double [][] profile = new double[lines.size()][5];
 	    for(int j = 0; j < lines.size(); j++) {

@@ -7,32 +7,41 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ChangePanelState extends Command {
-  int state;
-  public ChangePanelState(int state) {
+public class LidarCommand extends Command {
+  int numAvg = 5;
+  double[] readings = new double[numAvg];
+  int count = 0;
+  public LidarCommand() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    this.state = state;
+    requires(Robot.lidar);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //Robot.panelHolderState.setMode(state);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    readings[count] = Robot.lidar.getReading();
+    count ++;
+    if (count >= numAvg) count = 0;
+    double sum = 0;
+    for (int i = 0; i < numAvg; i++) {
+      sum += readings[i];
+    }
+    Robot.lidar.setDistance(sum/numAvg);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

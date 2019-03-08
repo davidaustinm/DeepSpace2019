@@ -8,16 +8,18 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.DriveToTarget;
-import frc.robot.commands.ExecuteDriveProfile;
+import frc.robot.commands.*;
 
 public class LeftLeftRocketBack extends CommandGroup {
   /**
    * Add your docs here.
    */
   public LeftLeftRocketBack() {
+    addParallel(new ReadyIntake());
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-left-rocket-back.profile.csv"));
     addSequential(new DriveToTarget());
+    addSequential(new AutoActivatePusher(true));
+    
     
     // Add Commands here:
     // e.g. addSequential(new Command1());

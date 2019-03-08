@@ -27,8 +27,8 @@ public class RobotMap {
 
   //TALON SRX
   public static final int FRONT_LIFT1 = 7;
-  public static final int FRONT_LIFT2 = 8;
-  public static final int REAR_LIFT1 = 9;
+  public static final int FRONT_LIFT2 = 9;
+  public static final int REAR_LIFT1 = 8;
   public static final int REAR_LIFT2 = 10;
   public static final int ROTATE_MOTOR = 11;
 
@@ -37,6 +37,14 @@ public class RobotMap {
   public static final int REAR_LIFT_DRIVE_MOTOR = 13;
 
   // DIO
+  public static final int LIDAR = 0;
+  public static final int AUTOSWITCH0 = 10;
+  public static final int AUTOSWITCH1 = 12;
+  public static final int AUTOSWITCH2 = 11;
+  public static final int AUTOSWITCH3 = 13;
+  public static final int AUTOSWITCH4 = 18;
+  public static final int AUTOSWITCH5 = 19;
+
   //public static final int VAC_ON = 7;
   // public static final int VAC_RELEASE = 8;
   //public static final int VAC_SENSE = 9;
@@ -46,7 +54,7 @@ public class RobotMap {
   public static final int FRONT_LIFT_SHIFT = 0;
   public static final int RF_LATCH = 2;
   //public static final int NOTHING = 3;
-  public static final int PUSHER = 4;
+  public static final int PUSHER = 5;
 
   public static final int VAC_POWER = 5;
   public static final int VAC_ON = 6;

@@ -8,7 +8,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.DriveToTarget;
+import frc.robot.commands.*;
 import frc.robot.commands.ExecuteDriveProfile;
 
 public class Cargo3Left extends CommandGroup {
@@ -16,7 +16,12 @@ public class Cargo3Left extends CommandGroup {
    * Add your docs here.
    */
   public Cargo3Left() {
+    addParallel(new ReadyIntake());
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/cargo3.profile.csv"));
+    
     addSequential(new DriveToTarget());
+    addSequential(new AutoActivatePusher(true));
+    
+    
   }
 }

@@ -8,9 +8,12 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.AutoActivatePusher;
 import frc.robot.commands.DriveForwardForDistance;
 import frc.robot.commands.DriveForwardForTime;
 import frc.robot.commands.DriveToTarget;
+import frc.robot.commands.DriveToTarget2;
+import frc.robot.commands.ReadyIntake;
 import frc.robot.commands.RotateToHeading;
 import frc.robot.commands.SwitchDirection;
 
@@ -19,7 +22,9 @@ public class RightRocketFrontBack extends CommandGroup {
    * Add your docs here.
    */
   public RightRocketFrontBack() {
+    addParallel(new ReadyIntake());
     addSequential(new DriveToTarget());
+    addSequential(new AutoActivatePusher(true));
     addSequential(new DriveForwardForTime(350, -0.5));
     addSequential(new RotateToHeading(-135, 0.5, 0.5));
     addSequential(new DriveForwardForDistance(60, 0.4, -135, true));
@@ -28,12 +33,14 @@ public class RightRocketFrontBack extends CommandGroup {
     // addSequential(new SwitchDirection());
     // addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/drive-to-portal.profile.csv"));
     addSequential(new DriveToTarget());
+    addSequential(new AutoActivatePusher(false));
     addSequential(new SwitchDirection());
     addSequential(new DriveForwardForDistance(12*12, 0.6, 55, true));
     addSequential(new DriveForwardForDistance(144, 0.6, 51));
     addSequential(new SwitchDirection());
     addSequential(new RotateToHeading(-90, 0.5, 0.5));
     addSequential(new DriveToTarget());
+    addSequential(new AutoActivatePusher(true));
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

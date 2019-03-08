@@ -30,7 +30,7 @@ public class IntakeRollerCommand extends Command {
     double power = 0;
     if (leftTrigger > 0.2) power = -leftTrigger;
     else power = rightTrigger;
-    SmartDashboard.putNumber("Intake Roller Power", power);
+    //SmartDashboard.putNumber("Intake Roller Power", power);
     Robot.intakeRoller.setPower(power);
   }
 

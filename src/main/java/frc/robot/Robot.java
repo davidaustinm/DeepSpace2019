@@ -18,17 +18,21 @@ import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GameState;
 import frc.robot.commands.PanelHolderState;
+import frc.robot.commands.ReadyIntake;
 import frc.robot.commands.VacuumCommand;
 import frc.robot.commands.VacuumState;
 import frc.robot.commands.autonomous.*;
+import frc.robot.subsystems.AutoSwitches;
 import frc.robot.subsystems.DeepSpaceDriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FrontLiftMotors;
 import frc.robot.subsystems.IntakeRollerMotors;
 import frc.robot.subsystems.IntakeRotateMotors;
+import frc.robot.subsystems.Lidar;
 //import frc.robot.subsystems.PowerUpDriveTrain;
 import frc.robot.subsystems.Sensors;
 import frc.robot.subsystems.VacuumSubsystem;
+import frc.robot.subsystems.VelocityRecord;
 import frc.robot.subsystems.Pneumatics;
 import frc.robot.subsystems.RearLiftDriveMotors;
 import frc.robot.subsystems.RearLiftMotors;
@@ -52,15 +56,20 @@ public class Robot extends TimedRobot {
   public static FrontLiftMotors frontLift = new FrontLiftMotors();
   public static RearLiftMotors rearLift = new RearLiftMotors();
   public static RearLiftDriveMotors rearLiftDrive = new RearLiftDriveMotors();
-  public static VacuumSubsystem vacSys = new VacuumSubsystem();
-  public static VacuumState vacState = new VacuumState();
+  //public static VacuumSubsystem vacSys = new VacuumSubsystem();
+  //public static VacuumState vacState = new VacuumState();
   public static Sensors sensors = new Sensors();
   public static TargetCamera camera;
   public static TCPClient client = null;
   public static Pneumatics pneumatics = new Pneumatics();
-  public static PanelHolderState panelHolderState = new PanelHolderState();
+  //public static PanelHolderState panelHolderState = new PanelHolderState();
   public static GameState gameState = new GameState();
   public static TargetInfo targetInfo;
+  public static VelocityRecord velocityRecord = new VelocityRecord();
+  public static Lidar lidar = new Lidar();
+
+  public static AutoSwitches autoSwitches = new AutoSwitches();
+  boolean manualStart = false;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -106,6 +115,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    //System.out.println(autoSwitches.getAutonCommand().getName());
+    //velocityRecord.updateVelocity();
+    //SmartDashboard.putNumber("lidar", lidar.getDistance());
   }
 
   /**
@@ -140,7 +152,14 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
     
-    m_autonomousCommand = new LeftRocketFrontBack();
+    //m_autonomousCommand = new Cargo1Left();
+    m_autonomousCommand = autoSwitches.getAutonCommand();
+
+    //m_autonomousCommand = new ReadyIntake();
+
+    //m_autonomousCommand = autoSwitches.getAutonCommand();
+    //manualStart = autoSwitches.getManualMode();
+
     sensors.resetGyro();
     sensors.resetDriveEncoders();
     sensors.resetPosition();
@@ -150,8 +169,7 @@ public class Robot extends TimedRobot {
     frontLift.resetEncoder();
     rearLift.resetEncoder();
     
-
-    if (m_autonomousCommand != null) {
+    if (m_autonomousCommand != null && !manualStart) {
       m_autonomousCommand.start();
     }
   }
@@ -162,6 +180,17 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     sensors.updatePosition();
+    if (m_autonomousCommand != null && Robot.oi.driver.getBButton()) {
+      if (manualStart && !m_autonomousCommand.isRunning()) {
+        m_autonomousCommand.start();
+        manualStart = false;
+      }
+    }
+    if (m_autonomousCommand != null && Robot.oi.driver.getXButton()) {
+      //m_autonomousCommand.end();
+      m_autonomousCommand.cancel();
+      //m_autonomousCommand = null;
+    }
     Scheduler.getInstance().run();
   }
 
@@ -171,21 +200,19 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
     
-    pneumatics.setState(pneumatics.SHIFT, false);
+    //pneumatics.setState(pneumatics.SHIFT, false);
     
     sensors.resetPosition();
     sensors.resetDriveEncoders();
     sensors.resetGyro();
     // intakeRotate.resetOffset();
-    frontLift.resetEncoder();
-    rearLift.resetEncoder();
+    //frontLift.resetEncoder();
+    //rearLift.resetEncoder();
     sensors.resetPitch();
     
     if(Robot.driveTrain.isSwitched()) Robot.driveTrain.switchDirection();
+    if(m_autonomousCommand != null) m_autonomousCommand.cancel();
     
   }
   /**
@@ -214,14 +241,16 @@ public class Robot extends TimedRobot {
     double[] targetInfo = client.getTargetInfo();
     System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
     */
-    double[] driveEncoders = sensors.getDriveEncoders();
+    //double[] driveEncoders = sensors.getDriveEncoders();
+    //System.out.println(driveEncoders[0] + " " + driveEncoders[1]);
+    //System.out.println("pitch = " + sensors.getHeading());
+    /*
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
     SmartDashboard.putNumber("Left drive", driveEncoders[0]);
     SmartDashboard.putNumber("Right drive", driveEncoders[1]);
     SmartDashboard.putNumber("gyro", sensors.getHeading());
-    
-    /*
     SmartDashboard.putNumber("Front Lift Encoder", frontLift.getPosition());
+    
     SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
     SmartDashboard.putNumber("Front Lift State", RobotMap.mode);
     SmartDashboard.putNumber("Left drive", driveEncoders[0]);
@@ -236,11 +265,14 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
     SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
     */
+    /*
+    if (oi.driver.getXButton() && m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
+    */
     Scheduler.getInstance().run();
     //sensors.updatePosition();
-    if(RobotMap.DEBUG){
-      //System.out.println(client.getTargetArea());
-    }
+    
   }
 
   /**

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.io.*;
 
 public class TCPClient implements Runnable, TargetInfo {
-	private final Object lock = new Object();
+	//private final Object lock = new Object();
 	protected double[] targetInfo = new double[] {-1, -1, -1};
 	/*
 	protected double[] coefficients = new double[] {
@@ -41,18 +41,27 @@ public class TCPClient implements Runnable, TargetInfo {
 	protected double currX, currY, currArea;
 
 	public TCPClient() {
-		thread = new Thread(this);
+		try {
+			thread = new Thread(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
 		TCPClient c = new frc.robot.utilities.TCPClient();
 		c.serverIP = args[0];
 		System.out.println("starting thread...");
-		c.start();
+		try {
+			c.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void start() {
-		thread.start();
+		if (!thread.isAlive()) thread.start();
 	}
 
 	protected void setTargetInfo(double x, double y, double averArea) {
@@ -75,7 +84,7 @@ public class TCPClient implements Runnable, TargetInfo {
 		angle = -Math.toDegrees(Math.atan(fieldOfView / imageWidth * center));
 
 		long time = System.currentTimeMillis();
-		double elapsed = time - lastTime;
+		//double elapsed = time - lastTime;
 		lastTime = time;
 		//System.out.println(elapsed + " " + distance + " " + angle);
         SmartDashboard.putNumber("distance", distance);
@@ -135,6 +144,7 @@ public class TCPClient implements Runnable, TargetInfo {
 				len = in.read(content);
 				if (len == -1) {
 					// We lost our connection
+					client.close();
 					client = null;
 					continue; // Start back at the top of our while loop
 				}
@@ -148,11 +158,12 @@ public class TCPClient implements Runnable, TargetInfo {
 					double x = Double.parseDouble(xy[0]);
 					double y = Double.parseDouble(xy[1]);
 					double area = Double.parseDouble(xy[2]);
-					SmartDashboard.putNumber("inner TCP x: ", x);
-					SmartDashboard.putNumber("inner TCP y: ", y);
-					SmartDashboard.putNumber("inner TCP area: ", area);
+					//SmartDashboard.putNumber("inner TCP x: ", x);
+					// SmartDashboard.putNumber("inner TCP y: ", y);
+					// SmartDashboard.putNumber("inner TCP area: ", area);
 					setTargetInfo(x, y, area);
 				}
+				Thread.sleep(10);
 			} catch (Exception e) {
 				client = null;
 				System.out.println("Error in TCP code, going to reconnect.");
