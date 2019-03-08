@@ -18,6 +18,7 @@ import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GameState;
 import frc.robot.commands.PanelHolderState;
+import frc.robot.commands.ReadyIntake;
 import frc.robot.commands.VacuumCommand;
 import frc.robot.commands.VacuumState;
 import frc.robot.commands.autonomous.*;
@@ -67,7 +68,7 @@ public class Robot extends TimedRobot {
   public static VelocityRecord velocityRecord = new VelocityRecord();
   public static Lidar lidar = new Lidar();
 
-  //public static AutoSwitches autoSwitches = new AutoSwitches();
+  public static AutoSwitches autoSwitches = new AutoSwitches();
   boolean manualStart = false;
 
   Command m_autonomousCommand;
@@ -114,7 +115,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    //System.out.println(autoSwitches.getAutonCommand().getName());
     //velocityRecord.updateVelocity();
+    //SmartDashboard.putNumber("lidar", lidar.getDistance());
   }
 
   /**
@@ -149,7 +152,10 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = new LeftRocketFront();
     //m_autonomousCommand = new DriveToTarget(0.4);
     
-    m_autonomousCommand = new Cargo1Left();
+    //m_autonomousCommand = new Cargo1Left();
+    m_autonomousCommand = autoSwitches.getAutonCommand();
+
+    //m_autonomousCommand = new ReadyIntake();
 
     //m_autonomousCommand = autoSwitches.getAutonCommand();
     //manualStart = autoSwitches.getManualMode();
@@ -235,15 +241,16 @@ public class Robot extends TimedRobot {
     double[] targetInfo = client.getTargetInfo();
     System.out.println(targetInfo[0]-160 + " " + targetInfo[1] + " " + targetInfo[2]);
     */
-    double[] driveEncoders = sensors.getDriveEncoders();
+    //double[] driveEncoders = sensors.getDriveEncoders();
     //System.out.println(driveEncoders[0] + " " + driveEncoders[1]);
     //System.out.println("pitch = " + sensors.getHeading());
+    /*
     SmartDashboard.putNumber("Intake Rotate Encoder", sensors.getIntakeRotatePosition());
     SmartDashboard.putNumber("Left drive", driveEncoders[0]);
     SmartDashboard.putNumber("Right drive", driveEncoders[1]);
     SmartDashboard.putNumber("gyro", sensors.getHeading());
     SmartDashboard.putNumber("Front Lift Encoder", frontLift.getPosition());
-    /*
+    
     SmartDashboard.putNumber("Rear Lift Encoder", rearLift.getPosition());
     SmartDashboard.putNumber("Front Lift State", RobotMap.mode);
     SmartDashboard.putNumber("Left drive", driveEncoders[0]);

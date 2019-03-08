@@ -61,7 +61,7 @@ public class FrontLiftCommand extends Command {
       if (liftPosition < 10000) power *= 0.3;
       else power *= 0.6;
     }
-    SmartDashboard.putNumber("lift power", power);
+    //SmartDashboard.putNumber("lift power", power);
     Robot.frontLift.setPower(power);
   }
 

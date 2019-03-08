@@ -49,9 +49,9 @@ public class DriveToTarget extends Command implements AutoTarget{
 
   // Called repeatedly when this Command is scheduled to run
   double kAngle = 0.005; //0.0075;
-  double rampDown = 35;
+  double rampDown = 40;
   double clipAnglePct = 0.2;
-  double distanceCutOut = 30;
+  double distanceCutOut = 35;
   int countNotSeen = 0;
   @Override
   protected void execute() {
@@ -67,7 +67,7 @@ public class DriveToTarget extends Command implements AutoTarget{
       countNotSeen = 0;
     }
     if(RobotMap.DEBUG){
-      System.out.println(position + " " + encoderTarget + " " + distance);
+      //System.out.println(position + " " + encoderTarget + " " + distance);
     }
     if (Double.isNaN(distance) && countNotSeen > 0) {
       countNotSeen++;
@@ -77,12 +77,14 @@ public class DriveToTarget extends Command implements AutoTarget{
     }
     double correction = kAngle * error;
     if(dontReadDistance) correction = 0;
-    correction = Utilities.clip(correction, -clipAnglePct * speed, clipAnglePct * speed);
+    double currentSpeed = speed;
+    if (dontReadDistance) currentSpeed = 0.2;
+    correction = Utilities.clip(correction, -clipAnglePct * currentSpeed, clipAnglePct * currentSpeed);
     double ramp = 1;
     double remaining = (encoderTarget - position)/Robot.sensors.ENCODER_COUNTS_PER_INCH_LOW_GEAR;
     if (remaining < rampDown) ramp = remaining/rampDown;
-    double leftPower = speed * ramp - correction;
-    double rightPower = speed * ramp + correction;
+    double leftPower = currentSpeed * ramp - correction;
+    double rightPower = currentSpeed * ramp + correction;
     Robot.driveTrain.setPower(leftPower, rightPower);
     //System.out.println(error + " " + leftPower + " " + rightPower);
   }
@@ -93,7 +95,7 @@ public class DriveToTarget extends Command implements AutoTarget{
     if (System.currentTimeMillis() > stopTime) return true;
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
     double position = (driveEncoders[0] + driveEncoders[1])/2.0;
-    return finished || position + 10 >= encoderTarget;
+    return finished || position + 16 >= encoderTarget;
   }
 
   // Called once after isFinished returns true

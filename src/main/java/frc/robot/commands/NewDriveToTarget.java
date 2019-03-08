@@ -19,7 +19,7 @@ public class NewDriveToTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    DriveToTarget2 dt = new DriveToTarget2();
+    DriveToTarget dt = new DriveToTarget();
     Robot.sensors.setDriveToTarget(dt);
     dt.start();
   }

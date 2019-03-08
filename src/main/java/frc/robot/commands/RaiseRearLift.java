@@ -30,7 +30,7 @@ public class RaiseRearLift extends Command {
   protected void initialize() {
   }
   double kp = 0.02; //2; //0.02
-  double ki = 0.00; // 0.005
+  double ki = 0.005; // 0.005
   double totalPitch = 0;
   double alpha = 0.8;
   // Called repeatedly when this Command is scheduled to run

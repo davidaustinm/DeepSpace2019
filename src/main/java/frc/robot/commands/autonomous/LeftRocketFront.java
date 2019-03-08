@@ -17,7 +17,7 @@ public class LeftRocketFront extends CommandGroup {
   public LeftRocketFront() {
     //addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/left-rocket-45.profile.csv"));
     addParallel(new ReadyIntake());
-    addSequential(new DriveToTarget2());
+    addSequential(new DriveToTarget());
     addSequential(new AutoActivatePusher(true));
     addSequential(new DriveForwardForTime(350, -0.5));
     addSequential(new RotateToHeading(135, 0.5, 0.5));
@@ -26,7 +26,7 @@ public class LeftRocketFront extends CommandGroup {
     // addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/turn-left-rocket-front.profile.csv"));
     // addSequential(new SwitchDirection());
     // addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/drive-to-portal.profile.csv"));
-    addSequential(new DriveToTarget2());
+    addSequential(new DriveToTarget());
     addSequential(new AutoActivatePusher(false));
     addSequential(new SwitchDirection());
     addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/backaway-from-portal.profile.csv"));
@@ -34,7 +34,7 @@ public class LeftRocketFront extends CommandGroup {
     addSequential(new RotateToHeading(-20, 0.5, 0.5));
     addSequential(new Wait(50));
     //addSequential(new ExecuteDriveProfile("/home/lvuser/profiles/return-to-rocket.profile.csv"));
-    addSequential(new DriveToTarget2());
+    addSequential(new DriveToTarget());
     addSequential(new AutoActivatePusher(true));
     
     /*

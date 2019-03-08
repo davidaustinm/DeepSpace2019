@@ -75,14 +75,14 @@ public class DeepSpaceDriveTrain extends Subsystem {
       left *= -1;
       right *= -1;
     }
-    
+    /*
     SmartDashboard.putNumber("rightMaster", rightMaster.getOutputCurrent());
     SmartDashboard.putNumber("rightSlave1", rightSlave1.getOutputCurrent());
     SmartDashboard.putNumber("rightSlave2", rightSlave2.getOutputCurrent());
     SmartDashboard.putNumber("leftMaster", leftMaster.getOutputCurrent());
     SmartDashboard.putNumber("leftSlave1", leftSlave1.getOutputCurrent());
     SmartDashboard.putNumber("leftSlave2", leftSlave2.getOutputCurrent());
-    
+    */
 
     leftMaster.set(left);
     leftSlave1.set(left);

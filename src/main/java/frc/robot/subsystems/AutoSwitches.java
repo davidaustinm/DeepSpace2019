@@ -39,17 +39,21 @@ public class AutoSwitches extends Subsystem {
   }
 
   public Command getAutonCommand() {
-    if (switches[2].get()) target = CARGO;
+    if (getSwitch(2)) target = CARGO;
     else target = ROCKET;
-    if (switches[3].get()) side = BACK;
+    if (getSwitch(3)) side = BACK;
     else side = FRONT;
-    if (switches[0].get()) return getCenterCommand();
-    if (switches[1].get()) return getRightCommand();
+    if (getSwitch(0)) return getCenterCommand();
+    if (getSwitch(1)) return getRightCommand();
     return getLeftCommand();
   }
 
+  public boolean getSwitch(int s){
+    return !switches[s].get();
+  }
+
   public Command getCenterCommand() {
-    direction = switches[4].get() ? RIGHT:LEFT;
+    direction = getSwitch(4) ? RIGHT:LEFT;
     if (target == CARGO) {      // going to cargo ship
       if (side == FRONT) return new CenterCargoFront();
       else {
@@ -80,7 +84,15 @@ public class AutoSwitches extends Subsystem {
   }
 
   public boolean getManualMode() {
-    return switches[5].get();
+    return getSwitch(5);
+  }
+
+  public void printState() {
+    String s = "";
+    for (int i = 0; i < switches.length; i++) {
+      s += getSwitch(i) + " ";
+    }
+    System.out.println(s);
   }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.

@@ -22,7 +22,7 @@ public class ArcadeDriveCommand extends Command {
   protected void initialize() {
   }
 
-  double alpha = 0.6; //0.74;
+  double alpha = 0.45; //0.74;
   double turnAlpha = .7;
   double lastTurn = 0;
   double turnAlpham1 = 1-turnAlpha;
@@ -55,7 +55,7 @@ public class ArcadeDriveCommand extends Command {
     }
     
     Robot.driveTrain.arcadeDrive(power, turn, true);
-    lastThrottle = throttle;
+    lastThrottle = power;
     lastSteering = steering;
   }
 
