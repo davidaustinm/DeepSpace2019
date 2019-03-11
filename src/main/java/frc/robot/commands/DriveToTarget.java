@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.Pneumatics;
 import frc.robot.utilities.Utilities;
 
 public class DriveToTarget extends Command implements AutoTarget{
@@ -32,12 +33,13 @@ public class DriveToTarget extends Command implements AutoTarget{
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    stopTime = System.currentTimeMillis() + 3000;
+    Robot.pneumatics.setState(Pneumatics.SHIFT, false);
+    stopTime = System.currentTimeMillis() + 10000;
     dontReadDistance = false;
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
     double distance = Robot.targetInfo.getDistance();
     if (Double.isNaN(distance)) {
-      System.out.println("distance = NaN");
+      //System.out.println("distance = NaN");
       //finished = true;
       encoderTarget = Double.POSITIVE_INFINITY;
       countNotSeen = 1;
@@ -72,8 +74,9 @@ public class DriveToTarget extends Command implements AutoTarget{
     if (Double.isNaN(distance) && countNotSeen > 0) {
       countNotSeen++;
       if (countNotSeen > 30) {
-        finished = true;
+        //finished = true;
       }
+      return;
     }
     double correction = kAngle * error;
     if(dontReadDistance) correction = 0;
@@ -95,7 +98,8 @@ public class DriveToTarget extends Command implements AutoTarget{
     if (System.currentTimeMillis() > stopTime) return true;
     double[] driveEncoders = Robot.sensors.getDriveEncoders();
     double position = (driveEncoders[0] + driveEncoders[1])/2.0;
-    return finished || position + 16 >= encoderTarget;
+    //return finished || position + 16 >= encoderTarget;
+    return position + 16 >= encoderTarget;
   }
 
   // Called once after isFinished returns true

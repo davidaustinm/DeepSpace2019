@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class RearLiftCommand extends Command {
@@ -27,6 +28,7 @@ public class RearLiftCommand extends Command {
   protected void execute() {
     if (Robot.gameState.isEndGame() == false) return; 
     double power = -Robot.oi.driver.getY(Hand.kRight);
+    //SmartDashboard.putNumber("rear power", power);
     Robot.rearLift.setPower(power);
   }
 

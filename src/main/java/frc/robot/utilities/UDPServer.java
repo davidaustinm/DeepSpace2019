@@ -5,13 +5,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.*;
 
-public class TCPClient implements Runnable, TargetInfo {
+public class UDPServer implements Runnable, TargetInfo {
 	//private final Object lock = new Object();
 	protected double[] targetInfo = new double[] {-1, -1, -1};
 	/*
@@ -32,7 +30,6 @@ public class TCPClient implements Runnable, TargetInfo {
 	protected double angle;
 	protected double fieldOfView = 15 / 26.0;
 	protected double imageWidth = 160;
-	protected String serverIP = "10.40.3.51";
 	protected int port = 5802;
 	protected Thread thread;
 	protected long lastTime = 0;
@@ -40,7 +37,7 @@ public class TCPClient implements Runnable, TargetInfo {
 
 	protected double currX, currY, currArea;
 
-	public TCPClient() {
+	public UDPServer() {
 		try {
 			thread = new Thread(this);
 		} catch (Exception e) {
@@ -49,8 +46,7 @@ public class TCPClient implements Runnable, TargetInfo {
 	}
 
 	public static void main(String[] args) {
-		TCPClient c = new frc.robot.utilities.TCPClient();
-		c.serverIP = args[0];
+		UDPServer c = new frc.robot.utilities.UDPServer();
 		System.out.println("starting thread...");
 		try {
 			c.start();
@@ -61,6 +57,7 @@ public class TCPClient implements Runnable, TargetInfo {
 	}
 
 	public void start() {
+		System.out.println("UDP Start");
 		if (!thread.isAlive()) thread.start();
 	}
 
@@ -84,11 +81,9 @@ public class TCPClient implements Runnable, TargetInfo {
 		angle = -Math.toDegrees(Math.atan(fieldOfView / imageWidth * center));
 
 		long time = System.currentTimeMillis();
-		//double elapsed = time - lastTime;
 		lastTime = time;
-		//System.out.println(elapsed + " " + distance + " " + angle);
-        SmartDashboard.putNumber("distance", distance);
-        SmartDashboard.putNumber("angle", angle);
+        // SmartDashboard.putNumber("distance", distance);
+        // SmartDashboard.putNumber("angle", angle);
 
 	}
 
@@ -116,75 +111,46 @@ public class TCPClient implements Runnable, TargetInfo {
 		return currArea;
 	}
 
-	protected Socket connectToPi(String serverIP, int port) {
-		System.out.println("Connecting to " + serverIP + " on port " + port);
-		Socket client = null;
-		try {
-			client = new Socket(serverIP, port);
-			System.out.println("Just connected to " + client.getRemoteSocketAddress());
-		} catch (IOException ex) {
-			client = null;
-			System.out.println("Error connecting to pi.");
-			//ex.printStackTrace();
-		}
-		return client;
-	}
-
 	public void run() {
-		Socket client = connectToPi(serverIP, port);
+		// In the UDP version the RoboRIO will be the server side, opening up a connection
+		// for the pi to connect to and fire data at us.
+		System.out.println("Running");
+		DatagramSocket dgs = null;
+		try {
+			dgs = new DatagramSocket(port);
+		} catch (SocketException ex) {
+			ex.printStackTrace();
+		}
 
 		while(!Thread.interrupted()) {
 			try {
-				if (client == null) {
-					try {
-						client = connectToPi(serverIP, port);
-						Thread.sleep(10);
-					} catch (Exception e) {
-						System.out.println("Pi Connect Crash :" + client.getReuseAddress());
-						//e.printStackTrace();
-					}
-					
-					continue; 
-				}
-				InputStream in = client.getInputStream();
-				int len;
-				len = in.read(content);
-				if (len == -1) {
-					// We lost our connection
-					client.close();
-					client = null;
-					continue; // Start back at the top of our while loop
-				}
-				byte[] valid = Arrays.copyOfRange(content, 0, len);
-				String textData = new String(valid, StandardCharsets.UTF_8);
+				// Reset the receive buffer else we'll get some weird results.
+				Arrays.fill(content, (byte)0);
+				DatagramPacket dgp = new DatagramPacket(content, content.length);
+				dgs.receive(dgp);
+				String textData = new String(dgp.getData(), StandardCharsets.UTF_8);
+
 				int start = textData.lastIndexOf("^");
 				int end = textData.lastIndexOf(";");
 				String goodData = textData.substring(start+1, end);
+				System.out.println(goodData);
 				if (start != -1 && end != -1) {
 					String[] xy = goodData.split("\\|");
 					double x = Double.parseDouble(xy[0]);
 					double y = Double.parseDouble(xy[1]);
 					double area = Double.parseDouble(xy[2]);
-					//SmartDashboard.putNumber("inner TCP x: ", x);
-					// SmartDashboard.putNumber("inner TCP y: ", y);
-					// SmartDashboard.putNumber("inner TCP area: ", area);
+					System.out.println("UDP recv: " + x + ", " +  y + " area: " + area);
+					/*
+					SmartDashboard.putNumber("inner UDP x: ", x);
+					SmartDashboard.putNumber("inner UDP y: ", y);
+					SmartDashboard.putNumber("inner UDP area: ", area);
+					*/
 					setTargetInfo(x, y, area);
 				}
 				Thread.sleep(10);
 			} catch (Exception e) {
-				client = null;
-				System.out.println("Error in TCP code, going to reconnect.");
-				//e.printStackTrace();
+				System.out.println("Error in UDP code: " + e.getMessage());
 			}
 		}
-	}
-
-	public static byte[] convertALToArray(List<Byte> in) {
-		final int n = in.size();
-		byte ret[] = new byte[n];
-		for (int i = 0; i < n; i++) {
-			ret[i] = in.get(i);
-		}
-		return ret;
 	}
 }

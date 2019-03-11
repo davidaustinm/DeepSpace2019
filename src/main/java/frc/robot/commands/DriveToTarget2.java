@@ -124,7 +124,7 @@ public class DriveToTarget2 extends Command implements AutoTarget {
     double alpha = 1/(1+Math.exp(-(lastDistance-40)/2.0));
     double distance = alpha*cameraDistance + (1-alpha)*lidarDistance;
     lastDistance = distance;
-    System.out.println(lidarDistance + " " + cameraDistance + " " + distance);
+    //System.out.println(lidarDistance + " " + cameraDistance + " " + distance);
     return distance;
   }
 

@@ -92,7 +92,7 @@ public class AutoSwitches extends Subsystem {
     for (int i = 0; i < switches.length; i++) {
       s += getSwitch(i) + " ";
     }
-    System.out.println(s);
+    //System.out.println(s);
   }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.

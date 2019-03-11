@@ -39,6 +39,7 @@ import frc.robot.subsystems.RearLiftMotors;
 import frc.robot.utilities.TCPClient;
 import frc.robot.utilities.TargetCamera;
 import frc.robot.utilities.TargetInfo;
+import frc.robot.utilities.UDPServer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -61,12 +62,13 @@ public class Robot extends TimedRobot {
   public static Sensors sensors = new Sensors();
   public static TargetCamera camera;
   public static TCPClient client = null;
+  // public static UDPServer client = null;
   public static Pneumatics pneumatics = new Pneumatics();
   //public static PanelHolderState panelHolderState = new PanelHolderState();
   public static GameState gameState = new GameState();
   public static TargetInfo targetInfo;
-  public static VelocityRecord velocityRecord = new VelocityRecord();
-  public static Lidar lidar = new Lidar();
+  //public static VelocityRecord velocityRecord = new VelocityRecord();
+  public static Lidar lidar;// = new Lidar();
 
   public static AutoSwitches autoSwitches = new AutoSwitches();
   boolean manualStart = false;
@@ -83,16 +85,18 @@ public class Robot extends TimedRobot {
     Compressor compressor = new Compressor(0);
     compressor.setClosedLoopControl(true);
     CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().getServer().get
 
     oi = new OI();
 
-    m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
+    //m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
+    //SmartDashboard.putData("Auto mode", m_chooser);
 
     boolean pi = true;
     if (pi) {
       client = new TCPClient();
+      // client = new UDPServer();
       client.start();
       targetInfo = client;
     } else {
@@ -132,6 +136,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+    double[] driveEncoders = Robot.sensors.getDriveEncoders();
+    SmartDashboard.putNumber("left", driveEncoders[0]);
+    SmartDashboard.putNumber("right", driveEncoders[1]);
+    
     Scheduler.getInstance().run();
   }
 
@@ -270,6 +278,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     */
+    //SmartDashboard.putNumber("rearlift", Robot.rearLift.getPosition());
     Scheduler.getInstance().run();
     //sensors.updatePosition();
     
