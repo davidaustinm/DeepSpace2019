@@ -119,7 +119,9 @@ public class UDPServer implements Runnable, TargetInfo {
 		try {
 			dgs = new DatagramSocket(port);
 		} catch (SocketException ex) {
+			System.out.println("Can't open UDP socket");
 			ex.printStackTrace();
+			return;
 		}
 
 		while(!Thread.interrupted()) {
